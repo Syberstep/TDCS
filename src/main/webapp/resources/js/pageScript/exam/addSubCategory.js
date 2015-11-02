@@ -41,7 +41,7 @@ function saveSubCategory() {
     var data = $.ajax({
         type: "POST",
         contentType: "application/json",
-        url: "/TDCS/exam/getAllSubCategory",
+        url: context+"/TDCS/exam/getAllSubCategory",
         async: false,
         success: function (data) {
             //alert(subcategoryNameadd);
@@ -72,7 +72,7 @@ function saveSubCategory() {
 
             var dat = $.ajax({
                 type: "POST",
-                url: "/TDCS/exam/addSubCategory",
+                url: context+"/TDCS/exam/addSubCategory",
                 data: {
                     categoryId: categoryId,
                     subcategoryNameadd: subcategoryNameadd

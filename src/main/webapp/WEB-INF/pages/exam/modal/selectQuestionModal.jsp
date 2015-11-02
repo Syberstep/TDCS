@@ -1,5 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!-- Modal SelectQuestion-->
+<c:set var="context" value="${pageContext.request.contextPath}"/>
+<script>
+    var context = '${context}';
+</script>
 <style>
     #selectQuest {
         overflow-y: auto;

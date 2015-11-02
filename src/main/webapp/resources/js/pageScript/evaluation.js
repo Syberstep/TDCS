@@ -82,7 +82,7 @@ $(document).ready(function () {
         setDataEvaluationForm();
         var listStudent = $.ajax({
             type: 'POST',
-            url: 'getStudentForSelect',
+            url:context+ 'getStudentForSelect',
             data:{
                 page : "eva"
             },
@@ -123,7 +123,7 @@ function insertScore() {
     var evaGrade;
     var dataScore = $.ajax({
         type: "POST",
-        url: '/TDCS/sumScore',
+        url: context+'/TDCS/sumScore',
         data: {
             userId: $("#selectStudentForEvaluation").val()
         },
@@ -141,7 +141,7 @@ function insertScore() {
 
             var setEvaGrade = $.ajax({
                 type: "POST",
-                url: '/TDCS/setEvaGrade',
+                url: context+'/TDCS/setEvaGrade',
                 data: {
                     userId: $("#selectStudentForEvaluation").val(),
                     evaGrade: evaGrade
@@ -159,7 +159,7 @@ function insertScore() {
 function checkEvaluation() {
     var dataCheck = $.ajax({
         type: 'POST',
-        url: 'checkEvaluation',
+        url:context+'checkEvaluation',
         async: false
     }).responseText;
     if (dataCheck == "change")
@@ -176,7 +176,7 @@ function saveEvaluate(subId, score, note, type, userId) {
     var subId = [];
     var data = $.ajax({
         type: "POST",
-        url: '/TDCS/addEvaluate',
+        url: context+'/TDCS/addEvaluate',
         data: saveDate,
         success: function () {
 
@@ -189,21 +189,21 @@ function saveEvaluate(subId, score, note, type, userId) {
 function setDataEvaluationForm() {
     var data = $.ajax({
         type: 'POST',
-        url: 'evaluationDescription',
+        url: context+'evaluationDescription',
         async: false
     }).responseText;
     var dataDescription = JSON.parse(data);
 
     var data1 = $.ajax({
         type: 'POST',
-        url: 'evaluationTopic',
+        url: context+'evaluationTopic',
         async: false
     }).responseText;
     var dataTopic = JSON.parse(data1);
 
     var data2 = $.ajax({
         type: 'POST',
-        url: 'evaluationSubtopic',
+        url: context+'evaluationSubtopic',
         async: false
     }).responseText;
     var dataSubtopic = JSON.parse(data2);
@@ -251,7 +251,7 @@ function setDataEvaluationForm() {
                         subId: valueSubtopic.subtopicId,
                         type: "s"
                     },
-                    url: 'getResultEvaluation',
+                    url:context+ 'getResultEvaluation',
                     async: false
                 }).responseText;
 

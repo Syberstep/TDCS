@@ -11,7 +11,7 @@ function prepareLoad(data) {
 //        oMyForm.append("name", $("#fileUpload").val());
 //        oMyForm.append("username", picture);
         var data3 = $.ajax({
-            url: '/TDCS/uploadFile',
+            url: context+'/TDCS/uploadFile',
             data: oMyForm,
             dataType: 'text',
             processData: false,
@@ -151,7 +151,7 @@ $("#section").change(function () {
     if (section_Id != "") {
         var data = $.ajax({
             type: "POST",
-            url: '/TDCS/getJob',
+            url: context+'/TDCS/getJob',
             data: {
                 sec_id: section_Id
             },
@@ -200,7 +200,7 @@ $("#section").change(function () {
     if (section_Id != "") {
         var data = $.ajax({
             type: "POST",
-            url: '/TDCS/getTeam',
+            url: context+'/TDCS/getTeam',
             data: {
                 section_Id: section_Id
             },
@@ -238,7 +238,7 @@ $("#ddlCom").change(function () {
     if (compId != "") {
         var data = $.ajax({
             type: "POST",
-            url: '/TDCS/getSection',
+            url:context+ '/TDCS/getSection',
             data: {
                 comId: compId
             },
@@ -294,7 +294,7 @@ function selectFacAndgetDepartment(fac) {
     if (facName != "") {
         var data = $.ajax({
             type: "POST",
-            url: '/TDCS/getDep',
+            url:context+ '/TDCS/getDep',
             data: {
                 facutyname: $("#comboFac").val()
             },
@@ -324,7 +324,7 @@ function listuni() {
     var uniNameTr;
     var data = $.ajax({
         type: "POST",
-        url: '/TDCS/getUniver',
+        url: context+'/TDCS/getUniver',
         data: {
             UniversityName: uniName
         },
@@ -596,7 +596,7 @@ $(document).ready(function () {
         if (student_id.val() != "") {
             var data = $.ajax({
                 type: "POST",
-                url: '/TDCS/checkStudentOrEmployeeId',
+                url:context+ '/TDCS/checkStudentOrEmployeeId',
                 data: {
                     stduOrEmpId: student_id.val()
                 },
@@ -614,7 +614,7 @@ $(document).ready(function () {
         if (teamName.val() != "") {
             var data = $.ajax({
                 type: "POST",
-                url: '/TDCS/checkTeamName',
+                url: context+'/TDCS/checkTeamName',
                 data: {
                     teamName: teamName.val()
                 },
@@ -634,7 +634,7 @@ $(document).ready(function () {
         if (piority.val() != "") {
             var data = $.ajax({
                 type: "POST",
-                url: '/TDCS/checkPiority',
+                url:context+ '/TDCS/checkPiority',
                 data: {
                     piority: piority.val()
                 },
@@ -678,14 +678,14 @@ function saveData() {
         var datasendTeam = 'teamName=' + $("#txbTeam").val();
         var dat = $.ajax({
             type: "POST",
-            url: "/TDCS/insertTeam",
+            url: context+"/TDCS/insertTeam",
             data: datasendTeam,
             success:function(data){
                 datasend += ('&teamId='+data);
 //            location.href = "/TDCS/openLoginAfterRegis";
                 var dat = $.ajax({
                     type: "POST",
-                    url: "/TDCS/insertStaff",
+                    url: context+"/TDCS/insertStaff",
                     data: datasend,
                     success: function (data) {
                         if ($("#image").val() != "") {
@@ -704,7 +704,7 @@ function saveData() {
         datasend += '&teamId=' + $("#team").val();
         var dat = $.ajax({
             type: "POST",
-            url: "/TDCS/insertStaff",
+            url: context+"/TDCS/insertStaff",
             data: datasend,
             success: function (data) {
                 if ($("#image").val() != "") {
@@ -810,7 +810,7 @@ function checkUserName() {
         var userName = $("#username");
         var data = $.ajax({
             type: "POST",
-            url: '/TDCS/checkUserName',
+            url: context+'/TDCS/checkUserName',
             data: {
                 userName: $("#ssgMail").val()
             },

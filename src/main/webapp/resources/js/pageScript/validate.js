@@ -40,7 +40,7 @@ $(document).ready(function () {
                 sizeOfCheckBox++;
                 var data = $.ajax({
                     type: "POST",
-                    url: '/TDCS/setValidate',
+                    url: context+'/TDCS/setValidate',
                     data: {
                         id: $('tbody').children('tr:eq(' + i + ')').children('td:eq(0)').children().val()
                     },
@@ -59,7 +59,7 @@ $(document).ready(function () {
                 }).responseText;
                 var data = $.ajax({
                     type: "POST",
-                    url: '/TDCS/sendmailForValidate',
+                    url: context+'/TDCS/sendmailForValidate',
                     data: {
                         uId: $('tbody').children('tr:eq(' + i + ')').children('td:eq(0)').children().val()
                     },
@@ -99,7 +99,7 @@ $(document).ready(function () {
                 if ($('tbody').children('tr:eq(' + i + ')').children('td:eq(0)').children().is(':checked')) {
                     var data = $.ajax({
                         type: "POST",
-                        url: '/TDCS/sendmailForNotValidate',
+                        url: context+'/TDCS/sendmailForNotValidate',
                         data: {
                             uId: $('tbody').children('tr:eq(' + i + ')').children('td:eq(0)').children().val(),
                             message: $("#message").val()

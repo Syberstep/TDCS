@@ -24,7 +24,7 @@ var updateCategoryList = function () {
     clearCategoryList()
     var ajaxDat = $.ajax({
         type: "POST",
-        url: "/TDCS/exam/getAllCategory",
+        url: context+"/TDCS/exam/getAllCategory",
         success: function (catList) {
             catList.forEach(function (category) {
                 $('#selectCategoryToSelection').append('<option class="category" categoryId="' + category.id + '"' +
@@ -50,7 +50,7 @@ var updateSubCategoryList = function () {
     )
     var ajaxDat = $.ajax({
         type: "POST",
-        url: "/TDCS/exam/getAllSubCategoryInCategory",
+        url: context+"/TDCS/exam/getAllSubCategoryInCategory",
         data: {
             categoryId: data
         },
@@ -112,7 +112,7 @@ function listcatSelectInput() {
 
     var data = $.ajax({
         type: "POST",
-        url: "/TDCS/exam/getAllCategory",
+        url:context+ "/TDCS/exam/getAllCategory",
 
         async: false,
 
@@ -154,7 +154,7 @@ var listSubCategory = function () {
         categoryId = categoryId2;
         var data = $.ajax({
             type: "POST",
-            url: "/TDCS/exam/getSubCategoryToDropDown",
+            url: context+"/TDCS/exam/getSubCategoryToDropDown",
             data: {
                 categoryId: categoryId
             },
@@ -184,7 +184,7 @@ var listSubCategory = function () {
     } else {
         var data = $.ajax({
             type: "POST",
-            url: "/TDCS/exam/getSubCategoryToDropDown",
+            url: context+"/TDCS/exam/getSubCategoryToDropDown",
             data: {
                 categoryId: categoryId
             },

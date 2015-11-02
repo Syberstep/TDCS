@@ -1,6 +1,10 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<c:set var="context" value="${pageContext.request.contextPath}"/>
+<script>
+    var context = '${context}';
+</script>
 <script src="<c:url value="/resources/js/callculatetime.js" />"></script>
 <script src="<c:url value="/resources/js/callutaeAge.js" />"></script>
 <script src="<c:url value="/resources/js/checkKeybord.js" />"></script>
@@ -20,7 +24,7 @@
 </div>
 <br/><br/>
 <div class="row">
-<form:form method="POST" action="/TDCS/insertStaff" modelAttribute="staffData" id="formregis">
+<form:form method="POST" action="${pageContext.request.contextPath}/TDCS/insertStaff" modelAttribute="staffData" id="formregis">
 <div class="col-md-2 col-md-offset-1 text-center">
     <input type='file' id="image" name="image" style="display: none" autocomplete="off"/>
     <img id="myImg" src="<c:url value="/resources/images/blank.jpg" />" alt="your image" width="100%" height="190px"/>
@@ -320,7 +324,7 @@
 </form:form>
 </div>
 
-<form id="formAfterAdd" action="/TDCS/getStaffDataAfterAdd" method="post">
+<form id="formAfterAdd" action="${pageContext.request.contextPath}/TDCS/getStaffDataAfterAdd" method="post">
     <input type="hidden" id="ID" name="ID" value=""/>
 </form>
 

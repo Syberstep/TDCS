@@ -5,7 +5,10 @@
 <script src="<c:url value="/resources/js/callutaeAge.js" />"></script>
 <script src="<c:url value="/resources/js/checkKeybord.js" />"></script>
 <script src="<c:url value="/resources/js/setInputUserdata.js" />"></script>
-
+<c:set var="context" value="${pageContext.request.contextPath}"/>
+<script>
+    var context = '${context}';
+</script>
 <script>
     if('${status}' == 'user' || '${status}' == ''){
         window.location.href = "/TDCS/index.html";
@@ -21,7 +24,7 @@
 </div>
 <br/><br/>
 <div class="row">
-<form method="POST" action="/TDCS/insertStaff" modelAttribute="staffData" id="formregis">
+<form method="POST" action="${context}/TDCS/insertStaff" modelAttribute="staffData" id="formregis">
 <div class="col-md-offset-1 col-md-2">
     <input type="hidden" id="userId" value="${user[0].userId}" />
     <%--<input type="hidden" id="piority" value="${user[0].piority}" />--%>

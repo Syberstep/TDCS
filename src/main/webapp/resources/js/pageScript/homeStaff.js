@@ -68,7 +68,7 @@ $("#section").change(function(){
     if(section_Id!=""){
         var data = $.ajax({
             type: "POST",
-            url: '/TDCS/getJob',
+            url: context+'/TDCS/getJob',
             data : {
                 sec_id : section_Id
             },
@@ -117,7 +117,7 @@ $("#section").change(function(){
     if(section_Id!=""){
         var data = $.ajax({
             type: "POST",
-            url: '/TDCS/getTeam',
+            url:context+ '/TDCS/getTeam',
             data : {
                 section_Id : section_Id
             },
@@ -155,7 +155,7 @@ $( "#ddlCom" ).change(function() {
     if(compId!=""){
         var data = $.ajax({
             type: "POST",
-            url: '/TDCS/getSection',
+            url: context+'/TDCS/getSection',
             data : {
                 comId : compId
             },
@@ -211,7 +211,7 @@ function selectFacAndgetDepartment(fac){
     if(facName!=""){
         var data = $.ajax({
             type: "POST",
-            url: '/TDCS/getDep',
+            url:context+ '/TDCS/getDep',
             data : {
                 facutyname : $("#comboFac").val()
             },
@@ -235,7 +235,7 @@ function listuni(){
     var uniNameTr;
     var data = $.ajax({
         type: "POST",
-        url: '/TDCS/getUniver',
+        url:context+ '/TDCS/getUniver',
         data : {
             UniversityName : uniName
         },
@@ -284,7 +284,7 @@ function prepareLoad(event)
 //        oMyForm.append("name", $("#fileUpload").val());
 //        oMyForm.append("havefile", picture);
         var data = $.ajax({
-            url: '/TDCS/uploadFile',
+            url: context+'/TDCS/uploadFile',
             data: oMyForm,
             dataType: 'text',
             processData: false,
@@ -437,7 +437,7 @@ $(document).ready(function(){
             if (student_id.val() != "") {
                 var data = $.ajax({
                     type: "POST",
-                    url: '/TDCS/checkStudentOrEmployeeId',
+                    url:context+ '/TDCS/checkStudentOrEmployeeId',
                     data: {
                         stduOrEmpId: student_id.val()
                     },
@@ -460,7 +460,7 @@ $(document).ready(function(){
         if(teamName.val()!=""){
             var data = $.ajax({
                 type: "POST",
-                url: '/TDCS/checkTeamName',
+                url: context+'/TDCS/checkTeamName',
                 data : {
                     teamName : teamName.val()
                 },
@@ -480,7 +480,7 @@ $(document).ready(function(){
         if(piority.val()!=""){
             var data = $.ajax({
                 type: "POST",
-                url: '/TDCS/checkPiority',
+                url: context+'/TDCS/checkPiority',
                 data : {
                     piority : piority.val()
                 },
@@ -564,7 +564,7 @@ $(document).ready(function(){
 
         var dat = $.ajax({
             type: "POST",
-            url:"/TDCS/checkOldPassword",
+            url:context+"/TDCS/checkOldPassword",
             data: {Password:pass[0].val()},
             success: function(data) {
                 if(data<=0){
@@ -578,7 +578,7 @@ $(document).ready(function(){
 
                 var dat = $.ajax({
                     type: "POST",
-                    url:"/TDCS/changPassword",
+                    url:context+"/TDCS/changPassword",
                     data: {Password:pass[1].val()},
                     success: function(data) {
                         alert("เปลี่ยนรหัสผ่านสำเร็จ");
@@ -623,13 +623,13 @@ function saveData(){
         var datasendTeam = 'teamName='+$("#txbTeam").val();
         var dat = $.ajax({
             type: "POST",
-            url:"/TDCS/insertTeam",
+            url:context+"/TDCS/insertTeam",
             data: datasendTeam,
             success:function(data){
                 datasend += ('&teamId='+data);
                 var dat = $.ajax({
                     type: "POST",
-                    url:"/TDCS/editprofileStaff",
+                    url:context+"/TDCS/editprofileStaff",
                     data: datasend,
                     success:function(data){
 //                $("#ID").val(data);
@@ -651,7 +651,7 @@ function saveData(){
         datasend +=  '&teamId='+$("#team").val();
         var dat = $.ajax({
             type: "POST",
-            url:"/TDCS/editprofileStaff",
+            url:context+"/TDCS/editprofileStaff",
             data: datasend,
             success:function(data){
 //                $("#ID").val(data);
@@ -743,7 +743,7 @@ function checkUserName(){
                 var userName = $("#username");
                 var data = $.ajax({
                     type: "POST",
-                    url: '/TDCS/checkUserName',
+                    url: context+'/TDCS/checkUserName',
                     data: {
                         userName: userName.val()
                     },

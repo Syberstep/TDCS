@@ -28,7 +28,7 @@ var updateDetailModal = function (tr) {
 
     $.ajax({
         type: 'POST',
-        url: '/TDCS/exam/getQuestionDetail',
+        url: context+'/TDCS/exam/getQuestionDetail',
         data: {
             questionId: id
         }, success: function (question) {

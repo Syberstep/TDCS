@@ -11,6 +11,10 @@
 <script src="<c:url value="/resources/js/callutaeAge.js" />"></script>
 <script src="<c:url value="/resources/js/checkKeybord.js" />"></script>
 <script src="<c:url value="/resources/js/setInputUserdata.js" />"></script>
+<c:set var="context" value="${pageContext.request.contextPath}"/>
+<script>
+    var context = '${context}';
+</script>
 <div class="container row">
     <h3 class="h3">ข้อมูลผู้ใช้</h3>
     <hr/>

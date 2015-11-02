@@ -125,7 +125,7 @@ function selectFacAndgetDepartment(fac){
     if(facid!=""){
             var data = $.ajax({
                 type: "POST",
-                url: '/TDCS/getDep',
+                url: context+'/TDCS/getDep',
                 data : {
                     facutyid : facid
                 },
@@ -199,7 +199,7 @@ function listuni(){
     var uniNameTr;
     var data = $.ajax({
         type: "POST",
-        url: '/TDCS/getUniver',
+        url: context+'/TDCS/getUniver',
         data : {
             UniversityName : uniName
         },
@@ -239,7 +239,7 @@ function facutyQuery(univerId){
     if(univerId!=""){
         var data = $.ajax({
             type: "POST",
-            url: '/TDCS/getFac',
+            url: context+'/TDCS/getFac',
             data : {
                 univerID : univerId
             },
@@ -389,7 +389,7 @@ function saveData(){
     var dat = $.ajax({
 
         type: "POST",
-        url:url,
+        url:context+url,
         data: datasend,
         success:function(data){
             console.log("|"+$("#image").val()+"|");
@@ -421,7 +421,7 @@ function prepareLoad(data)
 //        oMyForm.append("name", $("#fileUpload").val());
 //        oMyForm.append("havefile", picture);
         var data3 = $.ajax({
-            url: '/TDCS/uploadFile',
+            url: context+'/TDCS/uploadFile',
             data: oMyForm,
             dataType: 'text',
             processData: false,
@@ -524,7 +524,7 @@ $("#stuid").change(function(){
     if($("#stuid").val()!=""){
         var data = $.ajax({
             type: "POST",
-            url: '/TDCS/checkStudentOrEmployeeId',
+            url: context+'/TDCS/checkStudentOrEmployeeId',
             data : {
                 stduOrEmpId : $("#stuid").val()
             },
@@ -554,7 +554,7 @@ function checkUserName(){
         var userName = $("#username");
         var data = $.ajax({
             type: "POST",
-            url: '/TDCS/checkUserName',
+            url: context+'/TDCS/checkUserName',
             data : {
                 userName : $("#ssgMail").val()
             },

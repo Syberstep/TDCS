@@ -19,6 +19,10 @@
     </div>
 
 <%@include file="../modal/addEmployeeToInputModal.jsp" %>
+<c:set var="context" value="${pageContext.request.contextPath}"/>
+<script>
+    var context = '${context}';
+</script>
 <script src="../../../resources/js/pageScript/exam/selectEmployee.js" ></script>
 <script src="../../../resources/js/pageScript/exam/selectCreateByInput.js"></script>
 <script>

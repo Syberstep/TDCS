@@ -13,7 +13,7 @@ $(document).ready(function () {
     if (status == 'staff') {
         var listStudent = $.ajax({
             type: 'POST',
-            url: 'getStudentForSelect',
+            url:context+ 'getStudentForSelect',
             data: {
                 page: "view"
             },
@@ -53,21 +53,21 @@ function setDataEvaluationForm() {
     $('#resultScore').empty();
     var data = $.ajax({
         type: 'POST',
-        url: 'evaluationDescription',
+        url: context+'evaluationDescription',
         async: false
     }).responseText;
     var dataDescription = JSON.parse(data);
 
     var data1 = $.ajax({
         type: 'POST',
-        url: 'evaluationTopic',
+        url: context+'evaluationTopic',
         async: false
     }).responseText;
     var dataTopic = JSON.parse(data1);
 
     var data2 = $.ajax({
         type: 'POST',
-        url: 'evaluationSubtopic',
+        url: context+'evaluationSubtopic',
         async: false
     }).responseText;
     var dataSubtopic = JSON.parse(data2);
@@ -113,7 +113,7 @@ function setDataEvaluationForm() {
                         subId: valueSubtopic.subtopicId,
                         type: "s"
                     },
-                    url: 'getResultEvaluation',
+                    url: context+'getResultEvaluation',
                     async: false
                 }).responseText;
 
@@ -141,7 +141,7 @@ function setDataEvaluationForm() {
                         subId: valueSubtopic.subtopicId,
                         type: "e"
                     },
-                    url: 'getResultEvaluation',
+                    url: context+'getResultEvaluation',
                     async: false
                 }).responseText;
 

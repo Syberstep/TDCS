@@ -9,7 +9,7 @@ function deleteSubTopicAndDescription(subTopicId){
     }
     $.ajax({
         type: "POST",
-        url:"/TDCS/deleteDiscription",
+        url:context+"/TDCS/deleteDiscription",
         data: {"subTopicId":subTopicId},
         complete:function(xhr){
             if (xhr.readyState == 4) {
@@ -58,7 +58,7 @@ function addDrecri(index,xhr){
             $.ajax({
 
                 type: "POST",
-                url: "/TDCS/saveDescription",
+                url: context+"/TDCS/saveDescription",
                 data: {
                     subtopicId:xhr,
                     descriptionData:textAreaArray[index].val() /*$('#tbodySubTopicAdd').children('tr:eq('+index+')').children(td2).children('textarea').val()*/,
@@ -250,7 +250,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: "POST",
-            url:"/TDCS/checkSubTopicInuse",
+            url:context+"/TDCS/checkSubTopicInuse",
             data: {subTopicName:$("#subTopicData").val(),
                 topicId:$("#selectTopic").val()},
             success:function(data){
@@ -263,7 +263,7 @@ $(document).ready(function () {
 
                     $.ajax({
                         type: "POST",
-                        url:"/TDCS/saveSubtopic",
+                        url:context+"/TDCS/saveSubtopic",
                         data: datasend,
                         success:function(xhr){
                             addDrecri(0,xhr);
@@ -383,7 +383,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: 'POST',
-            url: '/TDCS/checkTopicInuse',
+            url: context+'/TDCS/checkTopicInuse',
             data:{topicName:$("#topicName").val()},
             async: false,
             success:function(data){
@@ -399,7 +399,7 @@ $(document).ready(function () {
                     var TopicScore = $("#topicScore").val();
                     $.ajax({
                         type: 'POST',
-                        url: '/TDCS/saveTopic',
+                        url: context+'/TDCS/saveTopic',
                         data:datasend,
                         async: false,
                         success:function(data){
@@ -441,7 +441,7 @@ function updateSubToppicData(){
         var sumScore = 0;
         $.ajax({
             type: 'POST',
-            url: '/TDCS/getScoreTopic',
+            url: context+'/TDCS/getScoreTopic',
             data: {id: TopicId},
             async: false,
             success: function (data) {
@@ -450,7 +450,7 @@ function updateSubToppicData(){
         });
         $.ajax({
             type: 'POST',
-            url: '/TDCS/getSubtopicByTopic',
+            url: context+'/TDCS/getSubtopicByTopic',
             data:{id:TopicId},
             async: false,
             success: function (data) {
@@ -683,7 +683,7 @@ function saveEditSubtopic(topicId,subTopucId){
 
     var dataSub = $.ajax({
         type: 'POST',
-        url: '/TDCS/checkSubTopicInuseEdit',
+        url: context+'/TDCS/checkSubTopicInuseEdit',
         data:subTopicSend,
         success: function(xhr) {
             if (xhr>0) {
@@ -693,7 +693,7 @@ function saveEditSubtopic(topicId,subTopucId){
             else{
                 var dataSubTopic = $.ajax({
                     type: 'POST',
-                    url: '/TDCS/editSubTopic',
+                    url:context+ '/TDCS/editSubTopic',
                     data:subTopicSend,
                     complete: function(xhr) {
                         if (xhr.readyState == 4) {
@@ -740,7 +740,7 @@ function saveEditDescription(i,subTopucId){
 
         var dataDescripton = $.ajax({
             type: 'POST',
-            url: '/TDCS/editDescription',
+            url:context+ '/TDCS/editDescription',
             data: subTopicSend,
             complete: function (xhr) {
                 if (xhr.readyState == 4) {
@@ -785,7 +785,7 @@ function updateTableTopic(){
     $("#selectTopic").append('<option value="">เลือก TOPIC</option>');
     $.ajax({
         type: 'POST',
-        url: '/TDCS/getAllTopic',
+        url: context+'/TDCS/getAllTopic',
         async: false,
         success: function (data) {
             data.forEach(function (value) {
@@ -822,7 +822,7 @@ function deleteData(idTopic){
 
     $.ajax({
         type: 'POST',
-        url: '/TDCS/deleteTopic',
+        url: context+'/TDCS/deleteTopic',
         data:{
             id : idTopic
         },
@@ -858,7 +858,7 @@ function saveEditToppicdata(valueId){
 
     var data = $.ajax({
         type: 'POST',
-        url: '/TDCS/getScoreInUserOfTopic',
+        url: context+'/TDCS/getScoreInUserOfTopic',
         data:{"topicId":valueId},
         complete: function(xhr) {
             if(parseInt(xhr.responseText) > parseInt(scoreCheck)){
@@ -872,7 +872,7 @@ function saveEditToppicdata(valueId){
 
                 var data = $.ajax({
                     type: 'POST',
-                    url: '/TDCS/exam/editTopic',
+                    url: context+'/TDCS/exam/editTopic',
                     data:topicSend,
                     complete: function(xhr) {
                         if (xhr.readyState == 4) {

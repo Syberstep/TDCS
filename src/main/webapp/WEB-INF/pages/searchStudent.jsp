@@ -5,6 +5,10 @@
 <script type="text/javascript" src="<c:url value="/resources/js/callculatetime.js" />"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/randomString.js" />"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/pageScript/searchStudent.js" />"></script>
+<c:set var="context" value="${pageContext.request.contextPath}"/>
+<script>
+    var context = '${context}';
+</script>
 <script>
     if ('${status}' == 'user' || '${status}' == '') {
         window.location.href = "/TDCS/index.html";

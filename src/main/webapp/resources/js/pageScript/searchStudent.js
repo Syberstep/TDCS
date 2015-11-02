@@ -162,7 +162,7 @@ $(document).ready(function () {
         }
         var data = $.ajax({
             type: "POST",
-            url: '/TDCS/searchStudentData',
+            url: context+'/TDCS/searchStudentData',
             data: {
                 tFname: spNames,
                 tLname: spLastName,

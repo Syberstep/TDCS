@@ -104,7 +104,7 @@ $(document).ready(function () {
         }
         var data = $.ajax({
             type: "POST",
-            url: '/TDCS/searchStaffData',
+            url: context+'/TDCS/searchStaffData',
             data: {
                 tFname: spNames,
                 tLname: spLastName,

@@ -32,7 +32,7 @@ function saveCategory(){
     var data = $.ajax({
         type: "POST",
         contentType: "application/json",
-        url: "/TDCS/exam/getAllCategory",
+        url: context+"/TDCS/exam/getAllCategory",
         async: false,
         success: function (data) {
             data.forEach(function (value) {
@@ -55,7 +55,7 @@ function saveCategory(){
 
             var dat = $.ajax({
                 type: "POST",
-                url: "/TDCS/exam/addCategory",
+                url: context+"/TDCS/exam/addCategory",
                 data: 'id=' + categoryId + '&name=' + categoryName,
                 success: function () {
                     //alert('เพิ่มวิชา ' + categoryName + ' สำเร็จ ');

@@ -24,7 +24,7 @@ function searchEmpName(){
         //alert('1');
         var dataResponse = $.ajax({
             type: "POST",
-            url: "/TDCS/exam/selectEmployee",
+            url: context+"/TDCS/exam/selectEmployee",
             data: {
                 userName: userNameRequest
             },
@@ -85,7 +85,7 @@ function searchEmpName(){
 
         var dataResponse = $.ajax({
             type: "POST",
-            url: "/TDCS/exam/selectEmployeeNotInSelected",
+            url: context+"/TDCS/exam/selectEmployeeNotInSelected",
             dataType: "json",
             contentType: 'application/json',
             mimeType: 'application/json',
@@ -154,7 +154,7 @@ function addEmployee(){
 function getEmployee(){
     var dataResponse = $.ajax({
         type: "POST",
-        url: "/TDCS/exam/selectEmployee",
+        url: context+"/TDCS/exam/selectEmployee",
         async: false,
         success: function(data){
             //alert(data.length);
