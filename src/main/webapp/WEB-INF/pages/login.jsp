@@ -1,8 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<c:set var="context" value="${pageContext.request.contextPath}"/>
+<script>
+    var context = '${context}';
+</script>
 <div class="container" style="background-color: white; padding-bottom: 80px; border-radius: 20px; width: 72%; box-shadow: 10px 10px 5px #888888;">
-    <form method="post" action="/TDCS/login.html">
+    <form method="post" action="${context}/TDCS/login.html">
         <div class="form-horizontal">
             <div class="row">
                 <div class="help-block" style="margin-left: 20px; padding-bottom: 10px; margin-right: 20px;">

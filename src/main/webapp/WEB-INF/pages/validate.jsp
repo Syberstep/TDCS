@@ -1,6 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <script type="text/javascript" src="<c:url value="/resources/js/pageScript/validate.js" />"></script>
+<c:set var="context" value="${pageContext.request.contextPath}"/>
+<script>
+    var context = '${context}';
+</script>
 <script>
     if ('${status}' != 'staff') {
         window.location.href = "/TDCS/index.html";
@@ -34,7 +38,7 @@
                                 <td><input type="checkbox" value="${valid.userId}"/></td>
                                 <td>${valid.dateCreate}</td>
                                 <td>
-                                    <form method="post" action="/TDCS/detail.html">
+                                    <form method="post" action="${context}/TDCS/detail.html">
                                         <input value="${valid.userId}" name="id" style="display: none;" />
                                         <button class="btn btn-sm btn-warning" type="submit">
                                             ${valid.empId}

@@ -27,7 +27,7 @@ $("#btnChangePass").click(function(){
 
     var dat = $.ajax({
         type: "POST",
-        url:"/TDCS/checkOldPassword",
+        url:context+"/TDCS/checkOldPassword",
         data: {Password:pass[0].val()},
         success: function(data) {
             if(data<=0){
@@ -41,7 +41,7 @@ $("#btnChangePass").click(function(){
 
             var dat = $.ajax({
                 type: "POST",
-                url:"/TDCS/changPassword",
+                url:context+"/TDCS/changPassword",
                 data: {Password:pass[1].val()},
                 success: function(data) {
                     alert("เปลี่ยนรหัสผ่านสำเร็จ");
@@ -106,7 +106,7 @@ function changeValue(){
 
     var dat = $.ajax({
         type: "POST",
-        url:"/TDCS/saveData",
+        url:context+"/TDCS/saveData",
         data: datasend,
         complete: function(data) {
             if($("#image").val()!=""){
@@ -269,7 +269,7 @@ function selectFacAndgetDepartment(fac){
     if(facid!=""){
         var data = $.ajax({
             type: "POST",
-            url: '/TDCS/getDep',
+            url: context+'/TDCS/getDep',
             data : {
                 facutyid : facid
             },
@@ -339,7 +339,7 @@ function listuni(){
     var uniNameTr;
     var data = $.ajax({
         type: "POST",
-        url: '/TDCS/getUniver',
+        url: context+'/TDCS/getUniver',
         data : {
             UniversityName : uniName
         },
@@ -378,7 +378,7 @@ function facutyQuery(univerId){
     if(univerId!=""){
         var data = $.ajax({
             type: "POST",
-            url: '/TDCS/getFac',
+            url: context+'/TDCS/getFac',
             data : {
                 univerID : univerId
             },
@@ -403,7 +403,7 @@ function prepareLoad(event)
 //        oMyForm.append("name", $("#fileUpload").val());
 //        oMyForm.append("havefile", picture);
         var data = $.ajax({
-            url: '/TDCS/uploadFile',
+            url: context+'/TDCS/uploadFile',
             data: oMyForm,
             dataType: 'text',
             processData: false,
@@ -597,7 +597,7 @@ $("#stuid").change(function(){
         if (student_id.val() != "") {
             var data = $.ajax({
                 type: "POST",
-                url: '/TDCS/checkStudentOrEmployeeId',
+                url: context+'/TDCS/checkStudentOrEmployeeId',
                 data: {
                     stduOrEmpId: student_id.val()
                 },
@@ -624,7 +624,7 @@ function checkUserName(){
             var userName = $("#username");
             var data = $.ajax({
                 type: "POST",
-                url: '/TDCS/checkUserName',
+                url: context+'/TDCS/checkUserName',
                 data: {
                     userName: userName.val()
                 },

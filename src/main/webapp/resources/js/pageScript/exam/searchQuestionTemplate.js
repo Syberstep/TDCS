@@ -72,7 +72,7 @@ var submitSearchQuestion = function (mode) {
 
     var ajaxDat = $.ajax({
         type: "POST",
-        url: "/TDCS/exam/searchQuestion",
+        url: context+"/TDCS/exam/searchQuestion",
         async: false,
         data: {
             categoryId: SI.category,

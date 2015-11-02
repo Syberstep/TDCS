@@ -169,12 +169,12 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>3.6.2.Final</version>
+            <version>3.6.3.Final</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
-            <version>3.6.2.Final</version>
+            <version>3.6.3.Final</version>
             <exclusions>
                 <exclusion>
                     <groupId>cglib</groupId>

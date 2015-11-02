@@ -5,6 +5,10 @@
 <script src="<c:url value="/resources/js/callutaeAge.js" />"></script>
 <script src="<c:url value="/resources/js/checkKeybord.js" />"></script>
 <script src="<c:url value="/resources/js/setInputUserdata.js" />"></script>
+<c:set var="context" value="${pageContext.request.contextPath}"/>
+<script>
+    var context = '${context}';
+</script>
 <script>
     statusUser = '${status}';
     <%--if('${status}' == 'user' || '${status}' == 'staff' || '${status}' == ''){--%>
@@ -498,7 +502,7 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<form id="formAfterAdd" action="/TDCS/showStudentData" method="post">
+<form id="formAfterAdd" action="${context}/TDCS/showStudentData" method="post">
     <input type="hidden" id="ID" name="ID" value=""/>
 </form>
 

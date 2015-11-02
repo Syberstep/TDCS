@@ -90,7 +90,7 @@ function saveQuestion() {
 
         var dat = $.ajax({
             type: 'POST',
-            url: '/TDCS/exam/addQuestion',
+            url: context+'/TDCS/exam/addQuestion',
             data: {
                 categoryName: categoryName,
                 subCategoryName: subCategoryName,
@@ -128,7 +128,7 @@ function saveQuestion() {
     } else {
         var dat = $.ajax({
             type: 'POST',
-            url: '/TDCS/exam/addQuestion',
+            url: context+'/TDCS/exam/addQuestion',
             //async: false,
             data: {
                 categoryName: categoryName,
@@ -322,7 +322,7 @@ function listcatCreateQues() {
 
     var data = $.ajax({
         type: "POST",
-        url: "/TDCS/exam/getAllCategory",
+        url: context+"/TDCS/exam/getAllCategory",
 
         async: false,
 
@@ -357,7 +357,7 @@ $("#categoryInputForCreateQuestion").on('change', function () {
                 categoryId = categoryId2;
                 var data = $.ajax({
                     type: "POST",
-                    url: "/TDCS/exam/getSubCategoryToDropDown",
+                    url: context+"/TDCS/exam/getSubCategoryToDropDown",
                     data: {
                         categoryId: categoryId
                         //subcategoryName: subcategoryName
@@ -383,7 +383,7 @@ $("#categoryInputForCreateQuestion").on('change', function () {
             } else {
                 var data = $.ajax({
                     type: "POST",
-                    url: "/TDCS/exam/getSubCategoryToDropDown",
+                    url: context+"/TDCS/exam/getSubCategoryToDropDown",
                     data: {
                         categoryId: categoryId
                     },
