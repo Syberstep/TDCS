@@ -7,6 +7,10 @@
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<c:set var="context" value="${pageContext.request.contextPath}"/>
+<script>
+    var context = '${context}';
+</script>
 
 <div class="row">
     <div class=" col-md-offset-2 col-md-4">
@@ -38,7 +42,7 @@
                     <br>
 
                     <div class="row">
-                        <a href="/TDCS/exam/createPaper" class="btn btn-default"
+                        <a href="${context}/TDCS/exam/createPaper" class="btn btn-default"
                            style="width:125px;height:35px">ชุดข้อสอบ</a>
                     </div>
                 </div>
@@ -85,14 +89,14 @@
 
 
                     <div class="row">
-                        <a href="/TDCS/exam/manageCategory" class="btn btn-default"
+                        <a href="${context}/TDCS/exam/manageCategory" class="btn btn-default"
                            style="width:125px;height:35px">วิชา
                         </a>
                     </div>
                     <br>
 
                     <div class="row">
-                        <a href="/TDCS/exam/manageSubCategory" class="btn btn-default"
+                        <a href="${context}/TDCS/exam/manageSubCategory" class="btn btn-default"
                            style="width:125px;height:35px">หัวข้อเรื่อง
                         </a>
                     </div>
@@ -100,7 +104,7 @@
 
                     <div class="row">
 
-                        <a href="/TDCS/exam/examRecordSearch" class="btn btn-default"
+                        <a href="${context}/TDCS/exam/examRecordSearch" class="btn btn-default"
                            style="width:125px;height:35px">ตรวจข้อสอบ
                         </a>
 
@@ -108,7 +112,7 @@
                     <br>
 
                     <div class="row">
-                        <a href="/TDCS/exam/manageQuestion" class="btn btn-default"
+                        <a href="${context}/TDCS/exam/manageQuestion" class="btn btn-default"
                            style="width:125px;height:35px">ข้อสอบ
                         </a>
 
@@ -117,7 +121,7 @@
 
                     <div class="row">
 
-                        <a href="/TDCS/exam/managePapers" class="btn btn-default"
+                        <a href="${context}/TDCS/exam/managePapers" class="btn btn-default"
                            style="width:125px;height:35px">ชุดข้อสอบ
                         </a>
 

@@ -46,7 +46,7 @@
         <%@include file="template/searchPaperTemplateNew.jsp" %>
     </div>
     <div class="row">
-        <a href="/TDCS/exam/createPaper">
+        <a href="${context}/TDCS/exam/createPaper">
             <button class="btn btn-success btn-sm" align="center">
                 <span class="glyphicon glyphicon-plus"></span>
             </button>

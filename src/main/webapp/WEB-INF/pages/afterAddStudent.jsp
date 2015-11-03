@@ -293,7 +293,7 @@
     <div class="col-md-12">
         <div class="col-md-3"></div>
         <div class="col-md-5" style="padding-left: 0px">
-            <a class="btn btn-primary" href="/TDCS/addStudent">เพิ่มนักศึกษา</a>
+            <a class="btn btn-primary" href="${context}/TDCS/addStudent">เพิ่มนักศึกษา</a>
         </div>
 
     </div>
@@ -366,7 +366,7 @@
 //        alert(myPiority);
         var data = $.ajax({
             type: "POST",
-            url: '/TDCS/findStaffName',
+            url: context+'/TDCS/findStaffName',
             data: {
                 piority: staffPiority.trim()
             },
@@ -381,7 +381,7 @@
     function acceptUser() {
         var data = $.ajax({
             type: "POST",
-            url: '/TDCS/setValidate',
+            url: context+'/TDCS/setValidate',
             data: {
                 id: '${user.userId}'
             },
@@ -389,13 +389,13 @@
         }).responseText;
         var data = $.ajax({
             type: "POST",
-            url: '/TDCS/sendmailForValidate',
+            url: context+'/TDCS/sendmailForValidate',
             data: {
                 uId: '${user.userId}'
             },
             async: false
         }).responseText;
-        window.location.href = "/TDCS/validate.html";
+        window.location.href = context+"/TDCS/validate.html";
     }
     //
 
@@ -404,14 +404,14 @@
         if ($("#message").val() != "") {
             var data = $.ajax({
                 type: "POST",
-                url: '/TDCS/sendmailForNotValidate',
+                url: context+'/TDCS/sendmailForNotValidate',
                 data: {
                     uId: '${user.userId}',
                     message: $("#message").val()
                 },
                 async: false
             }).responseText;
-            window.location.href = "/TDCS/validate.html";
+            window.location.href = context+"/TDCS/validate.html";
         }else {
             alert('กรุณากรอกเหตผลที่ไม่อนุมัติ');
             $("#message").focus();

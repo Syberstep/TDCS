@@ -56,7 +56,7 @@
         <button id="saveCopyPaperBtn" class="btn btn-success btn-sm" type="button" style="display: none;">บันทึก</button>
         <button id="cancelBtn" class="btn btn-danger btn-sm" type="button" style="display: none;">ยกเลิก</button>
         <button id="copyPaperBtn" class="btn btn-default btn-sm" type="button">คัดลอกชุดข้อสอบ</button>
-        <a href="/TDCS/exam/managePapers">
+        <a href="${context}/TDCS/exam/managePapers">
             <button id="cancelCreatePaperBtn" class="btn btn-warning btn-sm" type="button">
                 ย้อนกลับ
             </button>
@@ -219,7 +219,7 @@
 
     <script>
         if ('${status}' != 'staff') {
-            window.location.href = "/TDCS/index.html";
+            window.location.href = context+"/TDCS/index.html";
         }
 //        $("#selectionQuestionBtnInpagePaper").unbind('click').click(function(){
 //            alert('hi');

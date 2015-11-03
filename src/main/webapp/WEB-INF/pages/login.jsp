@@ -41,7 +41,7 @@
                         <button id="submit" type="submit" class="btn btn-primary">
                             &nbsp;ลงชื่อเข้าใช้
                         </button>
-                        <a class="btn btn-primary" href="/TDCS/signup.html"  style="margin-top: 5px">
+                        <a class="btn btn-primary" href="${context}/TDCS/signup.html"  style="margin-top: 5px">
                             &nbsp;ลงทะเบียน&nbsp;
                         </a>
                     </div>
@@ -83,7 +83,7 @@
            var chk = 0;
            var data = $.ajax({
                type: "POST",
-               url: '/TDCS/forgetPassword',
+               url:context+ '/TDCS/forgetPassword',
                data: {
                    email : $("#mail").val()
                },

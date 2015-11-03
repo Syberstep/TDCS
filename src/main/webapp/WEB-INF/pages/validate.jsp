@@ -7,7 +7,7 @@
 </script>
 <script>
     if ('${status}' != 'staff') {
-        window.location.href = "/TDCS/index.html";
+        window.location.href = context+"/TDCS/index.html";
     }
 </script>
 <div class="container">
@@ -64,7 +64,7 @@
                                             </a>
                                         </li>
                                         <c:forEach var="i" begin="1" end="${pageCount}">
-                                            <li id="pageClass${i}"><a href="/TDCS/validate.html?page=${i}" id="pageLink${i}" title="หน้า ${i}" >${i}</a></li>
+                                            <li id="pageClass${i}"><a href="${context}/TDCS/validate.html?page=${i}" id="pageLink${i}" title="หน้า ${i}" >${i}</a></li>
                                         </c:forEach>
                                         <li id="nextPageClass">
                                             <a id="nextPage" href="javascript:void(0)" aria-label="Next" title="ถัดไป">

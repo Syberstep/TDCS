@@ -33,7 +33,7 @@ $('#confirmSubmitMarking').on('click', function () {
 })
 
 $("#cancleMarkingBtn").on('click',function(){
-    location.href = "/TDCS/exam/examRecordSearch"
+    location.href = context+"/TDCS/exam/examRecordSearch"
 })
 
 var goToUnfinishBtn = $('#goToUnfinish');
@@ -85,7 +85,7 @@ var submitMarking = function (confirmation) {
         },
         success: function () {
             alert('บันทึกข้อมูลสำเร็จ')
-            location.href = "/TDCS/home.html"
+            location.href = context+"/TDCS/home.html"
         },
         error: function () {
             alert('บันทึกข้อมูลล้มเหลว')

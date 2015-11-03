@@ -13,7 +13,7 @@
 </script>
 <script>
     if ('${status}' == 'user' || '${status}' == '') {
-        window.location.href = "/TDCS/index.html";
+        window.location.href = context+"/TDCS/index.html";
     }
 </script>
 

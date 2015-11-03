@@ -7,6 +7,10 @@
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<c:set var="context" value="${pageContext.request.contextPath}"/>
+<script>
+    var context = '${context}';
+</script>
 
 <div class="row">
     <div class=" col-md-4">
@@ -38,7 +42,7 @@
                     <br>
 
                     <div class="row">
-                        <a href="/TDCS/createPaper" class="btn btn-default"
+                        <a href="${context}/TDCS/createPaper" class="btn btn-default"
                            style="background-color:lightgreen  ;color:black ;width:85px;height:35px">ชุดข้อสอบ</a>
                     </div>
                 </div>
@@ -52,14 +56,14 @@
             <div class="panel-body">
                 <div class="col-md-6 col-md-offset-3" align="center">
                     <div class="row">
-                        <a href="/TDCS/editCategories" class="btn btn-default"
+                        <a href="${context}/TDCS/editCategories" class="btn btn-default"
                                 style="background-color:lightpink ;color: black ;width:85px;height:35px">หมวดหมู่
                         </a>
                     </div>
                     <br>
 
                     <div class="row">
-                        <a href="/TDCS/editQuestions" class="btn btn-default"
+                        <a href="${context}/TDCS/editQuestions" class="btn btn-default"
                                 style="background-color:lightpink ;color: black ;width:85px;height:35px">ข้อสอบ
                         </a>
                     </div>
@@ -73,7 +77,7 @@
                     <br>--%>
 
                     <div class="row">
-                        <a href="/TDCS/editPapers" class="btn btn-default"
+                        <a href="${context}/TDCS/editPapers" class="btn btn-default"
                            style="background-color:lightpink ;color: black ;width:85px;height:35px">ชุดข้อสอบ
                         </a>
                     </div>
@@ -109,7 +113,7 @@
                     <br>
 
                     <div class="row">
-                        <a href="/TDCS/searchPaper" class="btn btn-default"
+                        <a href="${context}/TDCS/searchPaper" class="btn btn-default"
                                 style="background-color:lightblue ;color: black ;width:125px;height:35px">ค้นหาชุดข้อสอบ
                         </a>
                     </div>

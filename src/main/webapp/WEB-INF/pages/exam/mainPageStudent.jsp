@@ -7,6 +7,10 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<c:set var="context" value="${pageContext.request.contextPath}"/>
+<script>
+    var context = '${context}';
+</script>
 
 
 <div class="container row">
@@ -43,7 +47,7 @@
                     <td align="center">${paper.maxScore}</td>
                     <td align="center">${paper.timeLimit} นาที</td>
                     <td style="text-align: center;">
-                        <a class="doExamBtn" location="/TDCS/exam/doExam?paperId=${paper.id}">
+                        <a class="doExamBtn" location="${context}/TDCS/exam/doExam?paperId=${paper.id}">
                             <button class="btn btn-block" type="button">เริ่มทำข้อสอบ</button>
                         </a>
                     </td>

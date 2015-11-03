@@ -1,5 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<c:set var="context" value="${pageContext.request.contextPath}"/>
+<script>
+  var context = '${context}';
+</script>
+
 <%--
   Created by IntelliJ IDEA.
   User: PeeMz
@@ -283,7 +288,7 @@
 
       <div class="form-group">
         <div class="row col-md-offset-3 col-md-6">
-          <a href="/TDCS/searchStudent.html" class="btn btn-warning">ย้อนกลับ</a>
+          <a href="${context}/TDCS/searchStudent.html" class="btn btn-warning">ย้อนกลับ</a>
         </div>
       </div>
 
@@ -318,7 +323,7 @@
 //        alert(myPiority);
     var data = $.ajax({
       type: "POST",
-      url: '/TDCS/findStaffName',
+      url: context+'/TDCS/findStaffName',
       data: {
         piority: staffPiority.trim()
       },

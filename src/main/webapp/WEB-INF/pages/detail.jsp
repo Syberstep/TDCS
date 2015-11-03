@@ -1,5 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="context" value="${pageContext.request.contextPath}"/>
+<script>
+    var context = '${context}';
+</script>
 <script type="text/javascript" src="<c:url value="/resources/js/callutaeAge.js" />"></script>
 <script src="<c:url value="/resources/js/callculatetime.js" />"></script>
 <div class="jumbotron" style="background-color: #ffffff;border: solid #c3c3c3 1px;">
@@ -277,7 +281,7 @@
                         <button id="disValidate" type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">
                             ไม่อนุมัติ
                         </button>&nbsp;&nbsp;
-                        <a href="/TDCS/validate.html" class="btn btn-warning">ย้อนกลับ</a>
+                        <a href="${context}/TDCS/validate.html" class="btn btn-warning">ย้อนกลับ</a>
                     </div>
                 </div>
 
@@ -332,7 +336,7 @@
 //        alert(myPiority);
         var data = $.ajax({
             type: "POST",
-            url: '/TDCS/findStaffName',
+            url: context+'/TDCS/findStaffName',
             data: {
                 piority: staffPiority.trim()
             },
@@ -347,7 +351,7 @@
     function acceptUser() {
         var data = $.ajax({
             type: "POST",
-            url: '/TDCS/setValidate',
+            url: context+'/TDCS/setValidate',
             data: {
                 id: '${user.userId}'
             },
@@ -355,14 +359,14 @@
         }).responseText;
         var data = $.ajax({
             type: "POST",
-            url: '/TDCS/sendmailForValidate',
+            url: context+'/TDCS/sendmailForValidate',
             data: {
                 uId: '${user.userId}'
             },
             async: false
         }).responseText;
         alert("อนุมัติสำเร็จ");
-        window.location.href = "/TDCS/validate.html";
+        window.location.href = context+"/TDCS/validate.html";
     }
     //
 
@@ -371,7 +375,7 @@
         if ($("#message").val() != "") {
             var data = $.ajax({
                 type: "POST",
-                url: '/TDCS/sendmailForNotValidate',
+                url: context+'/TDCS/sendmailForNotValidate',
                 data: {
                     uId: '${user.userId}',
                     message: $("#message").val()
@@ -379,7 +383,7 @@
                 async: false
             }).responseText;
             alert("ระบบส่ง E-mail เรียบร้อยแล้ว");
-            window.location.href = "/TDCS/validate.html";
+            window.location.href = context+"/TDCS/validate.html";
         }else {
             alert('กรุณากรอกเหตผลที่ไม่อนุมัติ');
             $("#message").focus();

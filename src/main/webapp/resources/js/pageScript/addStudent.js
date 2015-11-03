@@ -148,9 +148,9 @@ function selectDepartment(department){
 }
 $(document).ready(function () {
     if(statusUser=='admin'){
-        $("#formregis").attr('action','/TDCS/addingStu');
+        $("#formregis").attr('action',context+'/TDCS/addingStu');
     }else{
-        $("#formregis").attr('action','/TDCS/submiting');
+        $("#formregis").attr('action',context+'/TDCS/submiting');
     }
 
 
@@ -382,14 +382,14 @@ function saveData(){
 
     var url = "";
     if(statusUser=='admin'){
-        url = '/TDCS/addingStu';
+        url = context+'/TDCS/addingStu';
     }else{
-        url = '/TDCS/submiting';
+        url = context+'/TDCS/submiting';
     }
     var dat = $.ajax({
 
         type: "POST",
-        url:context+url,
+        url:url,
         data: datasend,
         success:function(data){
             console.log("|"+$("#image").val()+"|");
@@ -401,7 +401,7 @@ function saveData(){
                     $("#formAfterAdd").submit();
 //                location.href = "/TDCS/openLoginAfterRegis";
                 }else{
-                    location.href = "/TDCS/openLoginAfterRegis";
+                    location.href = context+"/TDCS/openLoginAfterRegis";
                 }
             }
 
@@ -433,7 +433,7 @@ function prepareLoad(data)
                     $("#formAfterAdd").submit();
 //                location.href = "/TDCS/openLoginAfterRegis";
                 }else{
-                    location.href = "/TDCS/openLoginAfterRegis";
+                    location.href = context+"/TDCS/openLoginAfterRegis";
                 }
 
             }
@@ -611,7 +611,7 @@ function timediff(start_actual_time, end_actual_time) {
 
 function reloadfunc(){
     if(confirm("คุณต้องการล้างข้อมูลหรือไม่")){
-        window.location.href = "/TDCS/signup.html";
+        window.location.href = context+"/TDCS/signup.html";
     }
 
 }
@@ -621,14 +621,14 @@ function reloadfunc(){
 //    }
 //}
 if(statusUser == 'user' && confirm("คุณต้างการไปหน้าหลักโดยไม่บันทึกข้อมูลใช่หรือไม่")){
-    window.location.href = "/TDCS/index.html";
+    window.location.href = context+"/TDCS/index.html";
 }
 $("#cancel").click(function(){
     if(confirm("คุณต้างการไปหน้าหลักโดยไม่บันทึกข้อมูลใช่หรือไม่")){
         if(statusUser == ''){
-            window.location.href = "/TDCS/index.html";
+            window.location.href = context+"/TDCS/index.html";
         }else {
-            window.location.href = "/TDCS/addStudent.html";
+            window.location.href = context+"/TDCS/addStudent.html";
         }
     }
 });

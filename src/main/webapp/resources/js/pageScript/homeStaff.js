@@ -305,7 +305,7 @@ function prepareLoad(event)
             },
             complete: function() {
                 updatesucess = true;
-                window.location.href = "/TDCS/home.html";
+                window.location.href = context+"/TDCS/home.html";
 //                $('.dv-background').hide();
             }
         }).responseText;
@@ -582,7 +582,7 @@ $(document).ready(function(){
                     data: {Password:pass[1].val()},
                     success: function(data) {
                         alert("เปลี่ยนรหัสผ่านสำเร็จ");
-                        window.location.href = "/TDCS/home.html";
+                        window.location.href =context+ "/TDCS/home.html";
                     },
                     asyn:false
                 });
@@ -640,7 +640,7 @@ function saveData(){
                         if($("#image").val()!=""){
                             prepareLoad();
                         }else{
-                            window.location.href = "/TDCS/home.html";
+                            window.location.href = context+"/TDCS/home.html";
                         }
                         updatesucess = true;
                     }
@@ -663,7 +663,7 @@ function saveData(){
                     prepareLoad();
                 }else{
                     updatesucess = true;
-                    window.location.href = "/TDCS/home.html";
+                        window.location.href = context+"/TDCS/home.html";
                 }
 
 //                window.location.href = "/TDCS/home.html";

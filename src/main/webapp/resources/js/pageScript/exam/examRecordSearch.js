@@ -151,7 +151,7 @@ $('#tbodyExamRecord').on('click','tr',function(){
     tbodytrResuiltId = $(this).children('td:eq(4)').attr('resultId') ;
 });
 $("#okBtnChangPage").on("click",function(){
-    location.href = "/TDCS/exam/marking?resultId="+ tbodytrResuiltId;
+    location.href =context+ "/TDCS/exam/marking?resultId="+ tbodytrResuiltId;
 });
 
 function listSearchPaper() {

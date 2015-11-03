@@ -261,7 +261,7 @@ public class QueryUserDomain extends HibernateUtil {
         return list;
     }
 
-    public Integer getCountUserValidate(String staffPiority) {
+    public Long getCountUserValidate(String staffPiority) {
         Criteria criteria = getSession().createCriteria(User.class);
         criteria.add(Restrictions.eq("validateStu", 0));
         criteria.add(Restrictions.like("piority", "%" + staffPiority + "%"));
@@ -269,7 +269,7 @@ public class QueryUserDomain extends HibernateUtil {
         projectionList.add(Projections.count("validateStu"));
         criteria.setProjection(projectionList);
 
-        Integer count = (Integer) criteria.uniqueResult();
+        Long count = (Long) criteria.uniqueResult();
         closeSession();
         return count;
     }

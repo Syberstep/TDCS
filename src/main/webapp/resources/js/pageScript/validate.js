@@ -20,14 +20,14 @@ $(document).ready(function () {
     $("#previousPage").click(function(){
         if(currentPage != 1) {
             currentPage--;
-            window.location.href = "/TDCS/validate.html?page=" + currentPage;
+            window.location.href = context+"/TDCS/validate.html?page=" + currentPage;
         }
     });
 
     $("#nextPage").click(function(){
         if(currentPage != maxPage) {
             currentPage++;
-            window.location.href = "/TDCS/validate.html?page=" + currentPage;
+            window.location.href = context+"/TDCS/validate.html?page=" + currentPage;
         }
     });
 
@@ -72,7 +72,7 @@ $(document).ready(function () {
             alert('กรุณาเลือกนักศึกษาที่จะอนุมัติ');
         else {
             alert('บันทึกข้อมูลสำเร็จ');
-            window.location.href = "/TDCS/validate.html";
+            window.location.href = context+"/TDCS/validate.html";
 //                window.location.reload();
         }
     });
@@ -116,7 +116,7 @@ $(document).ready(function () {
                 }
             }
             alert('ระบบส่ง E-mail เรียบร้อยแล้ว');
-            window.location.href = "/TDCS/validate.html";
+            window.location.href = context+"/TDCS/validate.html";
         }else {
             alert('กรุณากรอกเหตผลที่ไม่อนุมัติ');
             $("#message").focus();

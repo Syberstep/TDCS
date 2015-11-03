@@ -7,6 +7,10 @@
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<c:set var="context" value="${pageContext.request.contextPath}"/>
+<script>
+    var context = '${context}';
+</script>
 <html>
 <head>
     <title></title>
@@ -32,7 +36,7 @@
 //        oMyForm.append("name", $("#fileUpload").val());
                 oMyForm.append("havefile", picture);
                 var data = $.ajax({
-                    url: '/TDCS/uploadFile',
+                    url: context+'/TDCS/uploadFile',
                     data: oMyForm,
                     dataType: 'text',
                     processData: false,

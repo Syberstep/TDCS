@@ -45,7 +45,7 @@ $("#btnChangePass").click(function(){
                 data: {Password:pass[1].val()},
                 success: function(data) {
                     alert("เปลี่ยนรหัสผ่านสำเร็จ");
-                    window.location.href = "/TDCS/home.html";
+                    window.location.href = context+"/TDCS/home.html";
                 },
                 asyn:false
             });
@@ -114,7 +114,7 @@ function changeValue(){
             }else {
                 updatesucess = true;
 //            $("#linkhome").click();
-                window.location.href = "/TDCS/home.html";
+                window.location.href =context+ "/TDCS/home.html";
             }
 
         },
@@ -288,9 +288,9 @@ function selectFacAndgetDepartment(fac){
 
 $(document).ready(function () {
     if('${status}'=='admin'){
-        $("#formregis").attr('action','/TDCS/addingStu');
+        $("#formregis").attr('action',context+'/TDCS/addingStu');
     }else{
-        $("#formregis").attr('action','/TDCS/submiting');
+        $("#formregis").attr('action',context+'/TDCS/submiting');
     }
 
 
@@ -412,7 +412,7 @@ function prepareLoad(event)
             complete: function() {
                 updatesucess = true;
 //            $("#linkhome").click();
-                window.location.href = "/TDCS/home.html";
+                window.location.href = context+"/TDCS/home.html";
 //                $('.dv-background').hide();
             }
         }).responseText;
