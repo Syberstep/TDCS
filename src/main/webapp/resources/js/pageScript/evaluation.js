@@ -82,7 +82,7 @@ $(document).ready(function () {
         setDataEvaluationForm();
         var listStudent = $.ajax({
             type: 'POST',
-            url:context+ 'getStudentForSelect',
+            url:context+ '/TDCS/getStudentForSelect',
             data:{
                 page : "eva"
             },
@@ -159,7 +159,7 @@ function insertScore() {
 function checkEvaluation() {
     var dataCheck = $.ajax({
         type: 'POST',
-        url:context+'checkEvaluation',
+        url:context+'/TDCS/checkEvaluation',
         async: false
     }).responseText;
     if (dataCheck == "change")
@@ -189,21 +189,21 @@ function saveEvaluate(subId, score, note, type, userId) {
 function setDataEvaluationForm() {
     var data = $.ajax({
         type: 'POST',
-        url: context+'evaluationDescription',
+        url: context+'/TDCS/evaluationDescription',
         async: false
     }).responseText;
     var dataDescription = JSON.parse(data);
 
     var data1 = $.ajax({
         type: 'POST',
-        url: context+'evaluationTopic',
+        url: context+'/TDCS/evaluationTopic',
         async: false
     }).responseText;
     var dataTopic = JSON.parse(data1);
 
     var data2 = $.ajax({
         type: 'POST',
-        url: context+'evaluationSubtopic',
+        url: context+'/TDCS//evaluationSubtopic',
         async: false
     }).responseText;
     var dataSubtopic = JSON.parse(data2);
@@ -251,7 +251,7 @@ function setDataEvaluationForm() {
                         subId: valueSubtopic.subtopicId,
                         type: "s"
                     },
-                    url:context+ 'getResultEvaluation',
+                    url:context+ '/TDCS/getResultEvaluation',
                     async: false
                 }).responseText;
 
