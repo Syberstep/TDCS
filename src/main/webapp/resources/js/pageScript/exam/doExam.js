@@ -102,7 +102,7 @@ var checkExamCompletion = function () {
 var examTimeOut = function () {
     alert('หมดเวลาทำข้อสอบ');
     submitExam;
-    location.href = "/TDCS/home.html";
+    location.href = context+"/TDCS/home.html";
 }
 
 var countdownTimer = new (function () {
@@ -290,7 +290,7 @@ var submitExam = function () {
         }
         , success: function () {
             alert('บันทึกข้อมูลสำเร็จ')
-            location.href = "/TDCS/home.html"
+            location.href = context+"/TDCS/home.html"
         }
         , error: function () {
             alert('บันทึกข้อมูลล้มเหลว')

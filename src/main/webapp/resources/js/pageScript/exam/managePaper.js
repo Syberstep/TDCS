@@ -264,7 +264,7 @@ $(document).ready(function(){
             success: function(){
                 alert('คัดลอกชุดข้อสอบเรียบร้อยแล้ว');
                 //window.location.reload(true);
-                window.location.href = "/TDCS/exam/managePapers";
+                window.location.href = context+"/TDCS/exam/managePapers";
             },
             error: function(){
                 alert('เกิดข้อผิดพลาด');
@@ -899,7 +899,7 @@ function dataFound(){
 }
 
 function toUrl(paperId){
-    window.location.href = "/TDCS/exam/createPaper?pId="+paperId+"#edit";
+    window.location.href = context+"/TDCS/exam/createPaper?pId="+paperId+"#edit";
 }
 
 function getValueFromUrl(){
@@ -1113,7 +1113,7 @@ function updatePaper(){
         },
         success: function(){
             alert('แก้ไขชุดข้อสอบเรียบร้อยแล้ว');
-            window.location.href = "/TDCS/exam/managePapers";
+            window.location.href = context+"/TDCS/exam/managePapers";
         },
         error: function(){
             alert('เกิดข้อผิดพลาด');

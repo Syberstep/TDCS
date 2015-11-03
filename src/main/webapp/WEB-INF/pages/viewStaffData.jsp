@@ -5,8 +5,12 @@
   Time: 12:54
   To change this template use File | Settings | File Templates.
 --%>
+<%@ c:taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="context" value="${pageContext.request.contextPath}"/>
+<script>
+    var context = '${context}';
+</script>
 <script src="<c:url value="/resources/js/callculatetime.js" />"></script>
 <script src="<c:url value="/resources/js/callutaeAge.js" />"></script>
 <script src="<c:url value="/resources/js/checkKeybord.js" />"></script>
@@ -283,7 +287,7 @@
 
                 <div class="form-group">
                     <div class="row col-md-offset-3 col-md-6">
-                        <a href="/TDCS/searchStaff.html" class="btn btn-warning">ย้อนกลับ</a>
+                        <a href="${context}/TDCS/searchStaff.html" class="btn btn-warning">ย้อนกลับ</a>
                     </div>
                 </div>
 

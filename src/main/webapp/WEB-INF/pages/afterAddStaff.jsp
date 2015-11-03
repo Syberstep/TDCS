@@ -11,7 +11,7 @@
 </script>
 <script>
     if('${status}' == 'user' || '${status}' == 'staff' || '${status}' == ''){
-        window.location.href = "/TDCS/index.html";
+        window.location.href = context+"/TDCS/index.html";
     }
 </script>
 
@@ -247,7 +247,7 @@
 <br/>
 <div class="form-group">
     <div class="row col-md-6 col-md-offset-3" style="padding-left: 7px">
-        <a id="cleardata" class="btn btn-primary pull-left" onclick="window.location.href = '/TDCS/addStaff.html'">
+        <a id="cleardata" class="btn btn-primary pull-left" onclick="window.location.href = context+'/TDCS/addStaff.html'">
             เพิ่มพนักงาน
         </a>
     </div>

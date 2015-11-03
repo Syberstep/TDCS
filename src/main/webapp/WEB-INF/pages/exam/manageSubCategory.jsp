@@ -16,7 +16,7 @@
         <%--window.location.href = "/TDCS/index.html";--%>
     <%--}--%>
     if ('${status}' != 'staff') {
-        window.location.href = "/TDCS/index.html";
+        window.location.href = context+"/TDCS/index.html";
     }
 </script>
 

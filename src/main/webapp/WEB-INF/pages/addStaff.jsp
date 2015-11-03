@@ -12,7 +12,7 @@
 
 <script>
     if('${status}' == 'user' || '${status}' == 'staff' || '${status}' == ''){
-        window.location.href = "/TDCS/index.html";
+        window.location.href = context+"/TDCS/index.html";
     }
 </script>
 
@@ -24,7 +24,7 @@
 </div>
 <br/><br/>
 <div class="row">
-<form:form method="POST" action="${pageContext.request.contextPath}/TDCS/insertStaff" modelAttribute="staffData" id="formregis">
+<form:form method="POST" action="${context}/TDCS/insertStaff" modelAttribute="staffData" id="formregis">
 <div class="col-md-2 col-md-offset-1 text-center">
     <input type='file' id="image" name="image" style="display: none" autocomplete="off"/>
     <img id="myImg" src="<c:url value="/resources/images/blank.jpg" />" alt="your image" width="100%" height="190px"/>
@@ -311,10 +311,10 @@
 
         <input type="button" class="btn btn-primary pull-left" value="&nbsp;&nbsp;&nbsp;&nbsp;ตกลง&nbsp;&nbsp;&nbsp;&nbsp;" onclick="checkEmpty()" />
 
-        <a id="cleardata" class="btn btn-primary pull-left" style="margin-left: 20px" onclick="window.location.href = '/TDCS/addStaff.html'">
+        <a id="cleardata" class="btn btn-primary pull-left" style="margin-left: 20px" onclick="window.location.href =${context}'/TDCS/addStaff.html'">
             &nbsp;ล้างข้อมูล&nbsp;
         </a>
-        <a id="cancel" class="btn" style="background-color: rgba(193, 193, 198, 0.83); color: #000000;margin-left: 20px" href="/TDCS/home.html">
+        <a id="cancel" class="btn" style="background-color: rgba(193, 193, 198, 0.83); color: #000000;margin-left: 20px" href=${context}"/TDCS/home.html">
             &nbsp;&nbsp;&nbsp;&nbsp;ยกเลิก&nbsp;&nbsp;&nbsp;&nbsp;
         </a>
     </div>
@@ -324,7 +324,7 @@
 </form:form>
 </div>
 
-<form id="formAfterAdd" action="${pageContext.request.contextPath}/TDCS/getStaffDataAfterAdd" method="post">
+<form id="formAfterAdd" action="${context}/TDCS/getStaffDataAfterAdd" method="post">
     <input type="hidden" id="ID" name="ID" value=""/>
 </form>
 

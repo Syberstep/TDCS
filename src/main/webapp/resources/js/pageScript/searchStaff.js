@@ -45,7 +45,7 @@ $(document).ready(function () {
             for(var i = 0 ; i < data2.length ; i++) {
                 $('#resultSearch').append('<tr align="center">' +
                 '<td>'+
-                '<form method="post" action="/TDCS/viewStaffData.html"><input value="' + data2[i].userId + '" name="id" style="display: none;" /><button class="btn btn-info" id="' + data2[i].userId + '">Info</button></form>'+
+                '<form method="post" action="${context}/TDCS/viewStaffData.html"><input value="' + data2[i].userId + '" name="id" style="display: none;" /><button class="btn btn-info" id="' + data2[i].userId + '">Info</button></form>'+
                 '</td> ' +
                 '<td>' + data2[i].empId + '</td>' +
                 '<td>' + data2[i].thFname + '</td>' +
@@ -55,7 +55,7 @@ $(document).ready(function () {
                 '<td>' + data2[i].sectionPosition + '</td>' +
                 '<td>' + data2[i].startWork + '</td>' +
                 '</tr> ')
-            }
+            };
             //CREATE BY PEEM
 
             //$('#table').bootstrapTable({

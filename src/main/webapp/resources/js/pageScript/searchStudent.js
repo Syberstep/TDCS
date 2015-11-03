@@ -50,7 +50,7 @@ $(document).ready(function () {
                 for(var i = 0 ; i < data2.length ; i++){
                     $('#resultSearch').append('<tr align="center">' +
                                                 '<td>'+
-                                                '<form method="post" action="/TDCS/viewData.html"><input value="' + data2[i].userId + '" name="id" style="display: none;" /><button type="submit" class="btn btn-info" id="' + data2[i].userId + '">Info</button></form>'+
+                                                '<form method="post" action="${context}/TDCS/viewData.html"><input value="' + data2[i].userId + '" name="id" style="display: none;" /><button type="submit" class="btn btn-info" id="' + data2[i].userId + '">Info</button></form>'+
                                                 '</td>'+
                                                 '<td>'+ data2[i].empId+'</td>'+
                                                 '<td>'+ data2[i].thFname +'</td>'+
@@ -64,7 +64,7 @@ $(document).ready(function () {
                 for(var i = 0 ; i < data2.length ; i++){
                     $('#resultSearch').append('<tr align="center">' +
                                                 '<td>'+
-                                                '<form method="post" action="/TDCS/viewData.html"><input value="' + data2[i].userId + '" name="id" style="display: none;" /><button type="submit" class="btn btn-info" id="' + data2[i].userId + '">Info</button></form>'+
+                                                '<form method="post" action="${context}/TDCS/viewData.html"><input value="' + data2[i].userId + '" name="id" style="display: none;" /><button type="submit" class="btn btn-info" id="' + data2[i].userId + '">Info</button></form>'+
                                                 '</td>'+
                                                 '<td>'+ data2[i].empId+'</td>'+
                                                 '<td>'+ data2[i].thFname +'</td>'+
@@ -217,7 +217,7 @@ $(document).ready(function () {
     }
 
     $("#cancel").click(function () {
-        window.location.href = "/TDCS/searchStudent.html";
+        window.location.href = context+"/TDCS/searchStudent.html";
     });
 
 });
