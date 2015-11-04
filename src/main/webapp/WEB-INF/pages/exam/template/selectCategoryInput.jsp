@@ -36,4 +36,4 @@
         </select>
     </div>
 </div>
-<script src="../../../resources/js/pageScript/exam/selectCategoryInput.js" charset="utf-8"></script>
+<script src="${context}/resources/js/pageScript/exam/selectCategoryInput.js" charset="utf-8"></script>

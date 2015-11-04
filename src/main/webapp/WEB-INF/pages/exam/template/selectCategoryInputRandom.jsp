@@ -28,4 +28,4 @@
         </select>
     </div>
 </div>
-<script src="../../../resources/js/pageScript/exam/selectCategoryInputRandom.js" charset="utf-8"></script>
+<script src="${context}/resources/js/pageScript/exam/selectCategoryInputRandom.js" charset="utf-8"></script>

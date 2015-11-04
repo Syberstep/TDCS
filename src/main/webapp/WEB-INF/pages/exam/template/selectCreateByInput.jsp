@@ -24,8 +24,8 @@
     </div>
 
 <%@include file="../modal/addEmployeeToInputModal.jsp" %>
-<script src="../../../resources/js/pageScript/exam/selectEmployee.js" ></script>
-<script src="../../../resources/js/pageScript/exam/selectCreateByInput.js"></script>
+<script src="${context}/resources/js/pageScript/exam/selectEmployee.js" ></script>
+<script src="${context}/resources/js/pageScript/exam/selectCreateByInput.js"></script>
 <script>
     $(document).ready(function () {
         $("#selectAllEmployeeName").click(function (event) {

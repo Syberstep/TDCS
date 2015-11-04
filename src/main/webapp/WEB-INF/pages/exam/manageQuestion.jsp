@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <%--
   Created by IntelliJ IDEA.
   User: wanchana
@@ -13,6 +14,7 @@
 </script>
 
 <%@include file="modal/createQuestionModal.jsp" %>
+<%--<tiles:insertTemplate template="/WEB-INF/pages/exam/modal/createQuestionModal.jspx"/>--%>
 <%@include file="modal/questionDetailModal.jsp" %>
 
 <script>
@@ -77,7 +79,7 @@
 </div>
 </div>
 
-<script src="../../../resources/js/pageScript/exam/manageQuestion.js" charset="UTF-8"></script>
+<script src="${context}/resources/js/pageScript/exam/manageQuestion.js" charset="UTF-8"></script>
 
 <style>
     th {
