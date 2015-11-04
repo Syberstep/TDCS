@@ -55,15 +55,15 @@ function searchExampaper(){
     jsonObj = JSON.stringify(tempArray);
     //alert(jsonObj);
     var dataResponse = $.ajax({
-        type: "POST",
-        url: context+"/TDCS/exam/getQueryExamRecordSearch",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        headers: {
-            Accept: "application/json"
-        },
-        async: false,
-        data: jsonObj,
+            type: "POST",
+            url: context+"/TDCS/exam/getQueryExamRecordSearch",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            headers: {
+                Accept: "application/json"
+            },
+            async: false,
+            data: jsonObj,
         success: function(data){
             $("#tbodyExamRecord").empty();
             if(data.length == 0){
