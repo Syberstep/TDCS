@@ -95,7 +95,7 @@ function viewSubCategory() {
             var data = $.ajax({
                 type: "POST",
                 contentType: "application/json",
-                url: "/TDCS/exam/getAllSubCategory",
+                url: context+"/TDCS/exam/getAllSubCategory",
                 async :false,
                 success: function (data) {
                     $("#sSubCat").append(
@@ -429,7 +429,7 @@ $("#categoryId, #selectCategoryToSelection, #selectCategoryToSelectionForRandom"
             var data = $.ajax({
                 type: "POST",
                 contentType: "application/json",
-                url: "/TDCS/exam/getAllSubCategory",
+                url: context+"/TDCS/exam/getAllSubCategory",
                 async :false,
                 success: function (data) {
                     $("#sSubCat").append(

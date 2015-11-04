@@ -26,7 +26,7 @@ var updateCategoryList = function () {
     clearCategoryList()
     var ajaxDat = $.ajax({
         type: "POST",
-        url: "/TDCS/exam/getAllCategory",
+        url: context+"/TDCS/exam/getAllCategory",
         success: function (catList) {
             catList.forEach(function (category) {
                 $('#selectCategoryToSelectionForRandom').append('<option class="category" categoryId="' + category.id + '"' +
@@ -54,7 +54,7 @@ var updateSubCategoryList = function () {
 
     var ajaxDat = $.ajax({
         type: "POST",
-        url: "/TDCS/exam/getAllSubCategoryInCategory",
+        url: context+"/TDCS/exam/getAllSubCategoryInCategory",
         data: {
             categoryId: data
         },
@@ -92,7 +92,7 @@ $(document).ready(function () {
     var data = $.ajax({
         type: "POST",
         contentType: "application/json",
-        url: "/TDCS/exam/getAllSubCategory",
+        url: context+"/TDCS/exam/getAllSubCategory",
         async :false,
         success: function (data) {
             $("#selectSubCategoryToSelectionForRandom").append(
@@ -142,7 +142,7 @@ function listcatSelectInput() {
 
     var data = $.ajax({
         type: "POST",
-        url: "/TDCS/exam/getAllCategory",
+        url: context+"/TDCS/exam/getAllCategory",
 
         async: false,
 
@@ -185,7 +185,7 @@ $("#selectCategoryToSelectionForRandom").on('change', function () {
                 categoryId = categoryId2;
                 var data = $.ajax({
                     type: "POST",
-                    url: "/TDCS/exam/getSubCategoryToDropDown",
+                    url: context+"/TDCS/exam/getSubCategoryToDropDown",
                     data: {
                         categoryId: categoryId
                         //subcategoryName: subcategoryName
@@ -218,7 +218,7 @@ $("#selectCategoryToSelectionForRandom").on('change', function () {
 
                 var data = $.ajax({
                     type: "POST",
-                    url: "/TDCS/exam/getSubCategoryToDropDown",
+                    url: context+"/TDCS/exam/getSubCategoryToDropDown",
                     data: {
                         categoryId: categoryId
                         //subcategoryName: subcategoryName
@@ -255,7 +255,7 @@ $("#selectCategoryToSelectionForRandom").on('change', function () {
             var data = $.ajax({
                 type: "POST",
                 contentType: "application/json",
-                url: "/TDCS/exam/getAllSubCategory",
+                url: context+"/TDCS/exam/getAllSubCategory",
                 async :false,
                 success: function (data) {
                     $("#selectSubCategoryToSelectionForRandom").append(
