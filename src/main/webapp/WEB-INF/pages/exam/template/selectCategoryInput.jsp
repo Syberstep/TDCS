@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: PTang_000
@@ -8,7 +9,10 @@
 
 <!-- Slect Category and Sub Category (หมวดหมู่ และ หัวข้อเรื่อง)-->
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<c:set var="context" value="${pageContext.request.contextPath}"/>
+<script>
+    var context = '${context}';
+</script>
 
 <div class="row col-sm-6">
     <div class="col-sm-4  text-right">
