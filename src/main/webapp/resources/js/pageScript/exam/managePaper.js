@@ -25,7 +25,9 @@ var tmpQ = new Array();
 var itm = {};
 
 var paperId = 0;
-var scoreChange = 0;
+var searchQEasy = 0;
+var searchQNormal = 0;
+var searchQHard = 0;
 
 $(document).ready(function(){
 
@@ -98,6 +100,16 @@ $(document).ready(function(){
         //if(subcategoryId == ""? subcategoryId = "": subcategoryId = $("#selectSubCategoryToSelection").val());
     });
 
+    $("#selectCategoryToSelectionForRandom").change(function(){
+        subcategoryId = $("#selectSubCategoryToSelectionForRandom").val();
+        categoryId = $("#selectCategoryToSelectionForRandom").val();
+    });
+
+    $("#selectSubCategoryToSelectionForRandom").change(function(){
+        subcategoryId = $("#selectSubCategoryToSelectionForRandom").val();
+        categoryId = $("#selectCategoryToSelectionForRandom").val();
+    });
+
     if($("#newPaperScore").val() == ""){
         $("#maxScore").val(0);
     }
@@ -131,7 +143,8 @@ $(document).ready(function(){
     //$("#selectionQuestionBtnInpagePaper").on('click' ,function(){
     $("#selectionQuestionBtnInpagePaper").unbind('click').click(function(){
         $("#selectQuest").modal('show');
-        viewQuestions();
+        //viewQuestions();
+        dataNotFound();
         if($("#tbSelectQuestion #tbodySelectQuestion tr").length == 0){
             $("#questionsAreEmpty").show();
             $("#removeRowSelected").attr('disabled', 'disabled');
@@ -264,7 +277,7 @@ $(document).ready(function(){
             success: function(){
                 alert('คัดลอกชุดข้อสอบเรียบร้อยแล้ว');
                 //window.location.reload(true);
-                window.location.href = context+"/TDCS/exam/managePapers";
+                window.location.href = "/TDCS/exam/managePapers";
             },
             error: function(){
                 alert('เกิดข้อผิดพลาด');
@@ -302,7 +315,8 @@ $("#addQuestionBtn").unbind('click').click(function(){
 
 function viewQuestions(){
     if($("#tbSelectedQuestionToPaper").is(":hidden") || $("#selectQuest").is(":visible") || $("#questionsAreEmpty").is(':visible')){
-        //alert('1');
+    //if($("#tbodySelectedQuestionToPaper tr").length == 0){
+    //    alert('1' + $("#tbodySelectQuestion tr").length);
         $("#checkQuestionAll").attr('checked', false);
         var dataResponse = $.ajax({
             type: "POST",
@@ -358,7 +372,8 @@ function viewQuestions(){
             }
         });
     }
-    if(($("#tbodySelectQuestion tr").length != 0 && $("#tbodySelectedQuestionToPaper tr").length != 0) || $("#tbodySelectedQuestionToPaper tr").length > 0){
+    if($("#tbodySelectQuestion tr").length != 0 && $("#tbodySelectedQuestionToPaper tr").length != 0){
+        alert('do this');
         $("#tbSelectQuestion").show();
         $("#questionsAreEmpty").hide();
         $("#removeRowSelected").removeAttr('disabled');
@@ -615,7 +630,6 @@ function createPaper(){
 
 function onLoadPageCreatePaper(){
     $("#questionNotFound").show();
-    $("#copyPaperBtn").hide();
     $("#tbSelectedQuestionToPaper").hide();
     $("#removeRowSelected").removeAttr('disabled');
     $("#addQuestionBtn").removeAttr('disabled');
@@ -692,6 +706,14 @@ function scoreOnChange(){
 
 function generalSearchQuestion(btnSearchStatus) {
 
+    allQuestionIdOnTableCreatePaper = [];
+    $("#tbodySelectedQuestionToPaper tr input:checkbox").each(function(){
+        var temp = $(this).parent().siblings().map(function(){
+            return $(this).text();
+        }).get(0);
+        allQuestionIdOnTableCreatePaper.push(temp);
+    });
+
     itemLenght = ($("#showEmployeeSelected").children("button")).length;
     if(categoryId.indexOf(':')!=-1){
         categoryId = categoryId.substring(0, categoryId.indexOf(':') - 1);
@@ -714,6 +736,14 @@ function generalSearchQuestion(btnSearchStatus) {
     if(questionCreateDateFromSearch == ""? questionCreateDateFromSearch = "": questionCreateDateFromSearch = $("#searchCreateDateFromInput").val());
     questionCreateDateToSearch = $("#searchCreateDateToInput").val();
     if(questionCreateDateToSearch == ""? questionCreateDateToSearch = "": questionCreateDateToSearch = $("#searchCreateDateToInput").val());
+    searchQEasy = $("#rEasy").val();
+    if(searchQEasy == ""? searchQEasy = 0: searchQEasy = $("#rEasy").val());
+    searchQNormal = $("#rNormal").val();
+    if(searchQNormal == ""? searchQNormal = 0: searchQNormal = $("#rNormal").val());
+    searchQHard = $("#rHard").val();
+    if(searchQHard == ""? searchQHard = 0: searchQHard = $("#rHard").val());
+
+    //alert(searchQEasy + " " + searchQNormal + " " + searchQHard);
 
     if(itemLenght > 0){
 
@@ -741,7 +771,10 @@ function generalSearchQuestion(btnSearchStatus) {
                     "questionCreateDateFromSearch" : questionCreateDateFromSearch,
                     "questionCreateDateToSearch" : questionCreateDateToSearch,
                     "questionScoreToSearch" : questionScoreToSearch,
-                    "questionScoreFromSearch" : questionScoreFromSearch
+                    "questionScoreFromSearch" : questionScoreFromSearch,
+                    "searchQEasy": searchQEasy,
+                    "searchQNormal": searchQNormal,
+                    "searchQHard": searchQHard
                 };
                 tempArray.push(items);
             }
@@ -766,7 +799,10 @@ function generalSearchQuestion(btnSearchStatus) {
                     "questionCreateDateFromSearch" : questionCreateDateFromSearch,
                     "questionCreateDateToSearch" : questionCreateDateToSearch,
                     "questionScoreToSearch" : questionScoreToSearch,
-                    "questionScoreFromSearch" : questionScoreFromSearch
+                    "questionScoreFromSearch" : questionScoreFromSearch,
+                    "searchQEasy": searchQEasy,
+                    "searchQNormal": searchQNormal,
+                    "searchQHard": searchQHard
                 };
                 tempArray.push(items);
             }
@@ -790,7 +826,10 @@ function generalSearchQuestion(btnSearchStatus) {
                 "questionCreateDateFromSearch" : questionCreateDateFromSearch,
                 "questionCreateDateToSearch" : questionCreateDateToSearch,
                 "questionScoreToSearch" : questionScoreToSearch,
-                "questionScoreFromSearch" : questionScoreFromSearch
+                "questionScoreFromSearch" : questionScoreFromSearch,
+                "searchQEasy": searchQEasy,
+                "searchQNormal": searchQNormal,
+                "searchQHard": searchQHard
             };
             tempArray.push(item);
         }
@@ -811,7 +850,10 @@ function generalSearchQuestion(btnSearchStatus) {
                 "questionCreateDateFromSearch" : questionCreateDateFromSearch,
                 "questionCreateDateToSearch" : questionCreateDateToSearch,
                 "questionScoreToSearch" : questionScoreToSearch,
-                "questionScoreFromSearch" : questionScoreFromSearch
+                "questionScoreFromSearch" : questionScoreFromSearch,
+                "searchQEasy": searchQEasy,
+                "searchQNormal": searchQNormal,
+                "searchQHard": searchQHard
             };
             tempArray.push(item2);
         }
@@ -826,7 +868,7 @@ function generalSearchQuestion(btnSearchStatus) {
         mimeType: 'application/json',
         data: jsonObj,
         success: function (result) {
-            if(result.length == 0){
+            if(result == null){
                 dataNotFound();
             }
             else{
@@ -873,9 +915,12 @@ function generalSearchQuestion(btnSearchStatus) {
             }
         },
         error: function () {
-            alert('เกิดข้อผิดพลาด');
+            alert('ไม่พบข้อสอบ');
         }
     });
+    searchQEasy = 0;
+    searchQNormal = 0;
+    searchQHard = 0;
     categoryId = "";
     subcategoryId = "";
     arrayEmpNameToQuery = [];
@@ -899,7 +944,7 @@ function dataFound(){
 }
 
 function toUrl(paperId){
-    window.location.href = context+"/TDCS/exam/createPaper?pId="+paperId+"#edit";
+    window.location.href = "/TDCS/exam/createPaper?pId="+paperId+"#edit";
 }
 
 function getValueFromUrl(){
@@ -1047,6 +1092,8 @@ function resetRandomQuestion(){
     $("#randEasy").val('');
     $("#randNormal").val('');
     $("#randHard").val('');
+    $("#selectCategoryToSelectionForRandom").val('');
+    $("#selectSubCategoryToSelectionForRandom").val('');
 }
 
 function updatePaper(){
@@ -1113,7 +1160,7 @@ function updatePaper(){
         },
         success: function(){
             alert('แก้ไขชุดข้อสอบเรียบร้อยแล้ว');
-            window.location.href = context+"/TDCS/exam/managePapers";
+            window.location.href = "/TDCS/exam/managePapers";
         },
         error: function(){
             alert('เกิดข้อผิดพลาด');
@@ -1123,22 +1170,47 @@ function updatePaper(){
 
 function randomQuestion(){
 
+    if(categoryId.indexOf(':')!=-1){
+        categoryId = categoryId.substring(0, categoryId.indexOf(':') - 1);
+    }
+    else{
+        categoryId = categoryId;
+    }
+    if(subcategoryId == null? subcategoryId = "": subcategoryId = subcategoryId);
+
     var randEasy = $("#randEasy").val();
     var randNormal = $("#randNormal").val();
     var randHard = $("#randHard").val();
+    var index = 0;
 
+    if(questionsInPaper.length > 0? index = questionsInPaper.length: index = 1);
     if(randEasy == ""? randEasy = 0: randEasy =  $("#randEasy").val());
     if(randNormal == ""? randNormal = 0: randNormal = $("#randNormal").val());
-    if(randHard == ""? randHard = 0: randHard = $("#randHard").val());
+    if(randHard == ""? randHard = 0: randHard = $("#randHard").val())
+
+    var obj = {};
+    var tempz = new Array();
+
+    for(var i = 0; i < index; i++){
+        var id = 0;
+        if(questionsInPaper.length > 0? id = questionsInPaper[i]: id = 0);
+        var item = {
+            "randEasy": randEasy,
+            "randNormal": randNormal,
+            "randHard": randHard,
+            "qid" : id,
+            "categoryId": categoryId,
+            "subCategoryId": subcategoryId
+        };
+        tempz.push(item);
+    }
+    obj = JSON.stringify(tempz);
 
     $.ajax({
         url: context+"/TDCS/exam/randomQuestions",
         type: "POST",
-        data: {
-            randEasy: randEasy,
-            randNormal: randNormal,
-            randHard: randHard
-        },
+        contentType: "application/json",
+        data: obj,
         success: function(data){
             if(data.length == 0){
                 dataNotFound();
@@ -1148,10 +1220,9 @@ function randomQuestion(){
                 $("#questionNotFound").hide();
                 $("#checkQuestionAll").attr('checked', false);
                 $("#tbSelectedQuestionToPaper").show();
-                $("#tbodySelectedQuestionToPaper").empty();
+                //$("#tbodySelectedQuestionToPaper").empty();
 
                 data.forEach(function(value){
-                    //new
                     var createDate = new Date(value.createDate);
                     var dateFormat = createDate.getDate() +" "+ getMonthFormat(Number(createDate.getMonth()) + 1) +" "+ createDate.getFullYear();
 
@@ -1166,17 +1237,11 @@ function randomQuestion(){
                             i = i+1;
                         });
                     }
-                    //
 
                     $("#tbodySelectedQuestionToPaper").append(
                         '<tr>'+
                         '<td style="display: none;"><label id="labelQuestionId'+value.id+'">'+value.id+'</td>'+
-
-                            //new
                         '<td style="display: none;"><label id="labelCreateDateId'+value.id+'">'+value.createDate+'</td>'+
-                        str+
-                            //
-
                         '<td style="text-align: center;"><input class="selectedQuestion" name="selectQ" type="checkbox"/></td>'+
                         '<td style="text-align: center;"><label id="labelQuestionTypeDesc'+value.id+'">'+value.questionType.description+'</td>'+
                         '<td style="text-align: left;"><label id="labelCategoryName'+value.id+'">'+value.subCategory.category.name+'<label></td>'+
@@ -1190,13 +1255,12 @@ function randomQuestion(){
 
                         '</tr>'
                     );
-
-                    sumScore(value.score);
-                    $("#score").val(sumPaperScore);
                 });
             }
+            scoreOnChange();
+            categoryId = "";
+            subcategoryId = "";
             sumPaperScore = 0;
-
             questionsInPaper = [];
             $("#tbodySelectedQuestionToPaper tr input:checkbox").each(function(){
                 var qId = $(this).parent().siblings().map(function(){

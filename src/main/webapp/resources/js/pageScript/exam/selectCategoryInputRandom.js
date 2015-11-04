@@ -1,16 +1,9 @@
-
-
-
-
-
-
-
 var getSearchCategoryInputValueId = function () {
 
-    var text = $('#selectCategoryToSelection + ul li[class="active"] a').text();
+    var text = $('#selectCategoryToSelectionForRandom + ul li[class="active"] a').text();
     var id = text.substr(0,text.indexOf(":")).trim();
 
-    if($('#selectCategoryToSelection').val() == ""){
+    if($('#selectCategoryToSelectionForRandom').val() == ""){
         return null
     }
     if(id != null) {
@@ -21,9 +14,9 @@ var getSearchCategoryInputValueId = function () {
 }
 
 var getSearchSubCategoryInputValue = function () {
-    var val = $('#selectSubCategoryToSelection').val();
+    var val = $('#selectSubCategoryToSelectionForRandom').val();
     if(val != null){
-        return $('#selectSubCategoryToSelection').val();
+        return $('#selectSubCategoryToSelectionForRandom').val();
     }else{
         return null
     }
@@ -36,7 +29,7 @@ var updateCategoryList = function () {
         url: "/TDCS/exam/getAllCategory",
         success: function (catList) {
             catList.forEach(function (category) {
-                $('#selectCategoryToSelection').append('<option class="category" categoryId="' + category.id + '"' +
+                $('#selectCategoryToSelectionForRandom').append('<option class="category" categoryId="' + category.id + '"' +
                 ' categoryName="' + category.name + ' value=' + category.id + '">' + category.id + ' : ' + category.name + '')
             })
         },
@@ -47,8 +40,8 @@ var updateCategoryList = function () {
 }
 
 var updateSubCategoryList = function () {
-    var catSelect = $('#selectCategoryToSelection');
-    var subcatSelect = $('#selectSubCategoryToSelection');
+    var catSelect = $('#selectCategoryToSelectionForRandom');
+    var subcatSelect = $('#selectSubCategoryToSelectionForRandom');
     subcatSelect.empty();
     subcatSelect.append("<option selected value=''></option>");
     var data = null;
@@ -87,7 +80,7 @@ var updateSubCategoryList = function () {
     })
 }
 var clearCategoryList = function () {
-    var categorySelect = $('#selectCategoryToSelection');
+    var categorySelect = $('#selectCategoryToSelectionForRandom');
     categorySelect.empty();
     categorySelect.append("<option selected value=''></option>");
 }
@@ -102,11 +95,11 @@ $(document).ready(function () {
         url: "/TDCS/exam/getAllSubCategory",
         async :false,
         success: function (data) {
-            $("#selectSubCategoryToSelection").append(
+            $("#selectSubCategoryToSelectionForRandom").append(
                 '<option value="" >' + "ทั้งหมด" + '</option>'
             )
             data.forEach(function (value) {
-                $("#selectSubCategoryToSelection").append(
+                $("#selectSubCategoryToSelectionForRandom").append(
                     '<option >' + value.subName + '</option>'
                 )
             });
@@ -119,23 +112,23 @@ $(document).ready(function () {
 
     });
 })
-$('#selectCategoryToSelection').on('change', function () {
+$('#selectCategoryToSelectionForRandom').on('change', function () {
     console.log("event on category change")
-    $('selectSubCategoryToSelection').children('.subCategory').remove()
+    $('selectSubCategoryToSelectionForRandom').children('.subCategory').remove()
     updateSubCategoryList()
 })
 
 var catAndSubcatSelectNothing = function () {
-    $('#selectCategoryToSelection option:selected').removeAttr("selected");
-    $('#selectCategoryToSelection').val("");
-    $('#selectCategoryToSelection option[value=""]').attr('selected', 'selected');
+    $('#selectCategoryToSelectionForRandom option:selected').removeAttr("selected");
+    $('#selectCategoryToSelectionForRandom').val("");
+    $('#selectCategoryToSelectionForRandom option[value=""]').attr('selected', 'selected');
     //updateSubCategoryList();
 
 }
 
 
 
-$("#selectCategoryToSelection").keyup(function (e) {
+$("#selectCategoryToSelectionForRandom").keyup(function (e) {
     if (e.which > 0) {
         e.preventDefault();
         listcatSelectInput();
@@ -145,7 +138,7 @@ $("#selectCategoryToSelection").keyup(function (e) {
 function listcatSelectInput() {
     //alert("LOV");
     var availableall = [];
-    var categoryId = $("#selectCategoryToSelection").val();
+    var categoryId = $("#selectCategoryToSelectionForRandom").val();
 
     var data = $.ajax({
         type: "POST",
@@ -163,8 +156,8 @@ function listcatSelectInput() {
             alert('error while request...');
         }
     });
-    var search = $("#selectCategoryToSelection").val();
-    $("#selectCategoryToSelection").typeahead('destroy').typeahead({
+    var search = $("#selectCategoryToSelectionForRandom").val();
+    $("#selectCategoryToSelectionForRandom").typeahead('destroy').typeahead({
         source: availableall,
         minLength: 0,
         items: 20,
@@ -174,12 +167,12 @@ function listcatSelectInput() {
 
 
 /////To Dropdown
-$("#selectCategoryToSelection").on('change', function () {
+$("#selectCategoryToSelectionForRandom").on('change', function () {
 
-        $("#selectSubCategoryToSelection").empty();
+        $("#selectSubCategoryToSelectionForRandom").empty();
         var categoryId = $("#selectCategoryToSelection").val();
 
-        var subcategoryName = $("#selectSubCategoryToSelection").val();
+        var subcategoryName = $("#selectSubCategoryToSelectionForRandom").val();
         //categoryId += " ";
         //var length = categoryId.length
         //alert(length);
@@ -201,7 +194,7 @@ $("#selectCategoryToSelection").on('change', function () {
 
                     success: function (data) {
                         data.forEach(function (value) {
-                            $("#selectSubCategoryToSelection").append(
+                            $("#selectSubCategoryToSelectionForRandom").append(
                                 '<option >' + value.SubCategory.name + '</option>'
                             )
                         });
@@ -210,13 +203,13 @@ $("#selectCategoryToSelection").on('change', function () {
                         alert('error while request...');
                     }
                 });
-                if (($("#selectSubCategoryToSelection").val() == null)) {
-                    $("#selectSubCategoryToSelection").append(
+                if (($("#selectSubCategoryToSelectionForRandom").val() == null)) {
+                    $("#selectSubCategoryToSelectionForRandom").append(
                         '<option>' + "ไม่มีหัวข้อเรื่องภายใต้หมวดหมู่นี้" + '</option>'
                     )
                 }
-                else if (($("#selectSubCategoryToSelection").val() != null)) {
-                    $("#selectSubCategoryToSelection").prepend(
+                else if (($("#selectSubCategoryToSelectionForRandom").val() != null)) {
+                    $("#selectSubCategoryToSelectionForRandom").prepend(
                         '<option value="" selected>' + "ทั้งหมด" + '</option>'
                     )
                 }
@@ -234,7 +227,7 @@ $("#selectCategoryToSelection").on('change', function () {
 
                     success: function (data) {
                         data.forEach(function (value) {
-                            $("#selectSubCategoryToSelection").append(
+                            $("#selectSubCategoryToSelectionForRandom").append(
                                 '<option >' + value.SubCategory.name + '</option>'
                             )
                         });
@@ -245,8 +238,8 @@ $("#selectCategoryToSelection").on('change', function () {
                     }
 
                 });
-                if (($("#selectSubCategoryToSelection").val() == null)) {
-                    $("#selectSubCategoryToSelection").append(
+                if (($("#selectSubCategoryToSelectionForRandom").val() == null)) {
+                    $("#selectSubCategoryToSelectionForRandom").append(
                         '<option>' + "ไม่มีหัวข้อเรื่องภายใต้หมวดหมู่นี้" + '</option>'
                     )
                 }
@@ -265,11 +258,11 @@ $("#selectCategoryToSelection").on('change', function () {
                 url: "/TDCS/exam/getAllSubCategory",
                 async :false,
                 success: function (data) {
-                    $("#selectSubCategoryToSelection").append(
+                    $("#selectSubCategoryToSelectionForRandom").append(
                         '<option value="" selected>' + "ทั้งหมด" + '</option>'
                     )
                     data.forEach(function (value) {
-                        $("#selectSubCategoryToSelection").append(
+                        $("#selectSubCategoryToSelectionForRandom").append(
                             '<option >' + value.subName + '</option>'
                         )
                     });

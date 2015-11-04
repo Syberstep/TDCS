@@ -1,22 +1,14 @@
 package com.springapp.mvc.controller.exam;
 
-import com.google.gson.Gson;
 import com.springapp.mvc.domain.QueryUserDomain;
 import com.springapp.mvc.domain.exam.*;
-import com.springapp.mvc.pojo.User;
 import com.springapp.mvc.pojo.exam.*;
-import com.springapp.mvc.pojo.exam.Choice;
-import com.springapp.mvc.pojo.exam.Question;
-
 import com.springapp.mvc.util.DateUtil;
 import com.springapp.mvc.util.HibernateUtil;
 import flexjson.JSONSerializer;
-
-import org.json.CDL;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -28,7 +20,10 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.ParseException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -281,6 +276,9 @@ public class QuestionController {
         String qCreateDateTo = "";
         String qScoreFrom = "";
         String qScoreTo = "";
+        Integer searchQEasy = 0;
+        Integer searchQNormal = 0;
+        Integer searchQHard = 0;
 
         JSONArray jsonArray = new JSONArray(jsonObj);
         JSONObject jObj = jsonArray.getJSONObject(0);
@@ -306,6 +304,11 @@ public class QuestionController {
             qCreateDateTo = jsonObject.getString("questionCreateDateToSearch");
             qScoreFrom = jsonObject.getString("questionScoreFromSearch");
             qScoreTo = jsonObject.getString("questionScoreToSearch");
+
+            searchQEasy = jsonObject.getInt("searchQEasy");
+            searchQNormal = jsonObject.getInt("searchQNormal");
+            searchQHard = jsonObject.getInt("searchQHard");
+
         } else {
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -337,7 +340,48 @@ public class QuestionController {
             String json = new JSONSerializer().include("choices").exclude("*.class").serialize(questionsGeneralResult);
             return new ResponseEntity<String>(json, headers, HttpStatus.OK);
         } else {
-            List<Question> questionsAdvanceResult = queryQuestionDomain.advanceSearchQuestion(empNameSearch, categorySearch, subCategoryId, qIdsNotSearch, qDesc, qCreateDateFrom, qCreateDateTo, qScoreFrom, qScoreTo);
+            int idx = 0;
+            List<Question> questionsAdvanceResult = new ArrayList<Question>();
+            if((searchQEasy == 0) && (searchQNormal == 0) && (searchQHard == 0)){
+                questionsAdvanceResult = queryQuestionDomain.advanceSearchQuestion(empNameSearch, categorySearch, subCategoryId, qIdsNotSearch, qDesc,
+                                                                                   qCreateDateFrom, qCreateDateTo, qScoreFrom, qScoreTo, searchQEasy, searchQNormal, searchQHard);
+            }
+            if(searchQEasy != 0){
+                List<Question> tmp1 = queryQuestionDomain.advanceSearchQuestion(empNameSearch, categorySearch, subCategoryId, qIdsNotSearch, qDesc,
+                                                                                qCreateDateFrom, qCreateDateTo, qScoreFrom, qScoreTo, searchQEasy, 0, 0);
+                if(searchQEasy <= tmp1.size()){
+                    for(idx = 0; idx < searchQEasy; idx ++){
+                        questionsAdvanceResult.add(tmp1.get(idx));
+                    }
+                }
+                else{
+                    return null;
+                }
+            }
+            if(searchQNormal != 0){
+                List<Question> tmp2 = queryQuestionDomain.advanceSearchQuestion(empNameSearch, categorySearch, subCategoryId, qIdsNotSearch, qDesc,
+                                                                                qCreateDateFrom, qCreateDateTo, qScoreFrom, qScoreTo, 0, searchQNormal, 0);
+                if(searchQNormal <= tmp2.size()){
+                    for(idx = 0; idx < searchQNormal; idx ++){
+                        questionsAdvanceResult.add(tmp2.get(idx));
+                    }
+                }
+                else{
+                    return null;
+                }
+            }
+            if(searchQHard != 0){
+                List<Question> tmp3 = queryQuestionDomain.advanceSearchQuestion(empNameSearch, categorySearch, subCategoryId, qIdsNotSearch, qDesc,
+                                                                                qCreateDateFrom, qCreateDateTo, qScoreFrom, qScoreTo, 0, 0, searchQHard);
+                if(searchQHard <= tmp3.size()){
+                    for(idx = 0; idx < searchQHard; idx ++){
+                        questionsAdvanceResult.add(tmp3.get(idx));
+                    }
+                }
+                else{
+                    return null;
+                }
+            }
             String json = new JSONSerializer().include("choices").exclude("*.class").serialize(questionsAdvanceResult);
             return new ResponseEntity<String>(json, headers, HttpStatus.OK);
         }
@@ -372,6 +416,106 @@ public class QuestionController {
         }
         List<Question> questions = queryQuestionDomain.getQuestionNotInSelected(questionIds);
         String json = new JSONSerializer().include("choices").exclude("*.class").serialize(questions);
+        return new ResponseEntity<String>(json, headers, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/exam/randomQuestions", method= RequestMethod.POST)
+    public ResponseEntity<String> randExamPaper(@RequestBody String obj) throws JSONException {
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json;charset=UTF-8");
+
+        List<Question> questions = new ArrayList<Question>();
+        List qIds = new ArrayList();
+        int randEasy = 0;
+        int randNormal = 0;
+        int randHard = 0;
+        int i = 0;
+        int subCategoryId = 0;
+        String json = "";
+        String categoryId = "";
+        String subCategoryName = "";
+
+        JSONArray jsonArray = new JSONArray(obj);
+        for(int index = 0; index < jsonArray.length(); index++){
+            JSONObject jsonObject = jsonArray.getJSONObject(index);
+            if(index == 0){
+                randEasy = jsonObject.getInt("randEasy");
+                randNormal = jsonObject.getInt("randNormal");
+                randHard = jsonObject.getInt("randHard");
+                categoryId = jsonObject.getString("categoryId");
+                subCategoryName = jsonObject.getString("subCategoryId");
+            }
+            qIds.add(new Integer(jsonObject.getInt("qid")));
+        }
+
+        if(!subCategoryName.equals("")){
+            subCategoryId = querySubCategoryDomain.getSubCategoryIdByName(subCategoryName);
+        }
+
+        if(randEasy != 0){
+            List index = new ArrayList();
+            List<Question> questionsEasy = queryQuestionDomain.getQuestionsByLevel(1, qIds, categoryId, subCategoryId);
+            if(questionsEasy.size() < randEasy){
+                json = null;
+                return new ResponseEntity<String>(json, headers, HttpStatus.OK);
+            }
+            else{
+                for(i = 0; i < questionsEasy.size(); i ++){
+                    index.add(i);
+                }
+                for(int j = 0; j < randEasy; j ++){
+                    Collections.shuffle(index);
+                    questions.add(questionsEasy.get((Integer) index.get(0)));
+                    index.remove(0);
+                }
+            }
+        }
+        if(randNormal != 0){
+            List index2 = new ArrayList();
+            List<Question> questionsNormal = queryQuestionDomain.getQuestionsByLevel(2, qIds, categoryId, subCategoryId);
+            if(questionsNormal.size() < randNormal){
+                json = null;
+                return new ResponseEntity<String>(json, headers, HttpStatus.OK);
+            }
+            else{
+                for(i = 0; i < questionsNormal.size(); i ++){
+                    index2.add(i);
+                }
+                for(int j = 0; j < randNormal; j ++){
+                    Collections.shuffle(index2);
+                    questions.add(questionsNormal.get((Integer) index2.get(0)));
+                    index2.remove(0);
+                }
+            }
+        }
+        if(randHard != 0){
+            List index3 = new ArrayList();
+            List<Question> questionsHard = queryQuestionDomain.getQuestionsByLevel(3, qIds, categoryId, subCategoryId);
+            if(questionsHard.size() < randNormal){
+                json = null;
+                return new ResponseEntity<String>(json, headers, HttpStatus.OK);
+            }
+            else{
+                for(i = 0; i < questionsHard.size(); i ++){
+                    index3.add(i);
+                }
+                for(int j = 0; j < randHard; j ++){
+                    Collections.shuffle(index3);
+                    questions.add(questionsHard.get((Integer) index3.get(0)));
+                    index3.remove(0);
+                }
+            }
+        }
+        if((randEasy == 0) && (randHard == 0) && (randNormal == 0)){
+            List<Question> questionList = queryQuestionDomain.getQuestionsByLevel(0, qIds, categoryId, subCategoryId);
+            for(Object idx: questionList){
+                questions.add((Question) idx);
+            }
+        }
+
+        json = new JSONSerializer().include("choices").exclude("*.class").serialize(questions);
+
         return new ResponseEntity<String>(json, headers, HttpStatus.OK);
     }
 
