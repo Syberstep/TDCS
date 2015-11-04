@@ -7,6 +7,10 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<c:set var="context" value="${pageContext.request.contextPath}"/>
+<script>
+    var context = '${context}';
+</script>
 <style>
     #tbManagePaper{
         margin-top: 3px;
@@ -25,7 +29,7 @@
         <%@include file="template/searchPaperTemplateNew.jsp" %>
     </div>
     <div class="row">
-        <a href="/TDCS/exam/createPaper">
+        <a href="${context}/TDCS/exam/createPaper">
             <button class="btn btn-success btn-sm" align="center">
                 <span class="glyphicon glyphicon-plus"></span>
             </button>
