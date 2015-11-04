@@ -1,9 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!-- Modal SelectQuestion-->
-<c:set var="context" value="${pageContext.request.contextPath}"/>
-<script>
-    var context = '${context}';
-</script>
 <style>
     #selectQuest {
         overflow-y: auto;
@@ -123,15 +119,17 @@
                     <div class="col-md-2 text-right">สร้างโดย :</div>
                     <span class="col-md-3" id="createByDetail"></span>
 
-                    <div class="col-md-2 text-right">วันที่สร้าง :</div>
-                    <span class="col-md-2" id="createDateDetail"></span>
+                    <%--<div class="col-md-2 text-right">วันที่สร้าง :</div>--%>
+                    <%--<span class="col-md-2" id="createDateDetail"></span>--%>
+                    <div class="col-md-2 text-right">ความยาก :</div>
+                    <span class="col-md-2" id="difficultyDetail"></span>
                 </div>
                 <div class="row">
                     <div class="col-md-2 text-right">ประเภท :</div>
                     <span class="col-md-2" id="questionTypeDetail"></span>
 
-                    <div class="col-md-2 col-sm-offset-1 text-right">ความยาก :</div>
-                    <span class="col-md-2" id="difficultyDetail"></span>
+                    <%--<div class="col-md-2 col-sm-offset-1 text-right">ความยาก :</div>--%>
+                    <%--<span class="col-md-2" id="difficultyDetail"></span>--%>
                 </div>
                 <div class="row">
                     <div class="col-md-2 text-right">คะแนน :</div>
@@ -146,10 +144,12 @@
             <div class="modal-footer">
                 <div id="choiceDetailContainer">
                     <div class="row">
-                        <div class="col-md-1 col-md-offset-1">ก :</div>
-                        <span class="col-md-8 text-left" id="choiceDetail1"></span>
                         <div class="col-md-1 " id="correctDetail1"><span class="glyphicon glyphicon-ok "
                                                                          style="color:rgb(92, 184, 92);"></span></div>
+                        <div class="col-md-1">ก :</div>
+                        <span class="col-md-8 text-left" id="choiceDetail1"></span>
+                        <%--<div class="col-md-1 " id="correctDetail1"><span class="glyphicon glyphicon-ok "--%>
+                                                                         <%--style="color:rgb(92, 184, 92);"></span></div>--%>
                     </div>
                     <div class="row">
                         <div class="col-md-1 col-md-offset-1">ข :</div>

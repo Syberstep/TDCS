@@ -6,7 +6,9 @@ import com.springapp.mvc.domain.QueryUserDomain;
 import com.springapp.mvc.domain.exam.*;
 import com.springapp.mvc.pojo.Position;
 import com.springapp.mvc.pojo.User;
-import com.springapp.mvc.pojo.exam.*;
+import com.springapp.mvc.pojo.exam.ExamPaper;
+import com.springapp.mvc.pojo.exam.PaperQuestion;
+import com.springapp.mvc.pojo.exam.Status;
 import com.springapp.mvc.util.DateUtil;
 import flexjson.JSONSerializer;
 import org.json.JSONArray;
@@ -18,22 +20,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
-import java.awt.print.Paper;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
-import java.sql.Date;
 
 /**
  * Created by Phuthikorn_T on 8/11/2015.
@@ -347,78 +341,6 @@ public class PaperController {
             String toJson = new JSONSerializer().include("choices").exclude("*.class").serialize(papers);
             return new ResponseEntity<String>(toJson, headers, HttpStatus.OK);
         }
-    }
-
-    @RequestMapping(value = "/exam/randomQuestions", method= RequestMethod.POST)
-    public ResponseEntity<String> randExamPaper(@RequestParam(value = "randEasy", required = false) Integer randEasy,
-                                                @RequestParam(value = "randNormal", required = false) Integer randNormal,
-                                                @RequestParam(value = "randHard", required = false) Integer randHard){
-
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/json;charset=UTF-8");
-
-        List<Question> questions = new ArrayList<Question>();
-        String json = "";
-        int i = 0;
-        if(!randEasy.equals(0)){
-            List index = new ArrayList();
-            List<Question> questionsEasy = queryQuestionDomain.getQuestionsByLevel(1);
-            if(questionsEasy.size() < randEasy){
-                json = null;
-                return new ResponseEntity<String>(json, headers, HttpStatus.OK);
-            }
-            else{
-                for(i = 0; i < questionsEasy.size(); i ++){
-                    index.add(i);
-                }
-                for(int j = 0; j < randEasy; j ++){
-                    Collections.shuffle(index);
-                    questions.add(questionsEasy.get((Integer) index.get(0)));
-                    index.remove(0);
-                }
-            }
-        }
-        if(!randNormal.equals(0)){
-            List index2 = new ArrayList();
-            List<Question> questionsNormal = queryQuestionDomain.getQuestionsByLevel(2);
-            if(questionsNormal.size() < randNormal){
-                json = null;
-                return new ResponseEntity<String>(json, headers, HttpStatus.OK);
-            }
-            else{
-                for(i = 0; i < questionsNormal.size(); i ++){
-                    index2.add(i);
-                }
-                for(int j = 0; j < randNormal; j ++){
-                    Collections.shuffle(index2);
-                    questions.add(questionsNormal.get((Integer) index2.get(0)));
-                    index2.remove(0);
-                }
-            }
-        }
-        if(!randHard.equals(0)){
-            List index3 = new ArrayList();
-            List<Question> questionsHard = queryQuestionDomain.getQuestionsByLevel(3);
-            if(questionsHard.size() < randNormal){
-                json = null;
-                return new ResponseEntity<String>(json, headers, HttpStatus.OK);
-            }
-            else{
-                for(i = 0; i < questionsHard.size(); i ++){
-                    index3.add(i);
-                }
-                for(int j = 0; j < randHard; j ++){
-                    Collections.shuffle(index3);
-                    questions.add(questionsHard.get((Integer) index3.get(0)));
-                    index3.remove(0);
-                }
-            }
-        }
-
-        json = new JSONSerializer().include("choices").exclude("*.class").serialize(questions);
-
-        return new ResponseEntity<String>(json, headers, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/exam/getPaperCode", method= RequestMethod.POST)

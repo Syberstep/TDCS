@@ -30,10 +30,11 @@ $(document).ready(function () {
         $("#subcategoryNameadd").val("");
     })
 
-
-        $("#sSubCat").append(
-            '<option value="">' + "เลือกหัวข้อเรื่อง" + '</option>'
-        )
+    //if($("#categoryId").val()=="") {
+    //    $("#sSubCat").append(
+    //        '<option value="">' + "เลือกหัวข้อเรื่อง" + '</option>'
+    //    )
+    //}
 
     //$("#categoryId").on('change',function(){
     //    $("#sSubCat").append(
@@ -61,7 +62,6 @@ function viewSubCategory() {
         async: false,
         success: function (data) {
             data.forEach(function (value) {
-
                 $("#tbodySubCategory").append(
                     '<tr>' +
 
@@ -91,6 +91,28 @@ function viewSubCategory() {
                         //'</td>'+
                     '</tr>'
                 )
+            });
+            var data = $.ajax({
+                type: "POST",
+                contentType: "application/json",
+                url: "/TDCS/exam/getAllSubCategory",
+                async :false,
+                success: function (data) {
+                    $("#sSubCat").append(
+                        '<option value="" >' + "ทั้งหมด" + '</option>'
+                    )
+                    data.forEach(function (value) {
+                        $("#sSubCat").append(
+                            '<option >' + value.subName + '</option>'
+                        )
+                    });
+
+                },
+                error :function(data){
+
+                }
+
+
             });
         },
         error: function (data) {
@@ -280,7 +302,6 @@ $("#categoryId").keyup(function (e) {
     if (e.which > 0) {
         e.preventDefault();
         listsubcat();
-
     }
 });
 function listsubcat() {
@@ -322,7 +343,7 @@ function listsubcat() {
 //$(document).ready(function () {
 
 
-$("#categoryId").on('change', function () {
+$("#categoryId, #selectCategoryToSelection, #selectCategoryToSelectionForRandom").on('change', function () {
         $("#sSubCat").empty();
         var categoryId = $("#categoryId").val();
         //var categoryName = $("#categoryId").val();
@@ -332,9 +353,9 @@ $("#categoryId").on('change', function () {
         //alert(length);
 
         //categoryId = categoryId.substr(0, categoryId.indexOf(' '));
-        if(categoryId !=""){
+        if(categoryId.trim() !=""){
             if(categoryId.indexOf(':')!=-1){
-            categoryId.indexOf(':');
+                categoryId.indexOf(':');
                 var categoryId2 =  categoryId.substr(0, categoryId.indexOf(' '));
                 categoryId = categoryId2;
                 var data = $.ajax({
@@ -403,6 +424,30 @@ $("#categoryId").on('change', function () {
                     )
                 }
             }
+        }else{
+
+            var data = $.ajax({
+                type: "POST",
+                contentType: "application/json",
+                url: "/TDCS/exam/getAllSubCategory",
+                async :false,
+                success: function (data) {
+                    $("#sSubCat").append(
+                        '<option value="" >' + "ทั้งหมด" + '</option>'
+                    )
+                    data.forEach(function (value) {
+                        $("#sSubCat").append(
+                            '<option >' + value.subName + '</option>'
+                        )
+                    });
+
+                },
+                error :function(data){
+
+                }
+
+
+            });
 
         }
     }
