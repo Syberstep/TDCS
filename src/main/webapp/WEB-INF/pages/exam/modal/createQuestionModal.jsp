@@ -167,7 +167,7 @@
 
 <!-- End Create Question Modal -->
 
-<script src="../../../../resources/js/pageScript/exam/createQuestionModal.js" charset="UTF-8"></script>
+<script src="${context}/resources/js/pageScript/exam/createQuestionModal.js" charset="UTF-8"></script>
 
 <style>
     .input-group-addon.success {

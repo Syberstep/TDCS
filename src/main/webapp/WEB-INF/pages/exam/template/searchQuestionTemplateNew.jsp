@@ -97,7 +97,7 @@
         </div>
     </div>
 
-<script src="../../../resources/js/pageScript/exam/searchQuestionTemplate.js" charset="UTF-8"></script>
+<script src="${context}/resources/js/pageScript/exam/searchQuestionTemplate.js" charset="UTF-8"></script>
 <script>
     $("#searchCreateDateFromInput").datepicker().on('changeDate', function(){
         $("#searchCreateDateFromInput").datepicker('hide');

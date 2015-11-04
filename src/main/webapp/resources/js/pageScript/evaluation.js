@@ -203,7 +203,7 @@ function setDataEvaluationForm() {
 
     var data2 = $.ajax({
         type: 'POST',
-        url: context+'/TDCS//evaluationSubtopic',
+        url: context+'/TDCS/evaluationSubtopic',
         async: false
     }).responseText;
     var dataSubtopic = JSON.parse(data2);

@@ -109,5 +109,5 @@
     <!-- /.modal-content -->
 </div>
 
-<script src="../../../resources/js/pageScript/exam/questionDetailModal.js" charset="UTF-8"></script>
+<script src="${context}/resources/js/pageScript/exam/questionDetailModal.js" charset="UTF-8"></script>
 
