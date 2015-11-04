@@ -1,5 +1,11 @@
 <%--By Jokkiz--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="context" value="${pageContext.request.contextPath}"/>
+<script>
+    var context = '${context}';
+</script>
+
 <div class="row col-sm-6">
     <div class="col-sm-4  text-right">
         <h5>หมวดหมู่ :</h5>

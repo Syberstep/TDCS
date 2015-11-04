@@ -5,7 +5,12 @@
   Time: 16:34
   To change this template use File | Settings | File Templates.
 --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<c:set var="context" value="${pageContext.request.contextPath}"/>
+<script>
+    var context = '${context}';
+</script>
     <%--Add By Mr.Wanchana--%>
     <div class="row col-sm-6">
         <div class="col-sm-4 " align="right">
@@ -19,10 +24,6 @@
     </div>
 
 <%@include file="../modal/addEmployeeToInputModal.jsp" %>
-<c:set var="context" value="${pageContext.request.contextPath}"/>
-<script>
-    var context = '${context}';
-</script>
 <script src="../../../resources/js/pageScript/exam/selectEmployee.js" ></script>
 <script src="../../../resources/js/pageScript/exam/selectCreateByInput.js"></script>
 <script>

@@ -7,6 +7,10 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="../modal/addEmployeeToInputModal.jsp" %>
+<c:set var="context" value="${pageContext.request.contextPath}"/>
+<script>
+    var context = '${context}';
+</script>
 
 <div class="panel-collapse" id="searchCollapse">
     <div class="panel panel-primary">
