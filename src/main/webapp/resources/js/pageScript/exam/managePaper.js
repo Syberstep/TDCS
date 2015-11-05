@@ -761,13 +761,15 @@ function generalSearchQuestion(btnSearchStatus) {
                 };
                 tmpQ.push(itm);
             }
+            var jsonString = JSON.stringify(tmpQ);
+
             for (var idx = 0; idx < arrayEmpNameToQuery.length; idx++) {
                 var items = {
                     "thFname": arrayEmpNameToQuery[idx],
                     "subCategoryId": subcategoryId,
                     "categoryId": categoryId,
                     "btnSearchStatus" : btnSearchStatus,
-                    "allQuestionIdOnTableCreatePaper" : tmpQ,
+                    "allQuestionIdOnTableCreatePaper" : jsonString,
                     "questionDescriptionSearch" : questionDescriptionSearch,
                     "questionCreateDateFromSearch" : questionCreateDateFromSearch,
                     "questionCreateDateToSearch" : questionCreateDateToSearch,
@@ -789,13 +791,16 @@ function generalSearchQuestion(btnSearchStatus) {
                 };
                 tmpQ.push(itm);
             }
+
+            var jsonString = JSON.stringify(tmpQ);
+
             for (var idx = 0; idx < arrayEmpNameToQuery.length; idx++) {
                 var items = {
                     "thFname": arrayEmpNameToQuery[idx],
                     "subCategoryId": subcategoryId,
                     "categoryId": categoryId,
                     "btnSearchStatus" : btnSearchStatus,
-                    "allQuestionIdOnTableCreatePaper" : tmpQ,
+                    "allQuestionIdOnTableCreatePaper" : jsonString,
                     "questionDescriptionSearch" : questionDescriptionSearch,
                     "questionCreateDateFromSearch" : questionCreateDateFromSearch,
                     "questionCreateDateToSearch" : questionCreateDateToSearch,
@@ -817,12 +822,15 @@ function generalSearchQuestion(btnSearchStatus) {
                 };
                 tmpQ.push(itm);
             }
+
+            var jsonString = JSON.stringify(tmpQ);
+
             var item = {
                 "thFname": '0',
                 "subCategoryId": subcategoryId,
                 "categoryId": categoryId,
                 "btnSearchStatus" : btnSearchStatus,
-                "allQuestionIdOnTableCreatePaper" : tmpQ,
+                "allQuestionIdOnTableCreatePaper" : jsonString,
                 "questionDescriptionSearch" : questionDescriptionSearch,
                 "questionCreateDateFromSearch" : questionCreateDateFromSearch,
                 "questionCreateDateToSearch" : questionCreateDateToSearch,
@@ -841,12 +849,15 @@ function generalSearchQuestion(btnSearchStatus) {
                 };
                 tmpQ.push(itm);
             }
+
+            var jsonString = JSON.stringify(tmpQ);
+
             var item2 = {
                 "thFname": '0',
                 "subCategoryId": subcategoryId,
                 "categoryId": categoryId,
                 "btnSearchStatus" : btnSearchStatus,
-                "allQuestionIdOnTableCreatePaper" : tmpQ,
+                "allQuestionIdOnTableCreatePaper" : jsonString,
                 "questionDescriptionSearch" : questionDescriptionSearch,
                 "questionCreateDateFromSearch" : questionCreateDateFromSearch,
                 "questionCreateDateToSearch" : questionCreateDateToSearch,
