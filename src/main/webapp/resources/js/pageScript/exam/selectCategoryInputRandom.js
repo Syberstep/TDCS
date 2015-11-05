@@ -131,11 +131,12 @@ var catAndSubcatSelectNothing = function () {
 $("#selectCategoryToSelectionForRandom").keyup(function (e) {
     if (e.which > 0) {
         e.preventDefault();
-        listcatSelectInput();
+        listcatSelectInputForRandom();
 
     }
 });
-function listcatSelectInput() {
+function listcatSelectInputForRandom() {
+
     //alert("LOV");
     var availableall = [];
     var categoryId = $("#selectCategoryToSelectionForRandom").val();
@@ -170,7 +171,7 @@ function listcatSelectInput() {
 $("#selectCategoryToSelectionForRandom").on('change', function () {
 
         $("#selectSubCategoryToSelectionForRandom").empty();
-        var categoryId = $("#selectCategoryToSelection").val();
+        var categoryId = $("#selectCategoryToSelectionForRandom").val();
 
         var subcategoryName = $("#selectSubCategoryToSelectionForRandom").val();
         //categoryId += " ";

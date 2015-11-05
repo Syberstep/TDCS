@@ -23,7 +23,7 @@
                                 <label style="margin-top: 3px;">ยาก :</label>
                             </div>
                             <div class="col-sm-3" style="padding: 0;">
-                                <input id="randomHard" type="number" class="form-control input-sm" placeholder="จำนวนข้อ"/>
+                                <input id="randHard" type="number" class="form-control input-sm" placeholder="จำนวนข้อ"/>
                             </div>
                             <div class="col-sm-3 text-right">
                                 <label style="margin-top: 3px;">ปานกลาง :</label>
@@ -31,13 +31,13 @@
                         </div>
                         <div class="row col-sm-6">
                             <div class="col-sm-3" style="padding: 0;">
-                                <input id="randomNormal" type="number" class="form-control input-sm" placeholder="จำนวนข้อ"/>
+                                <input id="randNormal" type="number" class="form-control input-sm" placeholder="จำนวนข้อ"/>
                             </div>
                             <div class="col-sm-2 text-right">
                                 <label style="margin-top: 3px;">ง่าย :</label>
                             </div>
                             <div class="col-sm-3" style="padding: 0;">
-                                <input id="randomEasy" type="number" class="form-control input-sm" placeholder="จำนวนข้อ"/>
+                                <input id="randEasy" type="number" class="form-control input-sm" placeholder="จำนวนข้อ"/>
                             </div>
                         </div>
                     </div><br/>

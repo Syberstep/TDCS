@@ -661,6 +661,7 @@ function onLoadPageEditPaper(){
     $("#score").val(0);
     $("#maxScore").val(0);
     $("#hours").defaultValue = "0";
+    $("#tbSelectedQuestionToPaper").show();
 }
 
 function onLoadPagePaperInfo(){
@@ -930,6 +931,7 @@ function generalSearchQuestion(btnSearchStatus) {
 }
 
 function dataNotFound(){
+    $("#removeRowQuestionSelect").hide();
     $("#questionsAreEmpty").show();
     $("#removeRowSelected").attr('disabled', 'disabled');
     $("#addQuestionBtn").attr('disabled', 'disabled');
@@ -937,6 +939,8 @@ function dataNotFound(){
 }
 
 function dataFound(){
+    $("#removeRowQuestionSelect").show();
+    $("#removeRowQuestionSelect").attr('disabled', 'disabled');
     $("#questionsAreEmpty").hide();
     $("#removeRowSelected").removeAttr('disabled');
     $("#addQuestionBtn").removeAttr('disabled');
@@ -995,13 +999,13 @@ function showUpdatePaper(paperId){
                     '<td style="display: none;">'+ value.question.id+'</td>'+
 
                     '<td style="text-align: center;"><input type="checkbox" class="selectedQuestion"/></td>'+
-                    '<td>'+ value.question.questionType.description+'</td>'+
+                    '<td style="text-align: center;">'+ value.question.questionType.description+'</td>'+
                     '<td>'+ value.question.subCategory.category.name+'</td>'+
                     '<td>'+ value.question.subCategory.name+'</td>'+
                     '<td style="text-align: left;">'+ value.question.description+'</td>'+
-                    '<td>'+ value.question.difficultyLevel.description+'</td>'+
+                    '<td style="text-align: center;">'+ value.question.difficultyLevel.description+'</td>'+
                     '<td><input id="newScore'+value.question.id+'" onkeypress="return isNumber(event)" onchange="scoreOnChange()" name="newScore" type="number" class="form-control innput-sm"  min="1" max="50" value="'+value.score+'"/></td>'+
-                    '<td>'+ value.question.createBy.thFname+' '+value.question.createBy.thLname+'</td>'+
+                    '<td style="text-align: center;">'+ value.question.createBy.thFname+' '+value.question.createBy.thLname+'</td>'+
                     '</tr>'
                 );
                 sumScore(value.score);
