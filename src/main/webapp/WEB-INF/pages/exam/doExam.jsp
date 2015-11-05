@@ -17,11 +17,9 @@
     }
 </script>
 
-
-<c:if test="${user != null}">
+<c:if test="${user != null && examRecord == null}">
     <div class="examHead" id="examHead" paperId="${paper.id}" timeLimit-minute="${paper.timeLimit}">
         <div class="container row">
-
             <div class="row text-center">
                 <h3>ข้อสอบออนไลน์</h3>
                 <hr/>
@@ -57,7 +55,7 @@
     </div>
     </div>
 
-    <div id="countdownContainer" class="btn btn-success" style="position: fixed; left: 0;bottom: 0;">
+    <div id="countdownContainer" class="btn btn-success" style="position: fixed; right:5px;top: 60px;">
         <div>
             <div class="">&nbsp;เวลาที่เหลือ</div>
             <span id="countdown">00:00:00</span>
@@ -105,5 +103,11 @@
 <c:if test="${user == null}">
     <div class="text-center">
         <h1>กรุณาเข้าสู่ระบบก่อนทำข้อสอบ</h1>
+    </div>
+</c:if>
+
+<c:if test="${user !=null && examRecord != null}">
+    <div class="text-center">
+        <h1>คุณเคยทำข้อสอบนี้ไปแล้ว</h1>
     </div>
 </c:if>

@@ -1,6 +1,7 @@
 package com.springapp.mvc.pojo.exam;
 
 import com.springapp.mvc.pojo.User;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -13,8 +14,8 @@ import java.io.Serializable;
 public class ExamMarkingRecord implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "markingRecord_id_generator")
-    @SequenceGenerator(name = "markingRecord_id_generator")
+    @GenericGenerator(name="marking_record_id" , strategy="increment")
+    @GeneratedValue(generator="marking_record_id")
     @Column(name = "MARKING_RECORD_ID")
     private Integer id;
 

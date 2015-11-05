@@ -205,7 +205,6 @@ function saveCategory(){
 
             if($("#categoryIdText").val() == "" || $("#categoryNameText").val() == ""){
 
-                alert("hi there..");
             }
 
             var dat = $.ajax({

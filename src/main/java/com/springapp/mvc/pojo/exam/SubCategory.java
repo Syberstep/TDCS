@@ -1,10 +1,10 @@
 package com.springapp.mvc.pojo.exam;
 
 import com.springapp.mvc.pojo.User;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Set;
 
 /**
  * Created by Phuthikorn_T on 6/30/2015.
@@ -15,8 +15,8 @@ import java.util.Set;
 public class SubCategory implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "TDCS_SUB_CATEGORY_ID_SEQ_GEN")
-    @SequenceGenerator(name = "TDCS_SUB_CATEGORY_ID_SEQ_GEN")
+    @GenericGenerator(name="SubCategory_id" , strategy="increment")
+    @GeneratedValue(generator="SubCategory_id")
     @Column(name="SUB_CATEGORY_ID")
     private Integer id;
 

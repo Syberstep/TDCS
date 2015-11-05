@@ -1,8 +1,10 @@
 package com.springapp.mvc.pojo.exam;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Set;
 
 /**
  * Created by Phuthikorn_T on 7/1/2015.
@@ -12,17 +14,17 @@ import java.util.Set;
 public class Choice  implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "choice_id_generator")
-    @SequenceGenerator(name = "choice_id_generator")
+    @GenericGenerator(name="choice_id" , strategy="increment")
+    @GeneratedValue(generator="choice_id")
     @Column(name="CHOICE_ID")
     private Integer id;
 
     @Column(name="CHOICE_DESCRIPTION")
     private String description;
 
-    @ManyToOne
-    @JoinColumn(name="CHOICE_CORRECTION")
-    private Boo correction;
+    @Column(name="CHOICE_CORRECTION")
+    @Type(type = "yes_no")
+    private boolean correction;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="QUESTION_ID")
@@ -32,32 +34,8 @@ public class Choice  implements Serializable {
     @JoinColumn(name = "CHOICE_STATUS")
     private Status status;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Choice)) return false;
-
-        Choice choice = (Choice) o;
-
-        if (getId() != null ? !getId().equals(choice.getId()) : choice.getId() != null) return false;
-        if (getDescription() != null ? !getDescription().equals(choice.getDescription()) : choice.getDescription() != null)
-            return false;
-        if (getCorrection() != null ? !getCorrection().equals(choice.getCorrection()) : choice.getCorrection() != null)
-            return false;
-        if (getQuestion() != null ? !getQuestion().equals(choice.getQuestion()) : choice.getQuestion() != null)
-            return false;
-        return !(getStatus() != null ? !getStatus().equals(choice.getStatus()) : choice.getStatus() != null);
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = getId() != null ? getId().hashCode() : 0;
-        result = 31 * result + (getDescription() != null ? getDescription().hashCode() : 0);
-        result = 31 * result + (getCorrection() != null ? getCorrection().hashCode() : 0);
-        result = 31 * result + (getQuestion() != null ? getQuestion().hashCode() : 0);
-        result = 31 * result + (getStatus() != null ? getStatus().hashCode() : 0);
-        return result;
+    public Boolean getCorrection() {
+        return correction;
     }
 
     public Status getStatus() {
@@ -84,11 +62,11 @@ public class Choice  implements Serializable {
         this.description = description;
     }
 
-    public Boo getCorrection() {
+    public boolean isCorrection() {
         return correction;
     }
 
-    public void setCorrection(Boo correction) {
+    public void setCorrection(boolean correction) {
         this.correction = correction;
     }
 

@@ -1,12 +1,11 @@
 package com.springapp.mvc.pojo.exam;
 
 import com.springapp.mvc.pojo.User;
-import org.hibernate.annotations.*;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
-import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -19,8 +18,8 @@ import java.util.List;
 public class ExamRecord implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @SequenceGenerator(name = "record_id_generator")
+    @GenericGenerator(name="exam_record_id" , strategy="increment")
+    @GeneratedValue(generator="exam_record_id")
     @Column(name = "RECORD_ID")
     private Integer id;
 
@@ -46,37 +45,12 @@ public class ExamRecord implements Serializable {
     @Cascade(CascadeType.ALL)
     private ExamResult examResult;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PRE_TEST_RECORD_ID")
-    private ExamRecord preTestRecord;
-
-    @OneToOne(mappedBy = "preTestRecord",fetch = FetchType.LAZY)
-    @Cascade(CascadeType.ALL)
-    private ExamRecord postTestRecord;
-
-
     public ExamResult getExamResult() {
         return examResult;
     }
 
     public void setExamResult(ExamResult examResult) {
         this.examResult = examResult;
-    }
-
-    public ExamRecord getPostTestRecord() {
-        return postTestRecord;
-    }
-
-    public void setPostTestRecord(ExamRecord postTestRecord) {
-        this.postTestRecord = postTestRecord;
-    }
-
-    public ExamRecord getPreTestRecord() {
-        return preTestRecord;
-    }
-
-    public void setPreTestRecord(ExamRecord preTestRecord) {
-        this.preTestRecord = preTestRecord;
     }
 
     public List<ExamAnswerRecord> getExamAnswerRecords() {

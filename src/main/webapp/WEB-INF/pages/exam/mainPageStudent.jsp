@@ -47,9 +47,11 @@
                     <td align="center">${paper.maxScore}</td>
                     <td align="center">${paper.timeLimit} นาที</td>
                     <td style="text-align: center;">
-                        <a class="doExamBtn" location="${context}/TDCS/exam/doExam?paperId=${paper.id}">
-                            <button class="btn btn-block" type="button">เริ่มทำข้อสอบ</button>
-                        </a>
+                            <%--<a class="doExamBtn" location="${context}/TDCS/exam/doExam?paperId=${paper.id}">--%>
+                        <button class="btn btn-block btn-primary doExamBtn" paperId="${paper.id}" type="button">
+                            เริ่มทำข้อสอบ
+                        </button>
+                            <%--</a>--%>
                     </td>
                 </tr>
             </c:forEach>
@@ -79,13 +81,25 @@
 
 <div class="modal fade" id="confirmationModal">
     <div class="modal-dialog">
-        <div class="modal-header" align="center">
-            เมื่อเริ่มทำข้อสอบแล้วออกจากหน้าระบบจะทำการบันทึกข้อมูลทันทีและจะไม่สามารถทำข้อสอบนี้ได้อีก
-            <br>
-            ต้องการที่จะทำข้อสอบหรือไม่
-        </div>
-        <div class="modal-body">
+        <div class="modal-content">
+            <div class="modal-header" align="center">
+                เมื่อเริ่มทำข้อสอบแล้วออกจากหน้าระบบจะทำการบันทึกข้อมูลทันที<br>และจะทำให้ไม่สามารถเข้าทำข้อสอบนี้ได้อีก
+                <br><br>
+                ต้องการที่จะทำข้อสอบนี้หรือไม่
+            </div>
+            <div class="modal-body" align="center">
+                <div class="row">
+                    <div class="col-md-3 col-md-offset-3">
+                        <button class="btn btn-primary btn-block" id="doExamConfirmedBtn">&nbsp;ใช่&nbsp;</button>
+                    </div>
 
+                    <div class="col-md-3">
+                        <button class="btn btn-warning btn-block" data-dismiss="modal">&nbsp;ไม่&nbsp;</button>
+                    </div>
+                </div>
+
+
+            </div>
         </div>
     </div>
 </div>

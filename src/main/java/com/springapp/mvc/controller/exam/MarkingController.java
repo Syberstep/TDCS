@@ -3,15 +3,16 @@ package com.springapp.mvc.controller.exam;
 import com.springapp.mvc.domain.QueryUserDomain;
 import com.springapp.mvc.domain.exam.*;
 import com.springapp.mvc.pojo.User;
-import com.springapp.mvc.pojo.exam.*;
+import com.springapp.mvc.pojo.exam.ExamAnswerRecord;
+import com.springapp.mvc.pojo.exam.ExamMarkingRecord;
+import com.springapp.mvc.pojo.exam.ExamResult;
 import com.springapp.mvc.util.DateUtil;
 import com.springapp.mvc.util.HibernateUtil;
 import org.hibernate.Hibernate;
 import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-//import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -52,12 +53,9 @@ public class MarkingController {
     QueryStatusDomain queryStatusDomain;
 
     @Autowired
-    QueryBooDomain queryBooDomain;
-
-    @Autowired
     QueryPaperQuestionDomain queryPaperQuestionDomain;
 
-    //    @Transactional
+    @Transactional
     @RequestMapping(method = RequestMethod.GET, value = "/exam/marking")
     public String marking(ModelMap modelMap, Model model, HttpServletRequest request, HttpServletResponse response
 //                         ,@RequestParam(value = "recordId") Integer recordId
@@ -65,6 +63,11 @@ public class MarkingController {
 
         ExamResult examResult = queryExamResultDomain.getExamResultById(resultId);
         Hibernate.initialize(examResult.getExamRecord().getPaper().getQuestions());
+        Hibernate.initialize(examResult.getExamRecord().getExamAnswerRecords());
+        for(ExamAnswerRecord ear : examResult.getExamRecord().getExamAnswerRecords()){
+            Hibernate.initialize(ear.getQuestion().getChoices());
+            Hibernate.initialize(ear.getQuestion().getPapers());
+        }
         modelMap.addAttribute("examResult", examResult);
         modelMap.addAttribute("user", queryUserDomain.getCurrentUser(request));
 

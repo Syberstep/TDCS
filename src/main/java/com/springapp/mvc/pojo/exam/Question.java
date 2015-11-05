@@ -3,6 +3,7 @@ package com.springapp.mvc.pojo.exam;
 import com.springapp.mvc.pojo.User;
 import flexjson.JSONSerializer;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -18,8 +19,8 @@ import java.util.List;
 public class Question implements Serializable, Cloneable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "question_id_generator")
-    @SequenceGenerator(name = "question_id_generator")
+    @GenericGenerator(name="question_id" , strategy="increment")
+    @GeneratedValue(generator="question_id")
     @Column(name = "QUESTION_ID")
     private Integer id;
 

@@ -17,9 +17,19 @@
     }
 </script>
 
+<c:if test="${examResult.status.id == 7}">
+    <script>
+        $(document).ready(function () {
+            $('input').prop('disabled', "true");
+            $('textarea').prop('disabled', 'true');
+        })
+    </script>
+</c:if>
+
 
 <c:if test="${user != null}">
     <c:set var="questionNumber" value="${1}"/>
+    <c:set var="questionNumberObjective" value="${1}"/>
 
     <h3>ตรวจข้อสอบ</h3>
     <hr>
@@ -73,6 +83,9 @@
         <div class="col-md-1 ObjectiveScore">
                 ${examResult.objectiveScore}
         </div>
+        <div class="col-md-1">
+            <button class="btn btn-primary" id="showObjective">แสดงข้อปรนัย</button>
+        </div>
     </div>
 
     <hr>
@@ -83,9 +96,11 @@
 
         <!---------------------------------------------->
         <c:forEach var="answerRecord" items="${examResult.examRecord.examAnswerRecords}">
+
+            <%--Subjective--%>
             <c:if test="${answerRecord.question.questionType.id == 2}">
 
-                <div class="questionContainer" questionNo="${questionNumber}"
+                <div class="questionContainer containerSubjective" questionNo="${questionNumber}"
                      questionId="${answerRecord.question.id}"
                      answerRecordId="${answerRecord.id}">
                     <div class="row question-row">
@@ -107,10 +122,16 @@
                         </div>
                     </div>
                     <div class="row ">
-                        <div class="col-md-offset-8 col-md-2 text-right"><h5>คะแนน :</h5></div>
-                        <div class="col-md-1">
-                            <input class="form-control scoreInput"
-                                   value="${answerRecord.markingRecord.markingScore}">
+                            <%--<div class="col-md-offset-7 col-md-2 text-right"><h5>คะแนน :</h5></div>--%>
+                        <div class="col-md-3 col-md-offset-8">
+                            <div class="col-md-5" align="right">
+                                <h5>คะแนน :</h5>
+                            </div>
+                            <div class=" col-md-7">
+                                <input class="form-control scoreInput" min=0 oninput="validity.valid||(value='');"
+                                       type="number" step="0.1"
+                                       value="${answerRecord.markingRecord.markingScore}">
+                            </div>
                         </div>
                         <div class="col-md-1"><h5>/&nbsp;
                             <c:forEach var="paperQuestion" items="${examResult.examRecord.paper.questions}">
@@ -128,6 +149,99 @@
                 <c:set var="questionNumber" value="${questionNumber+1}"/>
 
             </c:if>
+
+
+            <%--Objective--%>
+            <c:if test="${answerRecord.question.questionType.id == 1}">
+
+                <div class="questionContainer containerObjective hidden" questionNo="${questionNumber}"
+                     questionId="${answerRecord.question.id}"
+                     answerRecordId="${answerRecord.id}">
+                    <div class="row question-row">
+                        <div class="col-md-1 text-right">ป-${questionNumberObjective} :</div>
+                        <div class="col-md-10"><span style="font-weight:bold ">คำถาม :</span>
+            <span>
+                    ${answerRecord.question.description}
+            </span>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="row answer-row">
+                        <div class="col-md-10">
+                            <c:forEach var="choice1" items="${answerRecord.question.choices}">
+                                <form role="form">
+                                    <c:if test='${choice1.status.id == 3}'>
+                                        <div class="row">
+                                                <%--<form role="form">--%>
+                                            <div class="col-md-1 col-md-offset-1">
+                                                <span class="glyphicon glyphicon-ok text-success choiceCorrectness
+                                                <c:if test="${!choice1.correction}">hidden</c:if>
+                                                " style="margin-top: 12px"></span>
+                                            </div>
+                                            <div class="col-md-10">
+                                                <div class="radio">
+                                                    <label><input class="choiceDescRadio"
+                                                                  name="${answerRecord.question.id}" type="radio"
+                                                                  <c:if test="${answerRecord.answerObjective.id == choice1.id}">checked</c:if>
+                                                            >${choice1.description}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </c:if>
+                                </form>
+
+                            </c:forEach>
+
+
+                        </div>
+                    </div>
+                    <div class="row ">
+                            <%--<div class="col-md-offset-7 col-md-2 text-right"><h5>คะแนน :</h5></div>--%>
+                        <%--<div class="col-md-3 col-md-offset-8">--%>
+                            <%--<div class="col-md-5" align="right">--%>
+                                <%--<h5>คะแนน :</h5>--%>
+                            <%--</div>--%>
+                            <%--<div class=" col-md-7">--%>
+                                <%--<input class="form-control scoreInputObjective" min=0--%>
+                                       <%--oninput="validity.valid||(value='');"--%>
+                                       <%--type="number" step="0.1"--%>
+                                       <%--value="0"--%>
+                                       <%--maxScore="${paperQuestion.score}"--%>
+                                       <%--disabled>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<div class="col-md-1"><h5>/&nbsp;--%>
+                            <c:forEach var="paperQuestion" items="${examResult.examRecord.paper.questions}">
+
+                            <c:if test="${paperQuestion.pk.question.id == answerRecord.question.id}">
+                            <div class="col-md-3 col-md-offset-8">
+                                <div class="col-md-5" align="right">
+                                    <h5>คะแนน :</h5>
+                                </div>
+                                <div class=" col-md-7">
+                                    <input class="form-control scoreInputObjective" min=0
+                                           oninput="validity.valid||(value='');"
+                                           type="number" step="0.1"
+                                           value="0"
+                                           maxScore="${paperQuestion.score}"
+                                           disabled>
+                                </div>
+                            </div>
+                            <div class="col-md-1"><h5>/&nbsp;
+                            <span class="maxScore">${paperQuestion.score}</span></h5></div>
+                        </c:if>
+
+                        </c:forEach>
+
+
+                    </div>
+                    <hr>
+                </div>
+                <c:set var="questionNumberObjective" value="${questionNumberObjective+1}"/>
+
+            </c:if>
+
         </c:forEach>
         <!----------------------------------------------->
 
@@ -150,13 +264,13 @@
             </h5>
         </div>
         <div class="col-md-offset-4 col-md-2">
-            <button class="btn btn-primary submitMarkingBtn <c:if test="${examResult.status.id == 7}">hidden</c:if>"
+            <button class="btn btn-success submitMarkingBtn <c:if test="${examResult.status.id == 7}">hidden</c:if>"
                     style="width: 100%;" data-toggle="modal"
                     data-target="#submitMarkingModal">ส่งผลตรวจ
             </button>
         </div>
         <div class="col-md-2">
-            <button class="btn btn-default cancleMarkingBtn" style="width: 100%;">ยกเลิก</button>
+            <button class="btn btn-warning cancleMarkingBtn" style="width: 100%;">ยกเลิก</button>
         </div>
     </div>
 
@@ -183,14 +297,14 @@
                         </button>
                         &nbsp;
                     </span>
-                        <button id="confirmSubmitMarking" class="btn btn-primary" data-dismiss="modal">ส่งผลตรวจ
+                        <button id="confirmSubmitMarking" class="btn btn-success" data-dismiss="modal">ส่งผลตรวจ
                         </button>
                         &nbsp;
-                        <button id="confirmSubmitMarkingCONFIRM" class="btn btn-warning" data-dismiss="modal">
+                        <button id="confirmSubmitMarkingCONFIRM" class="btn btn-success" data-dismiss="modal">
                             ยืนยันผลตรวจ
                         </button>
                         &nbsp;
-                        <button id="cancleSubmitMarking" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
+                        <button id="cancleSubmitMarking" class="btn btn-warning" data-dismiss="modal">ยกเลิก</button>
                     </div>
                 </div>
             </div>

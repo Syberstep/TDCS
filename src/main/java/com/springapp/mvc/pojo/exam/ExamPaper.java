@@ -3,10 +3,12 @@ package com.springapp.mvc.pojo.exam;
 import com.springapp.mvc.pojo.Position;
 import com.springapp.mvc.pojo.User;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.*;
+import java.util.Date;
+import java.util.Set;
 
 /**
  * Created by Phuthikorn_T on 6/30/2015.
@@ -17,8 +19,8 @@ import java.util.*;
 public class ExamPaper implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "examPaper_id_generator")
-    @SequenceGenerator(name = "examPaper_id_generator")
+    @GenericGenerator(name="paper_id" , strategy="increment")
+    @GeneratedValue(generator="paper_id")
     @Column(name = "PAPER_ID")
     private Integer id;
 
