@@ -5,8 +5,6 @@ import com.springapp.mvc.pojo.exam.Question;
 import com.springapp.mvc.util.HibernateUtil;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.ProjectionList;
-import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,8 +17,6 @@ import java.util.List;
  */
 @Service
 public class QueryChoiceDomain extends HibernateUtil {
-    @Autowired
-    QueryBooDomain queryBooDomain;
 
     @Autowired
     QueryStatusDomain queryStatusDomain;
@@ -36,10 +32,16 @@ public class QueryChoiceDomain extends HibernateUtil {
 
             choice.setStatus(queryStatusDomain.getReadyStatus());
 
+//            if (i + 1 == correctChoice) { // choice correction range 1~4
+//                choice.setCorrection(queryBooDomain.getTrue());
+//            } else {
+//                choice.setCorrection(queryBooDomain.getFalse());
+//            }
+
             if (i + 1 == correctChoice) { // choice correction range 1~4
-                choice.setCorrection(queryBooDomain.getTrue());
+                choice.setCorrection(true);
             } else {
-                choice.setCorrection(queryBooDomain.getFalse());
+                choice.setCorrection(false);
             }
 
             choiceList.add(choice);

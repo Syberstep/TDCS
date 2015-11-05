@@ -10,7 +10,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-//import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,6 +18,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+
+//import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Created by PTang_000 on 14-Oct-15.
@@ -47,18 +48,18 @@ public class ResultController {
         return "checkScore";
     }
 
-    @RequestMapping(method=RequestMethod.POST, value="/exam/checkScore/getResultDetail")
+    @RequestMapping(method= RequestMethod.POST, value="/exam/checkScore/getResultDetail")
     @ResponseBody
     public ResponseEntity<String> getResultDetail(@RequestParam(value = "resultId",required = true)Integer resultId){
 
         ExamResult examResult = queryExamResultDomain.getExamResultById(resultId);
-        if(examResult.getStatus().getId() != 6){
+        if(examResult.getStatus().getId() != 7){
             examResult = null;
         }
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json;charset=UTF-8");
-        String json = new JSONSerializer().exclude("*.examPaper").exclude("*.examResult").exclude("*.class").serialize(examResult);
+        String json = new JSONSerializer().exclude("*.examPaper").exclude("*.examResult").exclude("*.class").exclude("*.paper").exclude("*.status").serialize(examResult);
 
         return new ResponseEntity<String>(json, headers, HttpStatus.OK);
 

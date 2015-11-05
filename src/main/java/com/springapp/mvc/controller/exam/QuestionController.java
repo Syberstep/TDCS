@@ -60,9 +60,6 @@ public class QuestionController {
     @Autowired
     QueryStatusDomain queryStatusDomain;
 
-    @Autowired
-    QueryBooDomain queryBooDomain;
-
     private static final Logger logger = Logger.getLogger(QuestionController.class.getName());
 
     @RequestMapping(method = RequestMethod.POST, value = "/exam/addQuestion")

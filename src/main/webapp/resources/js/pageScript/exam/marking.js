@@ -2,15 +2,46 @@
  * Created by Phuthikorn_T on 1/10/2558.
  */
 
+$(document).ready(function(){
+    $(".choiceDescRadio").prop('disabled',true)
+    //$(".choiceCorrectness:not(.hidden)").parent().parent().find('.choiceDescRadio:checked').closest('.containerObjective').find('.scoreInputObjective')
+    $.each($(".choiceCorrectness:not(.hidden)").parent().parent().find('.choiceDescRadio:checked').closest('.containerObjective').find('.scoreInputObjective'),function(){
+        $(this).val(parseFloat($(this).attr('maxScore')))
+        //alert(parseFloat($(this).attr('maxScore')))
+    })
+})
+
+var showObjective = false
+$("#showObjective").on('click',function(){
+    if(showObjective == false) {
+        $(".containerObjective").removeClass("hidden")
+        $(this).text('เลิกแสดงข้อปรนัย')
+        showObjective = true
+
+    }else{
+        $(".containerObjective").addClass("hidden")
+        $(this).text('แสดงข้อปรนัย')
+        showObjective = false
+    }
+})
+
+$(".cancleMarkingBtn").on('click',function(){
+    location.href="/TDCS/exam/examRecordSearch"
+})
 
 $('#marking-body').on('focusout', '.scoreInput', function () {
-    var maxScore = parseFloat($(this).parent().parent().children().children('h5').children('span').text());
+    console.log('focusout')
+    var maxScore = parseFloat($(this).parent().parent().parent().find(".maxScore").text());
+    console.log("maxscore = "+maxScore)
     if (!isNaN(($(this).val()))) {
         if ($(this).val() > maxScore) {
-            alert('คะแนนที่ให้มากกว่าคะแนนเต็ม' + $(this).val());
+            alert('คะแนนที่ให้มากกว่าคะแนนเต็ม');
             $(this).val('');
             document.getSelection().removeAllRanges();
-            jumpToElement($(this))
+            jumpToElement($(this), 250)
+        }else if($(this).val() < 0){
+            alert('ให้คะแนนติดลบ')
+            jumpToElement($(this),250)
         }
         updateSumScore()
     } else {
@@ -22,7 +53,7 @@ $('#marking-body').on('focusout', '.scoreInput', function () {
 })
 
 $('#confirmSubmitMarkingCONFIRM').on('click',function(){
-    var confirmation = confirm('หากยืนยันการตรวจแล้วจะไม่สามารถแก้ไขได้อีก ต้องการยืนยันผมตรว0หรือไม่')
+    var confirmation = confirm('หากยืนยันผลตรวจแล้วจะไม่สามารถแก้ไขได้อีก ต้องการยืนยันผลตรวจหรือไม่')
     if(confirmation){
         submitMarking(true)
     }
@@ -43,7 +74,7 @@ $(".submitMarkingBtn").on('click', function () {
 })
 
 goToUnfinishBtn.on('click', function () {
-    jumpToElement($('.questionContainer[questionNo="' + $(this).val() + '"'), 100)
+    jumpToElement($('.containerSubjective[questionNo="' + $(this).val() + '"'), 100)
 })
 
 $('#toTop').on('click', function () {
@@ -62,7 +93,7 @@ function markingRecord(answerRecordId, score) {
 }
 
 var submitMarking = function (confirmation) {
-    var questions = $('#marking-body .questionContainer');
+    var questions = $('#marking-body .containerSubjective');
     var markingArray = [];
 
     $.each(questions, function (index, value) {
@@ -122,7 +153,7 @@ var confirmationModalUpdate = function () {
 }
 
 var checkMarkingCompletion = function () {
-    var questions = $('#marking-body .questionContainer')
+    var questions = $('#marking-body .containerSubjective')
     var unfinishedArray = [];
 
     $.each(questions, function (index, value) {

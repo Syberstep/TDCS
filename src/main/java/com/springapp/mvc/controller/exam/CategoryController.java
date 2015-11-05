@@ -5,9 +5,6 @@ import com.springapp.mvc.domain.QueryUserDomain;
 import com.springapp.mvc.domain.exam.QueryCategoryDomain;
 import com.springapp.mvc.pojo.User;
 import com.springapp.mvc.pojo.exam.Category;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -15,13 +12,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import com.springapp.mvc.util.HibernateUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import javax.xml.ws.Response;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -42,16 +36,18 @@ public class CategoryController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/exam/addCategory")
     @ResponseBody
-    public void addCategory(ModelMap model, @Valid Category category
+    public ResponseEntity<String> addCategory(ModelMap model, @Valid Category category
             , HttpServletRequest request, HttpServletResponse response) {
 
         User createBy = queryUserDomain.getCurrentUser(request);
         category.setCreateBy(createBy);
 
         queryCategoryDomain.insertCategory(category);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json;charset=UTF-8");
+        String json = new Gson().toJson(category);
 
-
-// return null;
+        return new ResponseEntity<String>(json, headers, HttpStatus.OK);
     }
 
     //    Add by Mr. Wanchana

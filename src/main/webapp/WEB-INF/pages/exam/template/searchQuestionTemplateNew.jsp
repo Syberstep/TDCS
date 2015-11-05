@@ -76,13 +76,15 @@
                             <label>คะแนน :</label>
                         </div>
                         <div class="col-md-3 form-group" style="padding: 0;">
-                            <input id="searchScoreFromInput" type="text" class="form-control input-sm" placeholder="คะแนนตั้งแต่"/>
+                            <input id="searchScoreFromInput" class="form-control input-sm" placeholder="ตั้งแต่"
+                                   min=0 oninput="validity.valid||(value='');" type="number" step="0.1"/>
                         </div>
                         <div class="col-sm-1 col-sm-offset-1" align="right">
                             <label for="searchScoreToInput">ถึง :</label>
                         </div>
                         <div class="col-md-3 form-group" style="padding: 0;">
-                            <input id="searchScoreToInput" type="text" class="form-control input-sm" placeholder="ถึง"/>
+                            <input id="searchScoreToInput" class="form-control input-sm" placeholder="ถึง"
+                                   min=0 oninput="validity.valid||(value='');" type="number" step="0.1"/>
                         </div>
                     </div>
                     <div class="row">

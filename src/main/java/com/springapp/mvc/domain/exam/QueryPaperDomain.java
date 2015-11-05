@@ -2,15 +2,20 @@ package com.springapp.mvc.domain.exam;
 
 import com.springapp.mvc.pojo.Position;
 import com.springapp.mvc.pojo.User;
-import com.springapp.mvc.pojo.exam.*;
+import com.springapp.mvc.pojo.exam.ExamPaper;
+import com.springapp.mvc.pojo.exam.ExamRecord;
+import com.springapp.mvc.pojo.exam.PaperQuestion;
+import com.springapp.mvc.pojo.exam.Status;
 import com.springapp.mvc.util.HibernateUtil;
 import org.hibernate.Criteria;
-import org.hibernate.criterion.*;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Paper;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
