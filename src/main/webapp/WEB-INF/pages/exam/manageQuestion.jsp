@@ -13,9 +13,10 @@
     var context = '${context}';
 </script>
 
-<%@include file="modal/createQuestionModal.jsp" %>
-<%--<tiles:insertTemplate template="/WEB-INF/pages/exam/modal/createQuestionModal.jspx"/>--%>
-<%@include file="modal/questionDetailModal.jsp" %>
+<%--<%@include file="modal/createQuestionModal.jsp" %>--%>
+<tiles:insertTemplate template="/WEB-INF/pages/exam/modal/createQuestionModal.jsp"/>
+<%--<%@include file="modal/questionDetailModal.jsp" %>--%>
+<tiles:insertTemplate template="/WEB-INF/pages/exam/modal/questionDetailModal.jsp"/>
 
 <script>
     if ('${status}' == 'user' || '${status}' == '') {
@@ -29,7 +30,8 @@
 <hr/>
 
 <div class="container">
-    <%@include file="template/searchQuestionTemplateNew.jsp" %>
+    <%--<%@include file="template/searchQuestionTemplateNew.jsp" %>--%>
+    <tiles:insertTemplate template="/WEB-INF/pages/exam/template/searchQuestionTemplateNew.jsp"/>
 
     <!-- Example table information, it will remove soon ^^ -->
     <div class="row">

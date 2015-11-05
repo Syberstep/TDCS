@@ -8,10 +8,6 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!-- Modal Search Advance -->
-<c:set var="context" value="${pageContext.request.contextPath}"/>
-<script>
-  var context = '${context}';
-</script>
 <style>
   #dataNotFound{
     background-color: #b2e0ff;
