@@ -11,20 +11,24 @@
         <h5>หมวดหมู่ :</h5>
     </div>
 
-    <div class="col-sm-6 input-group">
-        <input type="text" class="form-control" name="cat" id="selectCategoryToSelectionForRandom" placeholder="ค้นหาหมวดหมู่" autocomplete="off"/>
-
-        <span class="input-group-addon" id="selectCatForRandom">
-        <i class="glyphicon glyphicon-search" onclick="listcatSelectInputForRandom()" style="cursor: pointer; height: 20px;"></i>
+    <div class="col-sm-8 input-group">
+        <input type="text" class="form-control input-sm" name="cat" id="selectCategoryToSelectionForRandom"
+               placeholder="ค้นหาหมวดหมู่" autocomplete="off"/>
+        <span class="input-group-addon input-group-sm input-sm" id="selectCatForRandom" style="height: 10px;">
+            <i class="" onclick="listcatSelectInputForRandom()"
+               style="cursor: pointer; height: 20px;">
+                <span class="glyphicon glyphicon-search"></span>
+            </i>
         </span>
     </div>
+
 </div>
 <div class="col-sm-6">
     <div class="col-sm-3 text-right">
         <h5>หัวข้อเรื่อง :</h5>
     </div>
-    <div class="col-sm-6 form-group" style="padding: 0;">
-        <select id="selectSubCategoryToSelectionForRandom" class="form-control" data-width="100%">
+    <div class="col-sm-8 form-group" style="padding: 0;">
+        <select id="selectSubCategoryToSelectionForRandom" class="form-control input-sm" data-width="100%">
         </select>
     </div>
 </div>

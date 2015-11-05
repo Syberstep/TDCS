@@ -268,7 +268,8 @@ function deletePapers(){
         data: jsonObj,
         success: function () {
             alert('ลบชุดข้อสอบเรียบร้อยแล้ว');
-            window.location.reload();
+            //window.location.reload();
+            getAllPapers();
         },
         error: function () {
             alert('ลบชุดข้อสอบผิดพลาด');
