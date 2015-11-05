@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="context" value="${pageContext.request.contextPath}"/>
 <script>
     var context = '${context}';
@@ -8,7 +9,6 @@
         window.location.href = context+"/TDCS/index.html";
     }
 </script>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript" src="<c:url value="/resources/js/callutaeAge.js" />"></script>
 <script src="<c:url value="/resources/js/callculatetime.js" />"></script>
 <script src="<c:url value="/resources/js/callculatetime.js" />"></script>
