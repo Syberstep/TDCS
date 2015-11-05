@@ -3,10 +3,11 @@
  */
 
 $(".doExamBtn").on('click',function(){
+    console.log('hello')
     $("#confirmationModal").modal("show")
     $("#doExamConfirmedBtn").attr("paperId",$(this).attr("paperId"))
 })
 
 $("#doExamConfirmedBtn").on('click',function(){
-    location.href= conext+"/TDCS/exam/doExam?paperId="+$(this).attr("paperId")
+    location.href= context+"/TDCS/exam/doExam?paperId="+$(this).attr("paperId")
 })

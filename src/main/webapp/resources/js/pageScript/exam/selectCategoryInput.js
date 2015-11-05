@@ -22,63 +22,6 @@ var getSearchSubCategoryInputValue = function () {
     }
 }
 
-var updateCategoryList = function () {
-    clearCategoryList()
-    var ajaxDat = $.ajax({
-        type: "POST",
-        url: "/TDCS/exam/getAllCategory",
-        success: function (catList) {
-            catList.forEach(function (category) {
-                $('#selectCategoryToSelection').append('<option class="category" categoryId="' + category.id + '"' +
-                ' categoryName="' + category.name + ' value=' + category.id + '">' + category.id + ' : ' + category.name + '')
-            })
-        },
-        error: function () {
-            alert("error in updateCategoryList()")
-        }
-    })
-}
-
-var updateSubCategoryList = function () {
-    var catSelect = $('#selectCategoryToSelection');
-    var subcatSelect = $('#selectSubCategoryToSelection');
-    subcatSelect.empty();
-    subcatSelect.append("<option selected value=''></option>");
-    var data = null;
-    if (catSelect.children('.category:selected').val()) {
-        data = catSelect.children('.category:selected').attr('categoryId')
-    } else(
-        data = ""
-    )
-    console.log(data.length)
-
-    var ajaxDat = $.ajax({
-        type: "POST",
-        url: "/TDCS/exam/getAllSubCategoryInCategory",
-        data: {
-            categoryId: data
-        },
-        success: function (item) {
-            if (jQuery.isEmptyObject(item)) {
-                subcatSelect.empty();
-                //if (catSelect.val() == "") {
-                //    subcatSelect.append("<option selected value=''></option>");
-                //}
-            }
-            if (item) {
-                item.forEach(function (item) {
-                    subcatSelect.append('<option class="subCategory" subCategoryId="' + item.id + '"' +
-                    ' subCategoryName="' + item.name + '" subCategoryId="' + item.id + '"' +
-                    'value="' + item.name + '""> ' + item.name +
-                    '</option>')
-                })
-            }
-        },
-        error: function () {
-            alert("error in updateSubCategoryList()")
-        }
-    })
-}
 var clearCategoryList = function () {
     var categorySelect = $('#selectCategoryToSelection');
     categorySelect.empty();
@@ -87,7 +30,6 @@ var clearCategoryList = function () {
 
 $(document).ready(function () {
     clearCategoryList()
-    updateCategoryList()
     //$("#selectSubCategoryToSelection").prepend('<option value="">'+"เลือกหัวข้อเรื่อง"+'</option>');
     var data = $.ajax({
         type: "POST",
@@ -96,7 +38,7 @@ $(document).ready(function () {
         async: false,
         success: function (data) {
             $("#selectSubCategoryToSelection").append(
-                '<option value="" >' + "ทั้งหมด" + '</option>'
+                '<option value="" >' + "" + '</option>'
             )
             data.forEach(function (value) {
                 $("#selectSubCategoryToSelection").append(
@@ -112,17 +54,11 @@ $(document).ready(function () {
 
     });
 })
-$('#selectCategoryToSelection').on('change', function () {
-    console.log("event on category change")
-    $('selectSubCategoryToSelection').children('.subCategory').remove()
-    updateSubCategoryList()
-})
 
 var catAndSubcatSelectNothing = function () {
     $('#selectCategoryToSelection option:selected').removeAttr("selected");
     $('#selectCategoryToSelection').val("");
     $('#selectCategoryToSelection option[value=""]').attr('selected', 'selected');
-    //updateSubCategoryList();
 
 }
 
@@ -131,7 +67,6 @@ $("#selectCategoryToSelection").keyup(function (e) {
     if (e.which > 0) {
         e.preventDefault();
         listcatSelectInput();
-
     }
 });
 function listcatSelectInput() {
@@ -183,7 +118,7 @@ var listSubCategory = function () {
         categoryId = categoryId2;
         var data = $.ajax({
             type: "POST",
-            url: "/TDCS/exam/getSubCategoryToDropDown",
+            url: context+"/TDCS/exam/getSubCategoryToDropDown",
             data: {
                 categoryId: categoryId
             },
@@ -213,7 +148,7 @@ var listSubCategory = function () {
     } else {
         var data = $.ajax({
             type: "POST",
-            url: "/TDCS/exam/getSubCategoryToDropDown",
+            url: context+"/TDCS/exam/getSubCategoryToDropDown",
             data: {
                 categoryId: categoryId
             },

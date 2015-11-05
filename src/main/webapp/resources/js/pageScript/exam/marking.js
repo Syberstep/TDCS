@@ -74,7 +74,7 @@ $(".submitMarkingBtn").on('click', function () {
 })
 
 goToUnfinishBtn.on('click', function () {
-    jumpToElement($('.questionContainer[questionNo="' + $(this).val() + '"'), 100)
+    jumpToElement($('.containerSubjective[questionNo="' + $(this).val() + '"'), 100)
 })
 
 $('#toTop').on('click', function () {
@@ -93,7 +93,7 @@ function markingRecord(answerRecordId, score) {
 }
 
 var submitMarking = function (confirmation) {
-    var questions = $('#marking-body .questionContainer');
+    var questions = $('#marking-body .containerSubjective');
     var markingArray = [];
 
     $.each(questions, function (index, value) {
@@ -153,7 +153,7 @@ var confirmationModalUpdate = function () {
 }
 
 var checkMarkingCompletion = function () {
-    var questions = $('#marking-body .questionContainer')
+    var questions = $('#marking-body .containerSubjective')
     var unfinishedArray = [];
 
     $.each(questions, function (index, value) {

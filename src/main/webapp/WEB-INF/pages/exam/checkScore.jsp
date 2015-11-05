@@ -68,7 +68,7 @@
 
 
 <%@include file="modal/showScoreModal.jsp" %>
-<script src="../../../resources/js/pageScript/exam/checkScore.js"></script>
+<script src="${context}/resources/js/pageScript/exam/checkScore.js"></script>
 
 <style>
 

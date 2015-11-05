@@ -57,8 +57,8 @@
 
     <div id="countdownContainer" class="btn btn-success" style="position: fixed; right:5px;top: 60px;">
         <div>
-            <div class="">&nbsp;เวลาที่เหลือ</div>
-            <span id="countdown">00:00:00</span>
+            <div class=""><h3>&nbsp;เวลาที่เหลือ</h3></div>
+            <span ><h3 id="countdown">00:00:00</h3></span>
         </div>
     </div>
 
@@ -96,8 +96,8 @@
         </div>
     </div>
 
-    <script src="../../../resources/js/pageScript/exam/doExam.js"></script>
-    <script src="../../../resources/js/jquery.timer.js"></script>
+    <script src="${context}/resources/js/pageScript/exam/doExam.js"></script>
+    <script src="${context}/resources/js/jquery.timer.js"></script>
 </c:if>
 
 <c:if test="${user == null}">

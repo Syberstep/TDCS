@@ -104,4 +104,4 @@
     </div>
 </div>
 
-<script src="../../../resources/js/pageScript/exam/mainPageStudent.js"></script>
+<script src="${context}/resources/js/pageScript/exam/mainPageStudent.js"></script>
