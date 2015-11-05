@@ -198,7 +198,7 @@
     </div>
 
 
-    <script src="../../../resources/js/pageScript/exam/marking.js"></script>
+    <script src="${context}/resources/js/pageScript/exam/marking.js"></script>
     <style>
         textarea {
             resize: vertical;

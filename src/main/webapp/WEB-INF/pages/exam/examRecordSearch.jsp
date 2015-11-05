@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <c:set var="context" value="${pageContext.request.contextPath}"/>
 <script>
     var context = '${context}';
@@ -70,7 +71,8 @@
 
                 </div>
                 <div class="row" style="margin: 15px 0 0 9px">
-                        <%@include file="template/selectCreateByInput.jsp" %>
+                        <%--<%@include file="template/selectCreateByInput.jsp" %>--%>
+                    <tiles:insertTemplate template="/WEB-INF/pages/exam/template/selectCreateByInput.jsp"/>
 
                     <div class="col-sm-6">
                         <label class="col-sm-3 control-label " style="text-align: right; margin-left: 16px">ตำแหน่ง :</label>
@@ -185,6 +187,7 @@
     <%--<!-- /.modal-dialog -->--%>
 <%--</div>--%>
 <%--<!-- /.modal -->--%>
-<%@include file="modal/addEmployeeToInputModal.jsp" %>
+<%--<%@include file="modal/addEmployeeToInputModal.jsp" %>--%>
+<tiles:insertTemplate template="/WEB-INF/pages/exam/modal/addEmployeeToInputModal.jsp"/>
 <script type="text/javascript" src="<c:url value="/resources/js/pageScript/exam/examRecordSearch.js" />"></script>
 <%--end class row--%>
