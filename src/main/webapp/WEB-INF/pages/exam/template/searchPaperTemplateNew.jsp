@@ -19,7 +19,7 @@
         </div>
         <div class="panel-body">
             <div class="row">
-                <div class="col-sm-2" align="right">
+                <div class="col-sm-2 text-right">
                     <label>รหัสชุดข้อสอบ :</label>
                 </div>
                 <div class="col-md-3 form-group" style="padding: 0;">
@@ -32,15 +32,16 @@
                     <input id="paperName" type="text" class="form-control input-sm" placeholder="ชื่อชุดข้อสอบ"/>
                 </div>
             </div>
-
-            <%@include file="selectCreateByInput.jsp" %>
             <div class="row">
-                <div class="col-sm-9 col-sm-offset-2">
-                    <div id="showEmployeeSelected" width="100%;">
-
-                    </div>
-                </div>
+                <%@include file="selectCreateByInput.jsp" %>
             </div>
+            <%--<div class="row">--%>
+                <%--<div class="col-sm-8 col-sm-offset-2">--%>
+                    <%--<div id="showEmployeeSelected" style="padding: 0; margin: 0;">--%>
+
+                    <%--</div>--%>
+                <%--</div>--%>
+            <%--</div>--%>
             <br/>
             <div class="row">
                 <div class="col-md-12 text-center">

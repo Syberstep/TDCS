@@ -203,9 +203,9 @@ $(document).ready(function(){
         createPaper();
     });
 
-    $("#copyPaperBtn").unbind('click').click(function(){
-        onLoadPageCopyPaper();
-    });
+    //$("#copyPaperBtn").unbind('click').click(function(){
+    //    onLoadPageCopyPaper();
+    //});
 
     $("#cancelBtn").unbind('click').click(function(){
         window.location.reload(true);
@@ -603,7 +603,7 @@ function createPaper(){
         tempArrayQuestion.push(item);
     }
     jsonObjQuestion = JSON.stringify(tempArrayQuestion);
-
+    alert(questionsInPaper + " " + newQuestionScore);
     $.ajax({
         type: "POST",
         url:context+ "/TDCS/exam/createPaper",
@@ -617,8 +617,8 @@ function createPaper(){
         },
         success: function(paperId){
             alert('บันทึกข้อมูลสำเร็จ');
-            //window.location.href = "/TDCS/exam/managePapers";
-            toUrl(paperId);
+            window.location.href = context+"/TDCS/exam/managePapers";
+            //toUrl(paperId);
         },
         error: function(){
             alert('เกิดข้อผิดพลาด');
@@ -640,21 +640,21 @@ function onLoadPageCreatePaper(){
 
 function onLoadPageCopyPaper(){
     $("h3").text('คัดลอกชุดข้อสอบ '+$("#newPaperId").val()+" : "+$("#newPaperName").val());
-    $("#copyPaperBtn").hide();
+    //$("#copyPaperBtn").hide();
     $("#updatePaperBtn").hide();
-    $("#saveCopyPaperBtn").show();
+    //$("#saveCopyPaperBtn").show();
     $("#cancelBtn").show();
     $("#cancelCreatePaperBtn").hide();
     $("#newPaperScore").attr('disabled', 'disabled');
     $("#newPaperForPosition").attr('disabled', 'disabled');
     $("#hours").attr('disabled', 'disabled');
     $("#minutes").attr('disabled', 'disabled');
-    $("body button:not(#saveCopyPaperBtn):not(#cancelBtn)").attr('disabled', 'disabled');
+    //$("body button:not(#saveCopyPaperBtn):not(#cancelBtn)").attr('disabled', 'disabled');
     $("#tbSelectedQuestionToPaper input[type=checkbox], #tbSelectedQuestionToPaper input[type=number]").attr('disabled', 'disabled');
 }
 
 function onLoadPageEditPaper(){
-    $("#copyPaperBtn").show();
+    //$("#copyPaperBtn").show();
     $("#questionNotFound").hide();
     $("#removeRowSelected").removeAttr('disabled');
     $("#addQuestionBtn").removeAttr('disabled');
@@ -951,7 +951,7 @@ function dataNotFound(){
 
 function dataFound(){
     $("#removeRowQuestionSelect").show();
-    $("#removeRowQuestionSelect").attr('disabled', 'disabled');
+    //$("#removeRowQuestionSelect").attr('disabled', 'disabled');
     $("#questionsAreEmpty").hide();
     $("#removeRowSelected").removeAttr('disabled');
     $("#addQuestionBtn").removeAttr('disabled');

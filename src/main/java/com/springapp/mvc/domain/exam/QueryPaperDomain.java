@@ -31,6 +31,8 @@ public class QueryPaperDomain extends HibernateUtil {
 
     @Autowired
     QueryStatusDomain queryStatusDomain;
+    @Autowired
+    QueryExamRecordDomain queryExamRecordDomain;
 
     public ExamPaper getPaperById(Integer paperId) {
         Criteria criteria = getSession().createCriteria(ExamPaper.class);
@@ -40,6 +42,14 @@ public class QueryPaperDomain extends HibernateUtil {
     }
 
     //    Add By Mr.Wanchana
+    public ExamPaper getPaperByCode(String code){
+
+        Criteria criteria = getSession().createCriteria(ExamPaper.class);
+        criteria.add(Restrictions.eq("code", code));
+
+        return (ExamPaper) criteria.list().get(0);
+    }
+
     public void createPaper(ExamPaper examPaper, List<Integer> qIds, List<Float> newScores) {
 
         HibernateUtil.beginTransaction();
@@ -127,7 +137,14 @@ public class QueryPaperDomain extends HibernateUtil {
         try {
             for (int i = 0; i < paperId.size(); i++) {
                 ExamPaper examPaper = queryPaperDomain.getPaperById((Integer) paperId.get(i));
-                getSession().delete(examPaper);
+                if(queryExamRecordDomain.checkExamRecordInUse((Integer) paperId.get(i)) == true){
+                    examPaper.setPaperStatus(queryStatusDomain.getDeletedStatus());
+                    getSession().merge(examPaper);
+                }
+                else{
+                    getSession().delete(examPaper);
+                }
+//                getSession().delete(examPaper);
             }
             HibernateUtil.commitTransaction();
 
