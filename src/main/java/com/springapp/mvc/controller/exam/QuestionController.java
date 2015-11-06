@@ -210,21 +210,6 @@ public class QuestionController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/exam/getChoiceDetail")
-    @ResponseBody
-    public ResponseEntity<String> getChoiceDetail(ModelMap model
-            , @RequestParam(value = "questionId", required = true) Integer questionId
-            , HttpServletRequest request, HttpServletResponse respons) {
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/json;charset=UTF-8");
-
-        List<Choice> choices = queryChoiceDomain.getChoiceListByQuestionId(questionId);
-        String json = new JSONSerializer().exclude("*.class").serialize(choices);
-
-        return new ResponseEntity<String>(json, headers, HttpStatus.OK);
-    }
-
     @RequestMapping(method = RequestMethod.POST, value = "/exam/getQuestionDetail")
     @ResponseBody
     public ResponseEntity<String> getQuestionDetail(ModelMap modelMap,

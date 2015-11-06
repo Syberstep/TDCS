@@ -96,7 +96,7 @@
                 <br>
                 <div class="row">
                     <div class="col-md-2 col-md-offset-4">
-                        <button class="btn btn-gray btn-block" id="detailEditBtn">แก้ไข</button>
+                        <button class="btn btn-gray btn-block detailEditBtn">แก้ไข</button>
                     </div>
                     <div class="col-md-2">
                         <button class="btn btn-warning btn-block" data-dismiss="modal">ปิด</button>

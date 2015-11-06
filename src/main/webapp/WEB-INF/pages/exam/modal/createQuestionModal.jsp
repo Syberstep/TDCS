@@ -51,7 +51,7 @@
                                 class="glyphicon glyphicon-ok"></span></button>
                     </div>
                     <div class="col-md-1">
-                        <button class="btn btn-warning btn-block form-control" id="createCategoryCancleBtn"><span
+                        <button class="btn btn-danger btn-block form-control" id="createCategoryCancleBtn"><span
                                 class="glyphicon glyphicon-remove"></span></button>
                     </div>
 
@@ -84,7 +84,7 @@
                                 class="glyphicon glyphicon-ok"></span></button>
                     </div>
                     <div class="col-md-1">
-                        <button class="btn btn-warning btn-block form-control" id="createSubCategoryCancleBtn"><span
+                        <button class="btn btn-danger btn-block form-control" id="createSubCategoryCancleBtn"><span
                                 class="glyphicon glyphicon-remove "></span></button>
                     </div>
 
@@ -201,7 +201,7 @@
                             <button class="btn btn-success" id="submitCreateBtn">บันทึก</button>
                         </div>
                         <div class="col-md-1">
-                            <button class="btn btn-warning" dat-dismiss="modal">ยกเลิก</button>
+                            <button class="btn btn-danger" dat-dismiss="modal">ยกเลิก</button>
                         </div>
                     </div>
 

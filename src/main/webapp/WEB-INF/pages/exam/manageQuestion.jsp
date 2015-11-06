@@ -61,7 +61,7 @@
                     <th style="text-align: center">คะแนน</th>
                     <th style="text-align: center">ผู้สร้าง</th>
                     <th style="text-align: center">วันที่สร้าง</th>
-
+                    <th style="text-align: center">แก้ไข</th>
                     <%--<th style="text-align: center">Action</th>--%>
                 </tr>
                 </thead>

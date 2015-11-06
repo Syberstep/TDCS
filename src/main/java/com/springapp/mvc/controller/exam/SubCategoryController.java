@@ -42,7 +42,7 @@ public class SubCategoryController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/exam/addSubCategory")
     @ResponseBody
-    public void addSubCategory(Model model,
+    public ResponseEntity<String> addSubCategory(Model model,
                                @RequestParam(value = "categoryId", required = true) String categoryId,
                                @RequestParam(value = "subcategoryNameadd", required = true) String subcategoryName,
                                HttpServletRequest request, HttpServletResponse response) {
@@ -58,6 +58,11 @@ public class SubCategoryController {
         subCategory.setCreateBy(currentUser);
 
         querySubCategoryDomain.insertSubCategory(subCategory);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json;charset=UTF-8");
+        String json = new Gson().toJson(subCategory);
+        return new ResponseEntity<String>(json, headers, HttpStatus.OK);
     }
 
     //end add

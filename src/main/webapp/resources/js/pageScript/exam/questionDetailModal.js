@@ -9,11 +9,11 @@ $(document).ready(function () {
     $("#correctDetail4").hide();
 })
 
-$('#detailEditBtn').on('click', function () {
+$('.detailEditBtn').on('click', function () {
     $('#questionDetailModal').modal('hide')
     $('#submitCreateBtn').text('ยืนยัน');
     $('#createQuestModalTitle').text('แก้ไขข้อสอบ');
-    setEditModalParameter();
+    setEditModalParameter(questionObj.attr('questionId'));
     $('#createQuest').modal('show')
 })
 
@@ -66,7 +66,7 @@ var updateDetailModal = function (tr) {
             question.choices.forEach(function (choice) {
                 var currentChoice = $('#choiceDetail' + i)
                 currentChoice.text(choice.description);
-                if (choice.correction.value == 1) {
+                if (choice.correction) {
                     //$('#correctDetail' + i).show();
                     //currentChoice.parent().addClass("bg-success")
                     currentChoice.parent().find(".correction").removeClass("hidden");

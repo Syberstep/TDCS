@@ -10,27 +10,27 @@ $(document).ready(function () {
     createQuestionModalClearInput()
 })
 
-$("#createCategoryBtn").on('click',function(){
-    if($("#subCategoryCreateContainer.hidden").size()){
+$("#createCategoryBtn").on('click', function () {
+    if ($("#subCategoryCreateContainer.hidden").size()) {
         showCreateCategory()
     }
 })
-$("#createCategorySubmitBtn").on('click',function(){
+$("#createCategorySubmitBtn").on('click', function () {
     console.log('hi')
     saveCategory()
 })
-$("#createCategoryCancleBtn").on('click',function(){
+$("#createCategoryCancleBtn").on('click', function () {
     hideCreateCategory()
 })
 
-$("#createSubCategoryBtn").on('click',function(){
+$("#createSubCategoryBtn").on('click', function () {
     showCreateSubCategory()
     hideCreateCategory()
 })
-$("#createSubCategorySubmitBtn").on('click',function(){
+$("#createSubCategorySubmitBtn").on('click', function () {
     saveSubCategory()
 })
-$("#createSubCategoryCancleBtn").on('click',function(){
+$("#createSubCategoryCancleBtn").on('click', function () {
     hideCreateSubCategory()
 })
 
@@ -114,7 +114,7 @@ function saveQuestion() {
 
         var dat = $.ajax({
             type: 'POST',
-            url: '/TDCS/exam/addQuestion',
+            url: context + '/TDCS/exam/addQuestion',
             data: {
                 categoryName: categoryName,
                 subCategoryName: subCategoryName,
@@ -152,7 +152,7 @@ function saveQuestion() {
     } else {
         var dat = $.ajax({
             type: 'POST',
-            url: '/TDCS/exam/addQuestion',
+            url: context + '/TDCS/exam/addQuestion',
             //async: false,
             data: {
                 categoryName: categoryName,
@@ -339,7 +339,7 @@ function listcatCreateQues() {
 
     var data = $.ajax({
         type: "POST",
-        url: "/TDCS/exam/getAllCategory",
+        url: context + "/TDCS/exam/getAllCategory",
 
         async: false,
 
@@ -374,7 +374,7 @@ $("#categoryInputForCreateQuestion").on('change', function () {
                 categoryId = categoryId2;
                 var data = $.ajax({
                     type: "POST",
-                    url: "/TDCS/exam/getSubCategoryToDropDown",
+                    url: context + "/TDCS/exam/getSubCategoryToDropDown",
                     data: {
                         categoryId: categoryId
                         //subcategoryName: subcategoryName
@@ -400,7 +400,7 @@ $("#categoryInputForCreateQuestion").on('change', function () {
             } else {
                 var data = $.ajax({
                     type: "POST",
-                    url: "/TDCS/exam/getSubCategoryToDropDown",
+                    url: context + "/TDCS/exam/getSubCategoryToDropDown",
                     data: {
                         categoryId: categoryId
                     },
@@ -427,24 +427,24 @@ $("#categoryInputForCreateQuestion").on('change', function () {
     }
 )
 
-var hideCreateCategory = function(){
+var hideCreateCategory = function () {
     $("#categoryCreateContainer").addClass("hidden")
     $("#categorySelectContainer").removeClass("hidden")
 }
-var showCreateCategory = function(){
+var showCreateCategory = function () {
     $("#categorySelectContainer").addClass("hidden")
     $("#categoryCreateContainer").removeClass("hidden")
 }
-var hideCreateSubCategory = function(){
+var hideCreateSubCategory = function () {
     $("#subCategoryCreateContainer").addClass("hidden")
     $("#subCategorySelectContainer").removeClass("hidden")
 }
-var showCreateSubCategory = function(){
+var showCreateSubCategory = function () {
     $("#subCategorySelectContainer").addClass("hidden")
     $("#subCategoryCreateContainer").removeClass("hidden")
 }
 
-var categoryValidate = function(){
+var categoryValidate = function () {
     var valid = true;
 
     var cat = $("#categoryInputForCreateQuestion")
@@ -458,66 +458,81 @@ var categoryValidate = function(){
     return valid
 }
 
-var saveCategory = function(){
+var saveCategory = function () {
     console.log('hello')
     var valid = true;
 
     var catId = $('#createCategoryIdInput');
     var catName = $('#createCategoryNameInput');
-    if(catId.val() == "" || catId.val() == null){
+    if (catId.val() == "" || catId.val() == null) {
         catId.addClass("validate-fail")
         valid = false
-    }else{
+    } else {
         catId.removeClass("validate-fail")
     }
-    if(catName.val() == "" || catName.val() == null){
+    if (catName.val() == "" || catName.val() == null) {
         catName.addClass("validate-fail")
         valid = false
-    }else{
+    } else {
         catName.removeClass("validate-fail")
     }
     console.log(valid)
-    if(valid){
+    if (valid) {
         console.log('valid')
         var dat = $.ajax({
             type: "POST",
-            url: context+"/TDCS/exam/addCategory",
+            url: context + "/TDCS/exam/addCategory",
             data: 'id=' + catId.val() + '&name=' + catName.val(),
             success: function (category) {
                 alert("บันทึกข้อมูลสำเร็จ");
                 setCreateModalCategory(category.name);
                 var categoryInput = $("#categoryInputForCreateQuestion");
                 categoryInput.change();
+                hideCreateCategory()
             },
             error: function () {
                 alert('บันทึกข้อมูลไม่สำเร็จ');
             }
         });
 
-        hideCreateSubCategory()
+
     }
 }
 
-var saveSubCategory = function(){
+var saveSubCategory = function () {
 
     var valid = categoryValidate();
-    if(!valid){
+    if (!valid) {
         alert('กรุณาเลือกหมวดหมู่ของหัวข้อเรื่อง')
     }
 
     var subCat = $('#createSubCategoryNameInput');
-    if(subCat.val() == null || subCat.val() == ""){
+    if (subCat.val() == null || subCat.val() == "") {
         subCat.addClass("validate-fail")
         valid = false
-    }else{
+    } else {
         subCat.removeClass("validate-fail")
     }
 
-    if(valid){
-        //doSave
+    if (valid) {
+        var catText = $("#categoryInputForCreateQuestion").parent().find('ul li.active').text()
 
-        //$("#categoryInputForCreateQuestion").change();
-        //$('#sSubCat').find('option[value="'+question.subCategory.name+'"]').prop("selected",true)
+        var dat = $.ajax({
+            type: "POST",
+            url: context + "/TDCS/exam/addSubCategory",
+            data: {
+                categoryId: catText.substr(0,catText.indexOf(":")).trim(),
+                subcategoryNameadd: subCat.val()
+            },
+            success: function (subCat) {
+                alert("บันทึกข้อมูลสำเร็จ");
+                $("#categoryInputForCreateQuestion").change();
+                $('#sSubCat').find('option[value="'+subCat.name+'"]').prop("selected",true)
+            },
+            error: function () {
+                alert('บันทึกข้อมูลไม่สำเร็จ');
+            }
+        });
 
         hideCreateSubCategory()
     }

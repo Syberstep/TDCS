@@ -26,7 +26,7 @@ $("#showObjective").on('click',function(){
 })
 
 $(".cancleMarkingBtn").on('click',function(){
-    location.href="/TDCS/exam/examRecordSearch"
+    location.href=context+"/TDCS/exam/examRecordSearch"
 })
 
 $('#marking-body').on('focusout', '.scoreInput', function () {
@@ -64,7 +64,10 @@ $('#confirmSubmitMarking').on('click', function () {
 })
 
 $("#cancleMarkingBtn").on('click',function(){
-    location.href = context+"/TDCS/exam/examRecordSearch"
+    var confirmation = confirm('ต้องการกลับไปยังหน้าหลักหรือไม่')
+    if(confirmation) {
+        location.href = context + "/TDCS/exam/examRecordSearch"
+    }
 })
 
 var goToUnfinishBtn = $('#goToUnfinish');
