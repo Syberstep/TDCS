@@ -100,8 +100,8 @@ $(document).ready(function(){
         }).responseText;
 
         if(check == 'true' || $("#dropdownId"+pId).val() == 1){
-            alert('ไม่สามารถลบชุดข้อสอบนี้ได้');
-            this.checked = false;
+            //alert('ไม่สามารถลบชุดข้อสอบนี้ได้');
+            //this.checked = false;
         }
     });
 
@@ -435,11 +435,13 @@ function generalSearchPaper(btnSearchStatus) {
 }
 
 function paperNotFound(){
+    $('#deletePapers').hide();
     $("#paperNotFound").show();
     $("#tbManagePaper").hide();
 }
 
 function paperFound(){
+    $('#deletePapers').show();
     $("#paperNotFound").hide();
     $("#tbManagePaper").show();
 }

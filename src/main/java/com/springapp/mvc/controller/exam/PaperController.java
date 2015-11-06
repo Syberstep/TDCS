@@ -50,6 +50,7 @@ public class PaperController {
 
 //    Add By Mr.Wanchana
     @Autowired
+
     QueryPositionDomain queryPositionDomain;
 
     @Autowired
@@ -101,7 +102,7 @@ public class PaperController {
 
         for(int i = 0; i < jsonArray.length(); i++){
             JSONObject jsonObject = jsonArray.getJSONObject(i);
-            Integer tempQId = new Integer(jsonObject.getString("qId"));
+            Integer tempQId = jsonObject.getInt("qId");
             tempQId.getClass().getName();
             Float tempQScore = new Float(jsonObject.getDouble("qScore"));
             qIds.add(tempQId);
@@ -271,6 +272,20 @@ public class PaperController {
         List<PaperQuestion> paperQuestion = queryPaperQuestionDomain.getPaperQuestionByExamPaper(paper);
         String json = new JSONSerializer().exclude("*.class").serialize(paperQuestion);
         logger.info("................................................"+paper.getCreateDate());
+
+        return new ResponseEntity<String>(json, headers, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/exam/getPaperByCode", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<String> getPaperByCode(@RequestParam(value = "paperCode") String paperCode){
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json;charset=UTF-8");
+
+        ExamPaper paper = queryPaperDomain.getPaperByCode(paperCode);
+        List<PaperQuestion> paperQuestion = queryPaperQuestionDomain.getPaperQuestionByExamPaper(paper);
+        String json = new JSONSerializer().exclude("*.class").serialize(paperQuestion);
 
         return new ResponseEntity<String>(json, headers, HttpStatus.OK);
     }

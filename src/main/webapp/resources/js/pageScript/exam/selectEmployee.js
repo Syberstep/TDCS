@@ -1,4 +1,9 @@
+$(document).ready(function(){
+    employeeNotFound();
+});
+
 function searchEmpName(){
+
     $('.modalSearchByEmployeeNameSubmitBtn').unbind('click').click(function(){
         $("#modalSearchByEmployeeName").modal("hide");
     });
@@ -32,12 +37,10 @@ function searchEmpName(){
             success: function(data){
                 //alert(data.length);
                 if(data.length == 0){
-                    $("#tbodySelectEmployeeName").empty();
-                    $("#dataNotFound").show();
+                    employeeNotFound()
                 }
                 else{
-                    $("#tbodySelectEmployeeName").empty();
-                    $("#dataNotFound").hide();
+                    employeeFound();
                     $("#selectAllEmployeeName").show();
                     $("#selectAllEmployeeName").prop("checked", false);
                     data.forEach(function(value){
@@ -138,7 +141,7 @@ function addEmployee(){
 
         $("#showEmployeeSelected").append(
 
-            '<button class="btn btn-sm" type="button" style="background-color: #cbff9e; border: 1px solid #f4ffdb;">'+arrayEmployeeName[2]+
+            '<button class="btn btn-sm" type="button" style="background-color: lightgray; border: 1px solid #f4ffdb;">'+arrayEmployeeName[2]+
                 '<label style="display: none;">'+"_"+uId+"z"+'</label>'+
             '<span class="glyphicon glyphicon-remove"/></button>&nbsp;'
         );
@@ -159,11 +162,10 @@ function getEmployee(){
         success: function(data){
             //alert(data.length);
             if(data.length == 0){
-                $("#tbodySelectEmployeeName").empty();
-                $("#dataNotFound").show();
+                employeeNotFound()
             }
             else{
-                $("#tbodySelectEmployeeName").empty();
+                employeeFound();
                 $("#dataNotFound").hide();
                 $("#selectAllEmployeeName").show();
                 $("#selectAllEmployeeName").prop("checked", false);
@@ -187,6 +189,17 @@ function getEmployee(){
             alert("เกิดข้อผิดพลาด");
         }
     });
+}
+
+function employeeNotFound(){
+    $("#tbEmployee").parent().parent().hide();
+    $("#dataNotFound").show();
+}
+
+function employeeFound(){
+    $("#tbEmployee").parent().parent().show();
+    $("#tbodySelectEmployeeName").empty();
+    $("#dataNotFound").hide();
 }
 
 jQuery.fn.cleanWhitespace = function() {
