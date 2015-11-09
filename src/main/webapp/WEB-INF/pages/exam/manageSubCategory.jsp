@@ -132,7 +132,7 @@
                 ><span class="glyphicon glyphicon-plus"></span>
         </button>
         <button align="center"  class="btn btn-danger btn-sm" onclick="deleteSubCategory()">
-            <span class="glyphicon glyphicon-trash"></span>
+            <span class="glyphicon glyphicon-minus"></span>
         </button>
             </div>
 
