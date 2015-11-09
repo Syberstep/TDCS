@@ -443,7 +443,7 @@ public class QueryUserDomain extends HibernateUtil {
         Criteria criteria = getSession().createCriteria(User.class);
         criteria.add(Restrictions.eq("userId", userId));
         List<User> list = criteria.list();
-        closeSession();
+//        closeSession();
         if (!list.isEmpty()) {
             return list.get(0);
         } else return null;

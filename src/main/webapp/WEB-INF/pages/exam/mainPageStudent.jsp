@@ -94,7 +94,7 @@
                     </div>
 
                     <div class="col-md-3">
-                        <button class="btn btn-warning btn-block" data-dismiss="modal">&nbsp;ไม่&nbsp;</button>
+                        <button class="btn btn-danger btn-block" data-dismiss="modal">&nbsp;ไม่&nbsp;</button>
                     </div>
                 </div>
 

@@ -5,11 +5,28 @@
 $(document).ready(function () {
     $("#searchCatNotFound").hide();
     clearAllSearchQuestionField()
+    $('#selectAllItem').prop('checked',false)
     //listSearchQuestion();
 })
 
+$('tbody').on('change','.questionSelectBox',function(){
 
-$('#tableBody').on('click', 'td:not(.questionSelect)', function () {
+    if($('.questionSelectBox').size() == $('.questionSelectBox:checked').size()){
+        $('#selectAllItem').prop('checked',true)
+    }else{
+        $('#selectAllItem').prop('checked',false)
+    }
+})
+
+$('body').on('click','.detailEditBtn', function () {
+    $('#questionDetailModal').modal('hide')
+    $('#submitCreateBtn').text('ยืนยัน');
+    $('#createQuestModalTitle').text('แก้ไขข้อสอบ');
+    setEditModalParameter($(this).closest('tr').attr('questionId'));
+    $('#createQuest').modal('show')
+})
+
+$('#tableBody').on('click', 'td:not(.questionSelect)td:not(.questionEditColumn)', function () {
     var questionDetailModal = $('#questionDetailModal')
     questionDetailModal.modal('hide');
     questionDetailModal.modal('show');
@@ -88,7 +105,7 @@ editQuestion = function () { // THIS FUNCTION IS CALLED FROM webapp/WEB-INF/page
 
     var dat = $.ajax({
             type: 'POST',
-            url: context+'/TDCS/exam/editQuestion',
+            url: context + '/TDCS/exam/editQuestion',
             data: {
                 questionId: questionId,
                 categoryName: categoryName,
@@ -130,50 +147,38 @@ editQuestion = function () { // THIS FUNCTION IS CALLED FROM webapp/WEB-INF/page
 
 }
 
-var setEditModalParameter = function () {
+var setEditModalParameter = function (questionId) {
 
-    var tr = questionObj;
+    //var tr = questionObj;
     var ajaxDat1 = $.ajax({ //quesotion
         type: "POST",
-        url: context+"/TDCS/exam/getQuestionDetail",
+        url: context + "/TDCS/exam/getQuestionDetail",
         data: {
-            questionId: tr.attr('questionId')
+            questionId: questionId
         },
         success: function (question) {
             createQuestionModalClearInput();
             setCreateModalCategory(question.subCategory.category.name);
             var categoryInput = $("#categoryInputForCreateQuestion");
             categoryInput.change();
-            $('#sSubCat').find('option[value="'+question.subCategory.name+'"]').prop("selected",true)
+            $('#sSubCat').find('option[value="' + question.subCategory.name + '"]').prop("selected", true)
             setCreateModalQuestionType(question.questionType.description);
             setCreateModalDufficulty(question.difficultyLevel.level);
             setCreateModalScore(question.score);
             setCreateModalQuestionDesc(question.description);
             updateCreateModalLayout();
-        },
-        error: function () {
-            console.log("fail in ajaxDat1");
-        }
-    })
-
-    var ith = 1;
-    var ajaxDat2 = $.ajax({ //choices
-        type: "POST",
-        url: context+"/TDCS/exam/getChoiceDetail",
-        data: {
-            questionId: tr.attr('questionId')
-        },
-        success: function (choices) {
-            choices.forEach(function (choice) {
+            var ith = 1;
+            question.choices.forEach(function (choice) {
                 setCreateModalIthChoice(choice.description, ith);
-                if (choice.correction.value == 1) {
+                if (choice.correction) {
                     setCreateModalCorrectQuestion(ith);
                 }
                 ith = ith + 1;
             })
+
         },
         error: function () {
-            console.log("fail in ajaxDat2")
+            console.log("fail in ajaxDat1");
         }
     })
 }
@@ -181,7 +186,7 @@ var setEditModalParameter = function () {
 var deleteQuestions = function (questionIds) {
     $.ajax({
         type: 'POST',
-        url: context+'/TDCS/exam/deleteQuestion',
+        url: context + '/TDCS/exam/deleteQuestion',
         data: {
             questionArray: JSON.stringify(questionIds)
         },
@@ -207,7 +212,7 @@ var listSearchQuestion = function (btn) {
 
     $("tbody").empty();
 
-    if(data == undefined){
+    if (data == undefined) {
         return null;
     }
     if (!(data.length > 0)) {
@@ -226,6 +231,7 @@ var listSearchQuestion = function (btn) {
             '<td class="questionScore">' + q.score + '</td>' +
             '<td class="questionCreateBy">' + q.createBy.thFname + ' ' + q.createBy.thLname + '</td>' +
             '<td class="questionCreateDate">' + formattedDate + '</td>' +
+            '<td class="questionEditColumn"><button class="detailEditBtn btn btn-gray btn-block" value="' + q.id + '"><span class="glyphicon glyphicon-pencil"></span></button></td>' +
             "</tr>")
             $("#searchCatNotFound").hide();
             if (q.description.length > 100) {

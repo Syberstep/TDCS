@@ -10,27 +10,26 @@ $(document).ready(function () {
     createQuestionModalClearInput()
 })
 
-$("#createCategoryBtn").on('click',function(){
-    if($("#subCategoryCreateContainer.hidden").size()){
+$("#createCategoryBtn").on('click', function () {
+    if ($("#subCategoryCreateContainer.hidden").size()) {
         showCreateCategory()
     }
 })
-$("#createCategorySubmitBtn").on('click',function(){
-    console.log('hi')
+$("#createCategorySubmitBtn").on('click', function () {
     saveCategory()
 })
-$("#createCategoryCancleBtn").on('click',function(){
+$("#createCategoryCancleBtn").on('click', function () {
     hideCreateCategory()
 })
 
-$("#createSubCategoryBtn").on('click',function(){
+$("#createSubCategoryBtn").on('click', function () {
     showCreateSubCategory()
     hideCreateCategory()
 })
-$("#createSubCategorySubmitBtn").on('click',function(){
+$("#createSubCategorySubmitBtn").on('click', function () {
     saveSubCategory()
 })
-$("#createSubCategoryCancleBtn").on('click',function(){
+$("#createSubCategoryCancleBtn").on('click', function () {
     hideCreateSubCategory()
 })
 
@@ -91,8 +90,8 @@ var editQuestion = function () {
 
 function saveQuestion() {
 
-    var categoryName = $("#categoryInputForCreateQuestion").val();
-    categoryName = categoryName.substr(8, categoryName.length);
+    var catText = $("#categoryInputForCreateQuestion").parent().find('ul li.active').text()
+    var categoryId = catText.substr(0, catText.indexOf(":")).trim();
 
     var subCategoryName = $("#sSubCat").val();
     var questionTypeString = $("#select-QuestionType").val();
@@ -109,84 +108,90 @@ function saveQuestion() {
         questionType = 2;
     }
 
-    if (questionType == 1) {
+    //if (questionType == 1) {
+    if(questionType == 1) {
         choiceDesc = new Array($('#choice1').val(), $('#choice2').val(), $('#choice3').val(), $('#choice4').val()).toString();
-
-        var dat = $.ajax({
-            type: 'POST',
-            url: '/TDCS/exam/addQuestion',
-            data: {
-                categoryName: categoryName,
-                subCategoryName: subCategoryName,
-                questionDesc: questionDesc,
-                choiceDescArray: choiceDesc,
-                correctChoice: correctChoice,
-                questionType: questionType,
-                difficulty: parseInt(difficulty),
-                score: parseFloat(score)
-            }
-            ,
-            success: function (q) {
-                alert('บันทึกข้อมูลสำเร็จ');
-                if ($('.h3').text() == "จัดการข้อสอบ") {
-                    var createDate = new Date(q.createDate);
-                    var formattedDate = createDate.getDate() + "/" + (parseInt(createDate.getMonth()) + 1) + "/" + createDate.getFullYear();
-                    $("#tableBody").prepend('<tr questionId=' + q.id + '>' +
-                    '<td class="questionSelect"><input type="checkbox" class="questionSelectBox"/></td>' +
-                    '<td class="questionType">' + q.questionType.description + '</td>' +
-                    '<td class="questionCategory">' + q.subCategory.category.name + '</td>' +
-                    '<td class="questionSubCategory">' + q.subCategory.name + '</td>' +
-                    '<td class="questionDescription" align="left">' + q.description.substring(0, 100) + '</td>' +
-                    '<td class="questionScore">' + q.score + '</td>' +
-                    '<td class="questionCreateBy">' + q.createBy.thFname + ' ' + q.createBy.thLname + '</td>' +
-                    '<td class="questionCreateDate">' + formattedDate + '</td>' +
-                    "</tr>")
-                }
-            },
-            error: function () {
-
-                alert('บันทึกข้อมูลไม่สำเร็จ');
-
-            }
-        })
-    } else {
-        var dat = $.ajax({
-            type: 'POST',
-            url: '/TDCS/exam/addQuestion',
-            //async: false,
-            data: {
-                categoryName: categoryName,
-                subCategoryName: subCategoryName,
-                questionDesc: questionDesc,
-                questionType: questionType,
-                difficulty: parseInt(difficulty),
-                score: parseFloat(score)
-            }
-            ,
-            success: function (q) {
-                alert('บันทึกข้อมูลสำเร็จ');
-                if ($('.h3').text() == "จัดการข้อสอบ") {
-                    var createDate = new Date(q.createDate);
-                    var formattedDate = createDate.getDate() + "/" + (parseInt(createDate.getMonth()) + 1) + "/" + createDate.getFullYear();
-                    $("#tableBody").prepend('<tr questionId=' + q.id + '>' +
-                    '<td class="questionSelect"><input type="checkbox" class="questionSelectBox"/></td>' +
-                    '<td class="questionType">' + q.questionType.description + '</td>' +
-                    '<td class="questionCategory">' + q.subCategory.category.name + '</td>' +
-                    '<td class="questionSubCategory">' + q.subCategory.name + '</td>' +
-                    '<td class="questionDescription" align="left">' + q.description.substring(0, 100) + '</td>' +
-                    '<td class="questionScore">' + q.score + '</td>' +
-                    '<td class="questionCreateBy">' + q.createBy.thFname + ' ' + q.createBy.thLname + '</td>' +
-                    '<td class="questionCreateDate">' + formattedDate + '</td>' +
-                    "</tr>")
-                }
-            },
-            error: function () {
-
-                alert('บันทึกข้อมูลไม่สำเร็จ');
-
-            }
-        })
+    }else{
+        choiceDesc = null;
+        correctChoice = null;
     }
+
+    var dat = $.ajax({
+        type: 'POST',
+        url: context + '/TDCS/exam/addQuestion',
+        data: {
+            categoryId: categoryId,
+            subCategoryName: subCategoryName,
+            questionDesc: questionDesc,
+            choiceDescArray: choiceDesc,
+            correctChoice: correctChoice,
+            questionType: questionType,
+            difficulty: parseInt(difficulty),
+            score: parseFloat(score)
+        }
+        ,
+        success: function (q) {
+            alert('บันทึกข้อมูลสำเร็จ');
+            if ($('.h3').text() == "จัดการข้อสอบ") {
+                var createDate = new Date(q.createDate);
+                var formattedDate = createDate.getDate() + "/" + (parseInt(createDate.getMonth()) + 1) + "/" + createDate.getFullYear();
+                $("#tableBody").prepend('<tr questionId=' + q.id + '>' +
+                '<td class="questionSelect"><input type="checkbox" class="questionSelectBox"/></td>' +
+                '<td class="questionType">' + q.questionType.description + '</td>' +
+                '<td class="questionCategory">' + q.subCategory.category.name + '</td>' +
+                '<td class="questionSubCategory">' + q.subCategory.name + '</td>' +
+                '<td class="questionDescription" align="left">' + q.description.substring(0, 100) + '</td>' +
+                '<td class="questionScore">' + q.score + '</td>' +
+                '<td class="questionCreateBy">' + q.createBy.thFname + ' ' + q.createBy.thLname + '</td>' +
+                '<td class="questionCreateDate">' + formattedDate + '</td>' +
+                '<td class="questionEditColumn"><button class="detailEditBtn btn btn-gray btn-block" value="' + q.id + '"><span class="glyphicon glyphicon-pencil"></span></button></td>' +
+                "</tr>")
+            }
+        },
+        error: function () {
+
+            alert('บันทึกข้อมูลไม่สำเร็จ');
+
+        }
+    })
+    //} else {
+    //    var dat = $.ajax({
+    //        type: 'POST',
+    //        url: context + '/TDCS/exam/addQuestion',
+    //        //async: false,
+    //        data: {
+    //            categoryId: categoryId,
+    //            subCategoryName: subCategoryName,
+    //            questionDesc: questionDesc,
+    //            questionType: questionType,
+    //            difficulty: parseInt(difficulty),
+    //            score: parseFloat(score)
+    //        }
+    //        ,
+    //        success: function (q) {
+    //            alert('บันทึกข้อมูลสำเร็จ');
+    //            if ($('.h3').text() == "จัดการข้อสอบ") {
+    //                var createDate = new Date(q.createDate);
+    //                var formattedDate = createDate.getDate() + "/" + (parseInt(createDate.getMonth()) + 1) + "/" + createDate.getFullYear();
+    //                $("#tableBody").prepend('<tr questionId=' + q.id + '>' +
+    //                '<td class="questionSelect"><input type="checkbox" class="questionSelectBox"/></td>' +
+    //                '<td class="questionType">' + q.questionType.description + '</td>' +
+    //                '<td class="questionCategory">' + q.subCategory.category.name + '</td>' +
+    //                '<td class="questionSubCategory">' + q.subCategory.name + '</td>' +
+    //                '<td class="questionDescription" align="left">' + q.description.substring(0, 100) + '</td>' +
+    //                '<td class="questionScore">' + q.score + '</td>' +
+    //                '<td class="questionCreateBy">' + q.createBy.thFname + ' ' + q.createBy.thLname + '</td>' +
+    //                '<td class="questionCreateDate">' + formattedDate + '</td>' +
+    //                "</tr>")
+    //            }
+    //        },
+    //        error: function () {
+    //
+    //            alert('บันทึกข้อมูลไม่สำเร็จ');
+    //
+    //        }
+    //    })
+    //}
     createQuestionModalClearInput();
 }
 
@@ -339,7 +344,7 @@ function listcatCreateQues() {
 
     var data = $.ajax({
         type: "POST",
-        url: "/TDCS/exam/getAllCategory",
+        url: context + "/TDCS/exam/getAllCategory",
 
         async: false,
 
@@ -374,7 +379,7 @@ $("#categoryInputForCreateQuestion").on('change', function () {
                 categoryId = categoryId2;
                 var data = $.ajax({
                     type: "POST",
-                    url: "/TDCS/exam/getSubCategoryToDropDown",
+                    url: context + "/TDCS/exam/getSubCategoryToDropDown",
                     data: {
                         categoryId: categoryId
                         //subcategoryName: subcategoryName
@@ -400,7 +405,7 @@ $("#categoryInputForCreateQuestion").on('change', function () {
             } else {
                 var data = $.ajax({
                     type: "POST",
-                    url: "/TDCS/exam/getSubCategoryToDropDown",
+                    url: context + "/TDCS/exam/getSubCategoryToDropDown",
                     data: {
                         categoryId: categoryId
                     },
@@ -427,24 +432,24 @@ $("#categoryInputForCreateQuestion").on('change', function () {
     }
 )
 
-var hideCreateCategory = function(){
+var hideCreateCategory = function () {
     $("#categoryCreateContainer").addClass("hidden")
     $("#categorySelectContainer").removeClass("hidden")
 }
-var showCreateCategory = function(){
+var showCreateCategory = function () {
     $("#categorySelectContainer").addClass("hidden")
     $("#categoryCreateContainer").removeClass("hidden")
 }
-var hideCreateSubCategory = function(){
+var hideCreateSubCategory = function () {
     $("#subCategoryCreateContainer").addClass("hidden")
     $("#subCategorySelectContainer").removeClass("hidden")
 }
-var showCreateSubCategory = function(){
+var showCreateSubCategory = function () {
     $("#subCategorySelectContainer").addClass("hidden")
     $("#subCategoryCreateContainer").removeClass("hidden")
 }
 
-var categoryValidate = function(){
+var categoryValidate = function () {
     var valid = true;
 
     var cat = $("#categoryInputForCreateQuestion")
@@ -458,66 +463,83 @@ var categoryValidate = function(){
     return valid
 }
 
-var saveCategory = function(){
-    console.log('hello')
+var saveCategory = function () {
     var valid = true;
 
     var catId = $('#createCategoryIdInput');
     var catName = $('#createCategoryNameInput');
-    if(catId.val() == "" || catId.val() == null){
+    if (catId.val() == "" || catId.val() == null) {
         catId.addClass("validate-fail")
         valid = false
-    }else{
+    } else {
         catId.removeClass("validate-fail")
     }
-    if(catName.val() == "" || catName.val() == null){
+    if (catName.val() == "" || catName.val() == null) {
         catName.addClass("validate-fail")
         valid = false
-    }else{
+    } else {
         catName.removeClass("validate-fail")
     }
-    console.log(valid)
-    if(valid){
-        console.log('valid')
+    if (valid) {
         var dat = $.ajax({
             type: "POST",
-            url: context+"/TDCS/exam/addCategory",
+            url: context + "/TDCS/exam/addCategory",
             data: 'id=' + catId.val() + '&name=' + catName.val(),
             success: function (category) {
                 alert("บันทึกข้อมูลสำเร็จ");
                 setCreateModalCategory(category.name);
                 var categoryInput = $("#categoryInputForCreateQuestion");
                 categoryInput.change();
+                hideCreateCategory()
+            },
+            error: function (xhr) {
+                if (xhr.status == 418) {
+                    alert('บันทึกข้อมูลไม่สำเร็จ : รหัสหมวดหมู่ซ้ำ')
+                } else {
+                    alert('บันทึกข้อมูลไม่สำเร็จ');
+                }
+
+            }
+        });
+
+
+    }
+}
+
+var saveSubCategory = function () {
+
+    var valid = categoryValidate();
+    if (!valid) {
+        alert('กรุณาเลือกหมวดหมู่ของหัวข้อเรื่อง')
+    }
+
+    var subCat = $('#createSubCategoryNameInput');
+    if (subCat.val() == null || subCat.val() == "") {
+        subCat.addClass("validate-fail")
+        valid = false
+    } else {
+        subCat.removeClass("validate-fail")
+    }
+
+    if (valid) {
+        var catText = $("#categoryInputForCreateQuestion").parent().find('ul li.active').text()
+
+        var dat = $.ajax({
+            type: "POST",
+            url: context + "/TDCS/exam/addSubCategory",
+            data: {
+                categoryId: catText.substr(0, catText.indexOf(":")).trim(),
+                subcategoryNameadd: subCat.val()
+            },
+            success: function (subCat) {
+                alert("บันทึกข้อมูลสำเร็จ");
+                $("#categoryInputForCreateQuestion").change();
+                $('#sSubCat').find('option[value="' + subCat.name + '"]').prop("selected", true)
             },
             error: function () {
                 alert('บันทึกข้อมูลไม่สำเร็จ');
             }
         });
-
-        hideCreateSubCategory()
-    }
-}
-
-var saveSubCategory = function(){
-
-    var valid = categoryValidate();
-    if(!valid){
-        alert('กรุณาเลือกหมวดหมู่ของหัวข้อเรื่อง')
-    }
-
-    var subCat = $('#createSubCategoryNameInput');
-    if(subCat.val() == null || subCat.val() == ""){
-        subCat.addClass("validate-fail")
-        valid = false
-    }else{
-        subCat.removeClass("validate-fail")
-    }
-
-    if(valid){
-        //doSave
-
-        //$("#categoryInputForCreateQuestion").change();
-        //$('#sSubCat').find('option[value="'+question.subCategory.name+'"]').prop("selected",true)
 
         hideCreateSubCategory()
     }

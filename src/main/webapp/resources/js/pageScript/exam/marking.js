@@ -26,13 +26,11 @@ $("#showObjective").on('click',function(){
 })
 
 $(".cancleMarkingBtn").on('click',function(){
-    location.href="/TDCS/exam/examRecordSearch"
+    location.href=context+"/TDCS/exam/examRecordSearch"
 })
 
 $('#marking-body').on('focusout', '.scoreInput', function () {
-    console.log('focusout')
     var maxScore = parseFloat($(this).parent().parent().parent().find(".maxScore").text());
-    console.log("maxscore = "+maxScore)
     if (!isNaN(($(this).val()))) {
         if ($(this).val() > maxScore) {
             alert('คะแนนที่ให้มากกว่าคะแนนเต็ม');
@@ -64,7 +62,10 @@ $('#confirmSubmitMarking').on('click', function () {
 })
 
 $("#cancleMarkingBtn").on('click',function(){
-    location.href = context+"/TDCS/exam/examRecordSearch"
+    var confirmation = confirm('ต้องการกลับไปยังหน้าหลักหรือไม่')
+    if(confirmation) {
+        location.href = context + "/TDCS/exam/examRecordSearch"
+    }
 })
 
 var goToUnfinishBtn = $('#goToUnfinish');
@@ -102,6 +103,8 @@ var submitMarking = function (confirmation) {
 
         if (!isNaN(score)) {
             markingArray.push(new markingRecord(answerRecordId, score))
+        }else{
+            markingArray.push(new markingRecord(answerRecordId, 0))
         }
     })
 

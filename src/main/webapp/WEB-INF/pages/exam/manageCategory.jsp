@@ -78,7 +78,7 @@
         <div>
 
             <button id="addCategory" data-toggle="modal" data-target="#createCat" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-plus"></span></button>
-            <button id="deleteCategory" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></button>
+            <button id="deleteCategory" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-minus"></span></button>
             </div>
             <table class="table table-bordered table-hover" id="tblCategory">
                 <thead class="label-primary small">

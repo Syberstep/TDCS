@@ -26,6 +26,12 @@ public class QueryExamRecordDomain extends HibernateUtil {
         return (ExamRecord)criteria.uniqueResult();
     }
 
+    public ExamRecord getExamRecordById (Integer id){
+        Criteria criteria = getSession().createCriteria(ExamRecord.class);
+        criteria.add(Restrictions.eq("id",id));
+        return  (ExamRecord)criteria.uniqueResult();
+    }
+
 //    Add By Mr.Wanchana
     public Boolean checkExamRecordInUse(Integer paperId){
 
@@ -40,5 +46,9 @@ public class QueryExamRecordDomain extends HibernateUtil {
         }
 
         return check;
+    }
+
+    public void mergeUpdateExamRecord(ExamRecord examRecord){
+        getSession().merge(examRecord);
     }
 }

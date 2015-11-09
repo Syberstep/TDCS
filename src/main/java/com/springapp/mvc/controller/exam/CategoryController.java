@@ -5,6 +5,7 @@ import com.springapp.mvc.domain.QueryUserDomain;
 import com.springapp.mvc.domain.exam.QueryCategoryDomain;
 import com.springapp.mvc.pojo.User;
 import com.springapp.mvc.pojo.exam.Category;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -39,15 +40,22 @@ public class CategoryController {
     public ResponseEntity<String> addCategory(ModelMap model, @Valid Category category
             , HttpServletRequest request, HttpServletResponse response) {
 
+        HttpStatus httpStatus = HttpStatus.OK;
+
         User createBy = queryUserDomain.getCurrentUser(request);
         category.setCreateBy(createBy);
 
-        queryCategoryDomain.insertCategory(category);
+        try{
+            queryCategoryDomain.insertCategory(category);
+        }catch (ConstraintViolationException cve){
+            httpStatus = HttpStatus.I_AM_A_TEAPOT;
+        }
+
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json;charset=UTF-8");
         String json = new Gson().toJson(category);
 
-        return new ResponseEntity<String>(json, headers, HttpStatus.OK);
+        return new ResponseEntity<String>(json, headers, httpStatus);
     }
 
     //    Add by Mr. Wanchana

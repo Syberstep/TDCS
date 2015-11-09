@@ -7,6 +7,7 @@ import com.springapp.mvc.domain.exam.QuerySubCategoryDomain;
 import com.springapp.mvc.pojo.User;
 import com.springapp.mvc.pojo.exam.Category;
 import com.springapp.mvc.pojo.exam.SubCategory;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -42,12 +43,12 @@ public class SubCategoryController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/exam/addSubCategory")
     @ResponseBody
-    public void addSubCategory(Model model,
+    public ResponseEntity<String> addSubCategory(Model model,
                                @RequestParam(value = "categoryId", required = true) String categoryId,
                                @RequestParam(value = "subcategoryNameadd", required = true) String subcategoryName,
                                HttpServletRequest request, HttpServletResponse response) {
 //            throws Exception {
-
+        HttpStatus httpStatus = HttpStatus.OK;
         SubCategory subCategory = new SubCategory();
 
         subCategory.setName(subcategoryName);
@@ -56,8 +57,16 @@ public class SubCategoryController {
         User currentUser = queryUserDomain.getCurrentUser(request);
 
         subCategory.setCreateBy(currentUser);
+        try{
+            querySubCategoryDomain.insertSubCategory(subCategory);
+        }catch (ConstraintViolationException cve){
+            httpStatus = HttpStatus.I_AM_A_TEAPOT;
+        }
 
-        querySubCategoryDomain.insertSubCategory(subCategory);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json;charset=UTF-8");
+        String json = new Gson().toJson(subCategory);
+        return new ResponseEntity<String>(json, headers, httpStatus);
     }
 
     //end add
