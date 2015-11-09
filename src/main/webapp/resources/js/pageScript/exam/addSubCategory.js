@@ -38,61 +38,26 @@ function saveSubCategory() {
     var categoryName = $("#sCat").children(":selected").attr("categoryName");
     var subcategoryNameadd = $("#subcategoryNameadd").val();
 
-    var data = $.ajax({
+    var dat = $.ajax({
         type: "POST",
-        contentType: "application/json",
-        url: context+"/TDCS/exam/getAllSubCategory",
-        async: false,
-        success: function (data) {
-            //alert(subcategoryNameadd);
-            data.forEach(function (value) {
-
-            if ($("#subcategoryNameadd").val().length < 1 || categoryName ==null || categoryId =="") {
-                alert("คุณกรอกข้อมูลไม่ครบ");
-            }
-            if (Number($("#categoryId").val()) == Number(value.id) && $("#categoryName").val() == value.name) {
-                alert("รหัสหมวดหมู่ " + $("#categoryId").val() + ", หมวดหมู่ " + $("#categoryName").val() + " มีอยู่แล้วในระบบ");
-            }
-            if (Number($("#categoryId").val()) == Number(value.id)) {
-                //alert("รหัสหมวดหมู่ "+$("#categoryId").val()+" ซ่ำ");
-                alert("รหัสหมวดหมู่ " + $("#categoryId").val() + " มีอยู่แล้วในระบบ");
-            }
-            if ($("#subcategoryNameadd").val() == value.subName) {
-                alert(" หัวข้อเรื่อง " + $("#subcategoryNameadd").val() + " มีอยู่แล้วในระบบ");
-            }
-
-
-            //if ($("#subcategoryNameadd").val() == "" || $("#categoryId").val() == "") {
-            //    alert(" กรุณากรอกข้อมูลให้ครบ ");
-            //    //this.xhr.abort();
-            //}
-            //alert(" not show ")
-            });
-
-
-            var dat = $.ajax({
-                type: "POST",
-                url: context+"/TDCS/exam/addSubCategory",
-                data: {
-                    categoryId: categoryId,
-                    subcategoryNameadd: subcategoryNameadd
-                },
-                success: function () {
-                    //alert('เพิ่มหัวข้อเรื่อง ' + subcategoryNameadd);
-                    alert("บันทึกข้อมูลสำเร็จ");
-                    //$("#tbodySubCategory").empty();
-                    //viewSubCategory();
-                    window.location.reload();
-
-                },
-                error: function () {
-                    alert('บันทึกข้อมูลไม่สำเร็จ');
-                }
-                    //.responseText;
-            });
+        url: context+"/TDCS/exam/addSubCategory",
+        data: {
+            categoryId: categoryId,
+            subcategoryNameadd: subcategoryNameadd
         },
-        error: function (data) {
-            alert('error while request...');
+        success: function (xhr) {
+            //alert('เพิ่มหัวข้อเรื่อง ' + subcategoryNameadd);
+            alert("บันทึกข้อมูลสำเร็จ");
+            //$("#tbodySubCategory").empty();
+            //viewSubCategory();
+            window.location.reload();
+
+        },
+        error: function (xhr) {
+            if(xhr.status == 418){
+                alert('บันทึกข้อมูลไม่สำเร็จ : หัวข้อเรื่องนี้มีอยู่แล้วในระบบ');
+            }
         }
+        //.responseText;
     });
 }
