@@ -51,17 +51,17 @@
                 <thead class="bg-primary label-primary small">
                 <tr>
                     <%--<th style="text-align: center">หมายเลขข้อสอบ</th>--%>
-                    <th><input type="checkbox" id="selectAllItem"/></th>
-                    <th style="text-align: center">ชนิดข้อสอบ</th>
-                    <th style="text-align: center">หมวดหมู่</th>
-                    <th style="text-align: center">หัวข้อเรื่อง</th>
+                    <th style="vertical-align:middle;"> <input type="checkbox" id="selectAllItem"/> </th>
+                    <th>ชนิดข้อสอบ</th>
+                    <th>หมวดหมู่</th>
+                    <th>หัวข้อเรื่อง</th>
 
-                    <th style="text-align: center" width="35%">คำถาม</th>
+                    <th width="35%">คำถาม</th>
                     <%--<th style="text-align: center">ระดับความยาก</th>--%>
-                    <th style="text-align: center">คะแนน</th>
-                    <th style="text-align: center">ผู้สร้าง</th>
-                    <th style="text-align: center">วันที่สร้าง</th>
-                    <th style="text-align: center">แก้ไข</th>
+                    <th>คะแนน</th>
+                    <th>ผู้สร้าง</th>
+                    <th>วันที่สร้าง</th>
+                    <th>แก้ไข</th>
                     <%--<th style="text-align: center">Action</th>--%>
                 </tr>
                 </thead>
@@ -86,7 +86,13 @@
 <style>
     th {
         border: solid 1px white;
+        text-align: center;
     }
+
+    td{
+        vertical-align: middle;
+    }
+
     #tableBody td{
         font-size: 13px;
     }

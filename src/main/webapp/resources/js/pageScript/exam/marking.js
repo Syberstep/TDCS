@@ -30,9 +30,7 @@ $(".cancleMarkingBtn").on('click',function(){
 })
 
 $('#marking-body').on('focusout', '.scoreInput', function () {
-    console.log('focusout')
     var maxScore = parseFloat($(this).parent().parent().parent().find(".maxScore").text());
-    console.log("maxscore = "+maxScore)
     if (!isNaN(($(this).val()))) {
         if ($(this).val() > maxScore) {
             alert('คะแนนที่ให้มากกว่าคะแนนเต็ม');
@@ -105,6 +103,8 @@ var submitMarking = function (confirmation) {
 
         if (!isNaN(score)) {
             markingArray.push(new markingRecord(answerRecordId, score))
+        }else{
+            markingArray.push(new markingRecord(answerRecordId, 0))
         }
     })
 

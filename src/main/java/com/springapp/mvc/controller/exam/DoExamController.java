@@ -92,7 +92,21 @@ public class DoExamController {
         User user = queryUserDomain.getCurrentUser(request);
         modelMap.addAttribute("paper", examPaper);
         modelMap.addAttribute("user", user);
-        modelMap.addAttribute("examRecord",queryExamRecordDomain.getExamRecordByPaperAndUser(examPaper,user));
+
+        ExamRecord examRecord = queryExamRecordDomain.getExamRecordByPaperAndUser(examPaper,user);
+        if(examRecord == null && examPaper != null){
+            examRecord = new ExamRecord();
+            examRecord.setUser(user);
+            examRecord.setPaper(queryPaperDomain.getPaperById(paperId));
+            examRecord.setExamDate(DateUtil.getCurrentDateWithRemovedTime());
+            HibernateUtil.beginTransaction();
+            queryExamRecordDomain.saveExamRecord(examRecord);
+            HibernateUtil.commitTransaction();
+        }else{
+            examRecord = null;
+        }
+
+        modelMap.addAttribute("examRecord",examRecord);
 
         return "doExam";
     }
@@ -100,19 +114,29 @@ public class DoExamController {
     @RequestMapping(method = RequestMethod.POST, value = "/exam/submitExam")
     @ResponseBody
     public ResponseEntity<String> submitExam(HttpServletRequest request, HttpServletResponse response, ModelMap model
-            , @RequestParam(value = "paperId") String paperId
+            , @RequestParam(value = "recordId") String recordId
             , @RequestParam(value = "answerRecords") JSONArray answerRecords
             , @RequestParam(value = "timeTaken") Integer timeTaken
 //                             , @RequestBody List<AnswerRecord> answerRecords
     ) throws Exception {
 
-        ExamPaper paper = queryPaperDomain.getPaperById(Integer.parseInt(paperId));
+        HttpHeaders headers = new HttpHeaders();
+        HttpStatus httpStatus = HttpStatus.OK;
+        ExamRecord examRecord = queryExamRecordDomain.getExamRecordById(Integer.parseInt(recordId));
+
+        ExamPaper paper = examRecord.getPaper();
         User user = queryUserDomain.getCurrentUser(request);
-        ExamRecord examRecord = new ExamRecord();
-        examRecord.setUser(user);
-        examRecord.setPaper(paper);
+
+        if(user!= examRecord.getUser()){
+            headers.add("Content-Type", "application/json;charset=UTF-8");
+            return new ResponseEntity<String>(null, headers, HttpStatus.CONFLICT);
+        }
+//        ExamRecord examRecord = new ExamRecord();
+//        examRecord.setUser(user);
+//        examRecord.setPaper(paper);
+//        examRecord.setExamDate(DateUtil.getCurrentDateWithRemovedTime());
+
         examRecord.setTimeTaken(timeTaken);
-        examRecord.setExamDate(DateUtil.getCurrentDateWithRemovedTime());
         boolean haveSubjective = false;
         MathContext mc = new MathContext(2);
         QuestionType subjective = queryQuestionTypeDomain.getSubjective();
@@ -123,7 +147,7 @@ public class DoExamController {
         try {
             HibernateUtil.beginTransaction();
 
-            queryExamRecordDomain.saveExamRecord(examRecord);
+            queryExamRecordDomain.mergeUpdateExamRecord(examRecord);
             //Save ExamRecord
 
             for (int i = 0; i < answerRecords.length(); i++) {
@@ -181,11 +205,10 @@ public class DoExamController {
             throw e;
         }
 
-        HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json;charset=UTF-8");
-        String json = new JSONSerializer().serialize("hello");
+        String json = new JSONSerializer().serialize("SUCCESS");
 
-        return new ResponseEntity<String>(json, headers, HttpStatus.OK);
+        return new ResponseEntity<String>(null, headers, httpStatus);
     }
 
     @RequestMapping(value = "/exam/getExamBody")

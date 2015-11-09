@@ -96,8 +96,7 @@
                 <div class="row" id="btnSearch">
                     <div class="col-md-12 text-center">
                         <button id="btnExamRecordSearch" class="btn btn-primary btn btn-sm" type="button">ค้นหา</button>
-                        <button id="btnExamRecordSearchClearInput" class="btn btn-default btn btn-sm" type="button"
-                                style="background-color: rgba(193, 193, 198, 0.83); color: #000000;">ล้างข้อมูล
+                        <button id="btnExamRecordSearchClearInput" class="btn btn-gray btn btn-sm" type="button">ล้างข้อมูล
                         </button>
                     </div>
                 </div>

@@ -6,6 +6,7 @@ import com.springapp.mvc.pojo.exam.*;
 import com.springapp.mvc.util.DateUtil;
 import com.springapp.mvc.util.HibernateUtil;
 import flexjson.JSONSerializer;
+import org.hibernate.Hibernate;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -65,7 +66,7 @@ public class QuestionController {
     @RequestMapping(method = RequestMethod.POST, value = "/exam/addQuestion")
     @ResponseBody
     public ResponseEntity<String> addQuestion(ModelMap model,
-                                              @RequestParam(value = "categoryName", required = true) String cat,
+                                              @RequestParam(value = "categoryId", required = true) String catId,
                                               @RequestParam(value = "subCategoryName", required = true) String subCat,
                                               @RequestParam(value = "questionDesc", required = true) String qDesc,
                                               @RequestParam(value = "choiceDescArray", required = false) List<String> cDescList,
@@ -83,18 +84,16 @@ public class QuestionController {
 
         question.setCreateBy(queryUserDomain.getCurrentUser(request));
         question.setDescription(qDesc);
-
         question.setCreateDate(DateUtil.getCurrentDateWithRemovedTime());
         question.setQuestionType(queryQuestionTypeDomain.getQuestionTypeById(questionTypeId));
         question.setDifficultyLevel(queryDifficultyDomain.getDifficultyByInteger(difficultyLevel));
         question.setScore(score);
-
-        question.setSubCategory(querySubCategoryDomain.getSubCategoryByNameAndCategory(subCat, queryCategoryDomain.getCategoryByName(cat)));
-
+        question.setSubCategory(querySubCategoryDomain.getSubCategoryByNameAndCategory(subCat, queryCategoryDomain.getCategoryById(catId)));
         question.setStatus(queryStatusDomain.getReadyStatus());
 
         queryQuestionDomain.insertQuestion(question, cDescList, correctChoice);
 
+        Hibernate.initialize(question);
         String json = new JSONSerializer().exclude("*.class").serialize(question);
 
         return new ResponseEntity<String>(json, headers, HttpStatus.OK);

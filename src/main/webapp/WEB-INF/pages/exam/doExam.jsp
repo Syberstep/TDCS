@@ -1,11 +1,4 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: wanchana
-  Date: 29/7/2558
-  Time: 13:10
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <c:set var="context" value="${pageContext.request.contextPath}"/>
 <script>
@@ -17,8 +10,8 @@
     }
 </script>
 
-<c:if test="${user != null && examRecord == null}">
-    <div class="examHead" id="examHead" paperId="${paper.id}" timeLimit-minute="${paper.timeLimit}">
+<c:if test="${user != null && examRecord != null}">
+    <div class="examHead" id="examHead" recordId="${examRecord.id}" paperId="${paper.id}" timeLimit-minute="${paper.timeLimit}">
         <div class="container row">
             <div class="row text-center">
                 <h3>ข้อสอบออนไลน์</h3>
@@ -103,10 +96,11 @@
 <c:if test="${user == null}">
     <div class="text-center">
         <h1>กรุณาเข้าสู่ระบบก่อนทำข้อสอบ</h1>
+        <script>location.href = ${context}+"/TDCS/index,html"</script>
     </div>
 </c:if>
 
-<c:if test="${user !=null && examRecord != null}">
+<c:if test="${user !=null && examRecord == null}">
     <div class="text-center">
         <h1>คุณเคยทำข้อสอบนี้ไปแล้ว</h1>
     </div>

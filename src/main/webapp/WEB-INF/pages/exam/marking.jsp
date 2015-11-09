@@ -264,7 +264,7 @@
             </h5>
         </div>
         <div class="col-md-offset-4 col-md-2">
-            <button class="btn btn-success submitMarkingBtn <c:if test="${examResult.status.id == 7}">hidden</c:if>"
+            <button class="btn btn-primary submitMarkingBtn <c:if test="${examResult.status.id == 7}">hidden</c:if>"
                     style="width: 100%;" data-toggle="modal"
                     data-target="#submitMarkingModal">บันทึกผลตรวจ
             </button>
@@ -297,10 +297,10 @@
                         </button>
                         &nbsp;
                     </span>
-                        <button id="confirmSubmitMarking" class="btn btn-success" data-dismiss="modal">บันทึกผลตรวจ
+                        <button id="confirmSubmitMarking" class="btn btn-primary" data-dismiss="modal">บันทึกผลตรวจ
                         </button>
                         &nbsp;
-                        <button id="confirmSubmitMarkingCONFIRM" class="btn btn-primary" data-dismiss="modal">
+                        <button id="confirmSubmitMarkingCONFIRM" class="btn btn-success" data-dismiss="modal">
                             ยืนยันผลตรวจ
                         </button>
                         &nbsp;

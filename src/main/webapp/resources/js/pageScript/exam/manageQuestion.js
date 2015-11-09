@@ -5,9 +5,26 @@
 $(document).ready(function () {
     $("#searchCatNotFound").hide();
     clearAllSearchQuestionField()
+    $('#selectAllItem').prop('checked',false)
     //listSearchQuestion();
 })
 
+$('tbody').on('change','.questionSelectBox',function(){
+
+    if($('.questionSelectBox').size() == $('.questionSelectBox:checked').size()){
+        $('#selectAllItem').prop('checked',true)
+    }else{
+        $('#selectAllItem').prop('checked',false)
+    }
+})
+
+$('body').on('click','.detailEditBtn', function () {
+    $('#questionDetailModal').modal('hide')
+    $('#submitCreateBtn').text('ยืนยัน');
+    $('#createQuestModalTitle').text('แก้ไขข้อสอบ');
+    setEditModalParameter($(this).closest('tr').attr('questionId'));
+    $('#createQuest').modal('show')
+})
 
 $('#tableBody').on('click', 'td:not(.questionSelect)td:not(.questionEditColumn)', function () {
     var questionDetailModal = $('#questionDetailModal')

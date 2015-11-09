@@ -9,14 +9,6 @@ $(document).ready(function () {
     $("#correctDetail4").hide();
 })
 
-$('.detailEditBtn').on('click', function () {
-    $('#questionDetailModal').modal('hide')
-    $('#submitCreateBtn').text('ยืนยัน');
-    $('#createQuestModalTitle').text('แก้ไขข้อสอบ');
-    setEditModalParameter(questionObj.attr('questionId'));
-    $('#createQuest').modal('show')
-})
-
 var updateDetailModal = function (tr) {
 
     for (var i = 1; i <= 4; i++) {

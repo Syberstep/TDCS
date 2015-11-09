@@ -15,8 +15,6 @@ $(document).ready(function () {
 })
 
 
-
-
 var goToUnfinishBtn = $('#goToUnfinish');
 var goToUnfinishBtnInitialText = goToUnfinishBtn.text();
 $("#SendPaper").on('click', function () {
@@ -50,6 +48,18 @@ $('#examBody').on('change', 'input[type="radio"]', function () {
     $('input[name="' + name + '"]').prop('checked', false)
     $(this).prop('checked', true)
 })
+
+$(function(){
+    var rx = /INPUT|SELECT|TEXTAREA/i;
+
+    $(document).bind("keydown keypress", function(e){
+        if( e.which == 8 ){ // 8 == backspace
+            if(!rx.test(e.target.tagName) || e.target.disabled || e.target.readOnly ){
+                e.preventDefault();
+            }
+        }
+    });
+});
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 var confirmationModalUpdate = function () {
@@ -102,7 +112,7 @@ var checkExamCompletion = function () {
 var examTimeOut = function () {
     alert('หมดเวลาทำข้อสอบ');
     submitExam;
-    location.href = context+"/TDCS/home.html";
+    location.href = context + "/TDCS/home.html";
 }
 
 var countdownTimer = new (function () {
@@ -171,7 +181,7 @@ var getExamPaperBody = function () {
     $('.examBody').empty();
     $.ajax({
         type: "POST"
-        , url: context+"/TDCS/exam/getExamBody"
+        , url: context + "/TDCS/exam/getExamBody"
         , async: false
         , data: {
             paperId: $('.examHead').attr('paperId')
@@ -191,7 +201,6 @@ var getExamPaperBody = function () {
                     'ข้อที่ ' + questionNo + '.&nbsp;<h5>' + question.description + '</h5>' +
                     '</div>' +
                     '</div>'
-
 
                 if (question.questionType.id == 1) {
                     var choiceNo = 1;
@@ -245,11 +254,37 @@ var getExamPaperBody = function () {
                 $('#examBody').append(appendString);
                 questionNo++;
 
+                enableOnUnloadEvent()
             })
         }, error: function () {
             console.log('doExam.js : getExamPaperBody Failed');
         }
     })
+}
+
+function enableOnUnloadEvent() {
+    window.onbeforeunload = function () {
+        return 'เมื่อคุณออกจากหน้าทำข้อสอบระบบจะทำการบันทึกผลสอบทันที \n ยังคงต้องการออกจากหน้านี้หรือไม่';
+    }
+    if (typeof window.addEventListener === 'undefined') {
+        window.addEventListener = function(e, callback) {
+            return window.attachEvent('on' + e, callback);
+        }
+    }
+
+    window.addEventListener('beforeunload', function() {
+        return 'เมื่อคุณออกจากหน้าทำข้อสอบระบบจะทำการบันทึกผลสอบทันที \n ยังคงต้องการออกจากหน้านี้หรือไม่';
+    });
+
+
+    window.onunload = function () {
+        submitExam()
+    }
+}
+
+function disableOnUnloadEvent() {
+    window.onbeforeunload = null;
+    window.onunload = null;
 }
 
 function answerRecord(questionId, answerObj, answerSubj) {
@@ -259,6 +294,7 @@ function answerRecord(questionId, answerObj, answerSubj) {
 }
 
 var submitExam = function () {
+    disableOnUnloadEvent()
     var Questions = $('#examBody .questionContainer')
 
     var answerArray = [];
@@ -282,18 +318,31 @@ var submitExam = function () {
     $.ajax({
         type: "POST"
         , async: false
-        , url: context+"/TDCS/exam/submitExam"
+        , url: context + "/TDCS/exam/submitExam"
         , data: {
             answerRecords: JSON.stringify(answerArray)
-            , paperId: $('#examHead').attr('paperId')
+            , recordId: $('#examHead').attr('recordId')
             , timeTaken: parseInt(timeTakenMillisec / 60 / 100)
         }
-        , success: function () {
-            alert('บันทึกข้อมูลสำเร็จ')
-            location.href = context+"/TDCS/home.html"
+        , success: function (returnnValue) {
+            alert('บันทึกข้อมูลสำเร็จ');
+            location.href = context + "/TDCS/home.html";
         }
-        , error: function () {
-            alert('บันทึกข้อมูลล้มเหลว')
+        , error: function (returnValue) {
+            //if(returnValue.status == 404){
+            //    alert('บันทึกข้อสอบล้มเหลว : CODE 404')
+            //}else     if(returnValue.status == 500){
+            //    alert('บันทึกข้อสอบล้มเหลว : CODE 500')
+            //}
+            if(returnValue.status == 200){
+                alert('บันทึกข้อมูลสำเร็จ');
+                location.href = context + "/TDCS/home.html";
+            }else{
+                enableOnUnloadEvent()
+                alert('บันทึกข้อมูลล้มเหลว : ERROR CODE '+ parseInt(returnValue.status))
+            }
+
         }
     })
+    //enableOnUnloadEvent()
 }

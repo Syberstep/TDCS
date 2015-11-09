@@ -198,7 +198,7 @@
 
                     <div class="col-md-12" id="submitBtnContainer" hidden align="center">
                         <div class="col-md-1 col-md-offset-5">
-                            <button class="btn btn-success" id="submitCreateBtn">บันทึก</button>
+                            <button class="btn btn-primary" id="submitCreateBtn">บันทึก</button>
                         </div>
                         <div class="col-md-1">
                             <button class="btn btn-danger" dat-dismiss="modal">ยกเลิก</button>
