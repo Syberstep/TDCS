@@ -453,11 +453,11 @@ public class QuestionController {
         if(randEasy != 0){
             List index = new ArrayList();
             List<Question> questionsEasy = queryQuestionDomain.getQuestionsByLevel(1, qIds, categoryId, subCategoryId);
-            if(questionsEasy.size() < randEasy){
-                json = null;
-                return new ResponseEntity<String>(json, headers, HttpStatus.OK);
-            }
-            else{
+//            if(questionsEasy.size() < randEasy){
+//                json = null;
+//                return new ResponseEntity<String>(json, headers, HttpStatus.OK);
+//            }
+            if(questionsEasy.size() >= randEasy){
                 for(i = 0; i < questionsEasy.size(); i ++){
                     index.add(i);
                 }
@@ -471,11 +471,11 @@ public class QuestionController {
         if(randNormal != 0){
             List index2 = new ArrayList();
             List<Question> questionsNormal = queryQuestionDomain.getQuestionsByLevel(2, qIds, categoryId, subCategoryId);
-            if(questionsNormal.size() < randNormal){
-                json = null;
-                return new ResponseEntity<String>(json, headers, HttpStatus.OK);
-            }
-            else{
+//            if(questionsNormal.size() < randNormal){
+//                json = null;
+//                return new ResponseEntity<String>(json, headers, HttpStatus.OK);
+//            }
+            if(questionsNormal.size() >= randNormal){
                 for(i = 0; i < questionsNormal.size(); i ++){
                     index2.add(i);
                 }
@@ -489,11 +489,11 @@ public class QuestionController {
         if(randHard != 0){
             List index3 = new ArrayList();
             List<Question> questionsHard = queryQuestionDomain.getQuestionsByLevel(3, qIds, categoryId, subCategoryId);
-            if(questionsHard.size() < randNormal){
-                json = null;
-                return new ResponseEntity<String>(json, headers, HttpStatus.OK);
-            }
-            else{
+//            if(questionsHard.size() < randNormal){
+//                json = null;
+//                return new ResponseEntity<String>(json, headers, HttpStatus.OK);
+//            }
+            if(questionsHard.size() >= randHard){
                 for(i = 0; i < questionsHard.size(); i ++){
                     index3.add(i);
                 }

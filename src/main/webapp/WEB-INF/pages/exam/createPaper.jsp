@@ -66,7 +66,7 @@
                     <span style="color:red;">*</span><label for="newPaperId" class="label-control"><h5
                         style="margin-top: 5px">รหัสชุดข้อสอบ :</h5></label>
                 </div>
-                <div class="col-sm-7 form-group" align="right">
+                <div class="col-sm-7" style="padding: 0;">
                     <input id="newPaperId" class="form-control input-sm" type="text" maxlength="5" placeholder="โปรดกรอกรหัสชุดข้อสอบ"
                            required/>
                 </div>
@@ -76,7 +76,7 @@
                     <label for="newPaperName" class="label-control"><h5 style="margin-top: 5px">ชื่อชุดข้อสอบ :</h5>
                     </label>
                 </div>
-                <div class="col-sm-8 form-group">
+                <div class="col-sm-7" style="padding: 0;">
                     <input id="newPaperName" class="form-control input-sm" type="text" placeholder="โปรดกรอกชื่อชุดข้อสอบ"/>
                 </div>
             </div>
@@ -87,7 +87,7 @@
                     <span style="color:red;">*</span><label for="newPaperScore" class="label-control"><h5
                         style="margin-top: 5px">คะแนน :</h5></label>
                 </div>
-                <div class="col-sm-7 form-group">
+                <div class="col-sm-7" style="padding: 0;">
                     <input id="newPaperScore" class="form-control input-sm" type="text" placeholder="โปรดกรอกคะแนน" required/>
                 </div>
             </div>
@@ -96,10 +96,10 @@
                     <span style="color:red;">*</span><label for="newPaperForPosition" class="label-control"><h5
                         style="margin-top: 5px">ตำแหน่ง :</h5></label>
                 </div>
-                <div class="col-sm-8 form-group">
+                <div class="col-sm-7" style="padding: 0;">
                     <select id="newPaperForPosition" class="form-control input-sm">
                         <option active>เลือกตำแหน่ง</option>
-                        <option value="0">ทั้งหมด</option>
+                        <option value="0"></option>
                         <option value="1">Software Developer Trainee</option>
                         <option value="2">Assistant Business Analyst</option>
                     </select>
@@ -111,7 +111,7 @@
                 <div class="col-sm-4 col-sm-offset-1" align="right">
                     <span style="color:red;">*</span><label class="label-control"><h5 style="margin-top: 5px">เวลา :</h5></label>
                 </div>
-                <div class="col-sm-7 form-group">
+                <div class="col-sm-7" style="padding: 0;">
                     <div class="form-inline">
                         <input id="hours" class="form-control input-sm" type="number" style="width: 35%;" max="60" min="0" placeholder="ชม." required/>
                         <label style="width: 15%;">ชั่วโมง</label>
@@ -120,27 +120,30 @@
                     </div>
                 </div>
             </div>
-            <div id="divCreateDate" class="col-sm-7" style="display: none;">
-                <div class="col-sm-3" align="right">
-                    <label for="questionCreatedDate" class="label-control"><h5 style="margin-top: 5px">วันที่สร้าง :</h5></label>
-                </div>
-                <div class="col-sm-5 form-group">
-                    <input id="questionCreatedDate" class="form-control input-sm" disabled/>
-                </div>
-            </div>
+            <%--<div id="divCreateDate" class="col-sm-7" style="display: none;">--%>
+                <%--<div class="col-sm-3" align="right">--%>
+                    <%--<label for="questionCreatedDate" class="label-control"><h5 style="margin-top: 5px">วันที่สร้าง :</h5></label>--%>
+                <%--</div>--%>
+                <%--<div class="col-sm-5" style="padding: 0;">--%>
+                    <%--<input id="questionCreatedDate" class="form-control input-sm" disabled/>--%>
+                <%--</div>--%>
+            <%--</div>--%>
         </div>
-        <div class="row">
+        <br/>
+        <div class="row" id="copyPaperField" style="display: none;">
             <div class="col-sm-6">
                 <div class="col-sm-4 col-sm-offset-1" align="right">
                     <label class="label-control"><h5 style="margin-top: 5px">คัดลอกชุดข้อสอบ :</h5></label>
                 </div>
-                <div class="col-sm-7 input-group form-group">
-                    <input id="copyPaperLov" class="form-control input-sm" type="text" placeholder="รหัสชุดข้อสอบ : ชื่อชุดข้อสอบ" autocomplete="off"/>
-                    <span id="selectPaper" class="input-group-addon input-group-sm input-sm">
-                        <i onclick="listPaperToLov()" style="cursor: pointer;">
-                            <span class="glyphicon glyphicon-search"></span>
-                        </i>
-                    </span>
+                <div class="col-sm-7" style="padding: 0;">
+                    <div class="input-group">
+                        <input id="copyPaperLov" class="form-control input-sm" type="text" placeholder="รหัสชุดข้อสอบ : ชื่อชุดข้อสอบ" autocomplete="off"/>
+                        <span id="selectPaper" class="input-group-addon input-sm">
+                            <i onclick="listPaperToLov()" style="cursor: pointer;">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </i>
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -157,7 +160,7 @@
 
     <div class="row">
         <hr/>
-        <button id="removeRowQuestionSelect" class="btn btn-danger btn-sm" type="button" style="height: 30px;"><span
+        <button id="removeRowQuestionSelect" class="btn btn-danger btn-sm" type="button" style="height: 30px; display: none;"><span
                 class="glyphicon glyphicon-minus"></span></button>
         <%--<button id="createPaperBtn" class="btn btn-success btn-sm" type="button">บันทึก</button>--%>
         <%--<button id="updatePaperBtn" class="btn btn-success btn-sm" type="button" style="display: none;">บันทึก</button>--%>

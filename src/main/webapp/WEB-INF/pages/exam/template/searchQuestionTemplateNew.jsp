@@ -20,7 +20,9 @@
             </div>
             <div class="panel-body">
                 <%@include file="selectCategoryInput.jsp" %>
-                <%@include file="selectCreateByInput.jsp" %>
+                <div class="row">
+                    <%@include file="selectCreateByInput.jsp" %>
+                </div>
 
                 <div class="col-sm-9">
                     <div id="showEmployeeSelected" class="col-sm-12 col-sm-offset-2">
