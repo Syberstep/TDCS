@@ -99,7 +99,7 @@ function viewSubCategory() {
                 async :false,
                 success: function (data) {
                     $("#sSubCat").append(
-                        '<option value="" >' + "ทั้งหมด" + '</option>'
+                        '<option value="" ></option>'
                     )
                     data.forEach(function (value) {
                         $("#sSubCat").append(
@@ -380,12 +380,12 @@ $("#categoryId, #selectCategoryToSelection, #selectCategoryToSelectionForRandom"
                 });
                 if (($("#sSubCat").val() == null)) {
                     $("#sSubCat").append(
-                        '<option >' + "ไม่มีหัวข้อเรื่องภายใต้หมวดหมู่นี้" + '</option>'
+                        '<option value="">' + "ไม่มีหัวข้อเรื่องภายใต้หมวดหมู่นี้" + '</option>'
                     )
                 }
                 else if (($("#sSubCat").val() != null)) {
                     $("#sSubCat").prepend(
-                        '<option value="" selected>' + "ทั้งหมด" + '</option>'
+                        '<option value="" selected></option>'
                     )
                 }
             }else{
@@ -415,12 +415,12 @@ $("#categoryId, #selectCategoryToSelection, #selectCategoryToSelectionForRandom"
                 });
                 if (($("#sSubCat").val() == null)) {
                     $("#sSubCat").append(
-                        '<option >' + "ไม่มีหัวข้อเรื่องภายใต้หมวดหมู่นี้" + '</option>'
+                        '<option value="">' + "ไม่มีหัวข้อเรื่องภายใต้หมวดหมู่นี้" + '</option>'
                     )
                 }
                 else if (($("#sSubCat").val() != null)) {
                     $("#sSubCat").prepend(
-                        '<option value="" selected>' + "ทั้งหมด" + '</option>'
+                        '<option value="" selected></option>'
                     )
                 }
             }
@@ -433,7 +433,7 @@ $("#categoryId, #selectCategoryToSelection, #selectCategoryToSelectionForRandom"
                 async :false,
                 success: function (data) {
                     $("#sSubCat").append(
-                        '<option value="" >' + "ทั้งหมด" + '</option>'
+                        '<option value="" ></option>'
                     )
                     data.forEach(function (value) {
                         $("#sSubCat").append(

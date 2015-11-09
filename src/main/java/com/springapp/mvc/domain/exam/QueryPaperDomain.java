@@ -2,10 +2,7 @@ package com.springapp.mvc.domain.exam;
 
 import com.springapp.mvc.pojo.Position;
 import com.springapp.mvc.pojo.User;
-import com.springapp.mvc.pojo.exam.ExamPaper;
-import com.springapp.mvc.pojo.exam.ExamRecord;
-import com.springapp.mvc.pojo.exam.PaperQuestion;
-import com.springapp.mvc.pojo.exam.Status;
+import com.springapp.mvc.pojo.exam.*;
 import com.springapp.mvc.util.HibernateUtil;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
@@ -46,6 +43,7 @@ public class QueryPaperDomain extends HibernateUtil {
 
         Criteria criteria = getSession().createCriteria(ExamPaper.class);
         criteria.add(Restrictions.eq("code", code));
+        criteria.add(Restrictions.ne("paperStatus.id", 4));
 
         return (ExamPaper) criteria.list().get(0);
     }
@@ -123,8 +121,13 @@ public class QueryPaperDomain extends HibernateUtil {
                 .add(Projections.property("position"), "position")
                 .add(Projections.property("paperStatus"), "paperStatus"));
         criteria.addOrder(Order.asc("id"));
+        criteria.add(Restrictions.ne("paperStatus.id", 4));
         criteria.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
         List<ExamPaper> papers = criteria.list();
+
+        for(ExamPaper examPaper : papers){
+            getSession().refresh(examPaper);
+        }
 
         return papers;
     }
@@ -176,7 +179,13 @@ public class QueryPaperDomain extends HibernateUtil {
             criteria.add(Restrictions.like("name", "%" + name + "%").ignoreCase());
         }
         criteria.addOrder(Order.asc("id"));
+        criteria.add(Restrictions.ne("paperStatus.id", 4));
+
         List<ExamPaper> papers = criteria.list();
+
+        for(ExamPaper examPaper : papers){
+            getSession().refresh(examPaper);
+        }
 
         return papers;
     }
@@ -231,7 +240,13 @@ public class QueryPaperDomain extends HibernateUtil {
             }
         }
         criteria.addOrder(Order.asc("id"));
+        criteria.add(Restrictions.ne("paperStatus.id", 4));
+
         List<ExamPaper> papers = criteria.list();
+
+        for(ExamPaper examPaper : papers){
+            getSession().refresh(examPaper);
+        }
 
         return papers;
     }

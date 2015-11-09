@@ -17,6 +17,7 @@ $(document).ready(function(){
                 questionsInPaper = [];
                 $("#questionNotFound").hide();
                 $("#tbSelectedQuestionToPaper").show();
+                $("#tbodySelectedQuestionToPaper").empty();
                 for(var i = 0; i < value.length; i ++){
                     $("#newPaperId").val(value[0].examPaper.code);
                     if($("#newPaperName").val(value[0].examPaper.name) == null? $("#newPaperName").val(''): $("#newPaperName").val(value[0].examPaper.name));
@@ -50,7 +51,7 @@ $(document).ready(function(){
                         '<td>'+ value[i].question.subCategory.name+'</td>'+
                         '<td style="text-align: left;">'+ value[i].question.description+'</td>'+
                         '<td style="text-align: center;">'+ value[i].question.difficultyLevel.description+'</td>'+
-                        '<td><input id="newScore'+value[i].question.id+'" onkeypress="return isNumber(event)" onchange="scoreOnChange()" name="newScore" type="number" class="form-control innput-sm"  min="1" max="50" value="'+value[i].score+'"/></td>'+
+                        '<td><input id="newScore'+value[i].question.id+'" onkeypress="return isNumber(event)" onchange="scoreOnChange()" name="newScore" type="number" class="form-control input-sm"  min="1" max="50" value="'+value[i].score+'"/></td>'+
                         '<td style="text-align: center;">'+ value[i].question.createBy.thFname+' '+value[i].question.createBy.thLname+'</td>'+
                         '</tr>'
                     );

@@ -34,7 +34,7 @@
     </div>
     <div class="col-md-4" align="left" style="margin-top: 20px;">
         <select class="form-control" id="viewControlSelector">
-            <option id = "selectSubCategory" value="SubCategory" selected>ทั้งหมด</option>
+            <option id = "selectSubCategory" value="SubCategory" selected></option>
             <option id = "selectCategory" value="Category">เฉพาะหมวดหมู่</option>
         </select>
     </div>

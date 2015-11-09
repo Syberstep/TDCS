@@ -96,7 +96,7 @@ $(document).ready(function () {
         async :false,
         success: function (data) {
             $("#selectSubCategoryToSelectionForRandom").append(
-                '<option value="" >' + "ทั้งหมด" + '</option>'
+                '<option value="" ></option>'
             )
             data.forEach(function (value) {
                 $("#selectSubCategoryToSelectionForRandom").append(
@@ -206,12 +206,12 @@ $("#selectCategoryToSelectionForRandom").on('change', function () {
                 });
                 if (($("#selectSubCategoryToSelectionForRandom").val() == null)) {
                     $("#selectSubCategoryToSelectionForRandom").append(
-                        '<option>' + "ไม่มีหัวข้อเรื่องภายใต้หมวดหมู่นี้" + '</option>'
+                        '<option value="">' + "ไม่มีหัวข้อเรื่องภายใต้หมวดหมู่นี้" + '</option>'
                     )
                 }
                 else if (($("#selectSubCategoryToSelectionForRandom").val() != null)) {
                     $("#selectSubCategoryToSelectionForRandom").prepend(
-                        '<option value="" selected>' + "ทั้งหมด" + '</option>'
+                        '<option value="" selected></option>'
                     )
                 }
             }else{
@@ -241,7 +241,7 @@ $("#selectCategoryToSelectionForRandom").on('change', function () {
                 });
                 if (($("#selectSubCategoryToSelectionForRandom").val() == null)) {
                     $("#selectSubCategoryToSelectionForRandom").append(
-                        '<option>' + "ไม่มีหัวข้อเรื่องภายใต้หมวดหมู่นี้" + '</option>'
+                        '<option value="">' + "ไม่มีหัวข้อเรื่องภายใต้หมวดหมู่นี้" + '</option>'
                     )
                 }
                 //else if (($("#selectSubCategoryToSelection").val() != null)) {
@@ -260,7 +260,7 @@ $("#selectCategoryToSelectionForRandom").on('change', function () {
                 async :false,
                 success: function (data) {
                     $("#selectSubCategoryToSelectionForRandom").append(
-                        '<option value="" selected>' + "ทั้งหมด" + '</option>'
+                        '<option value="" selected></option>'
                     )
                     data.forEach(function (value) {
                         $("#selectSubCategoryToSelectionForRandom").append(

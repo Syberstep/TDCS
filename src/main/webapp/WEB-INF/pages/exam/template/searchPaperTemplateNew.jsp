@@ -109,7 +109,7 @@
                 <div class="row form-group">
                     <div id="btnAdvanceSearch">
                         <div class="col-md-12 text-center">
-                            <hr/>
+                            <%--<hr/>--%>
                             <button id="advPaperSearchBtn" class="btn btn-primary btn-sm" type="button">ค้นหา
                             </button>
                             <button id="advPaperResetBtn" class="btn btn-gray btn-sm searchInputClearBtn"
