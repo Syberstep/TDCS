@@ -7,6 +7,9 @@ $(document).ready(function () {
     clearAllSearchQuestionField()
     $('#selectAllItem').prop('checked',false)
     //listSearchQuestion();
+
+//    ---------------------------------------------------------------------
+
 })
 
 $('tbody').on('change','.questionSelectBox',function(){
@@ -22,7 +25,11 @@ $('body').on('click','.detailEditBtn', function () {
     $('#questionDetailModal').modal('hide')
     $('#submitCreateBtn').text('ยืนยัน');
     $('#createQuestModalTitle').text('แก้ไขข้อสอบ');
-    setEditModalParameter($(this).closest('tr').attr('questionId'));
+    var qId = $(this).closest('tr').attr('questionId');
+    if(qId == undefined){
+        qId = $(this).val()
+    }
+    setEditModalParameter(qId);
     $('#createQuest').modal('show')
 })
 
@@ -158,7 +165,7 @@ var setEditModalParameter = function (questionId) {
         },
         success: function (question) {
             createQuestionModalClearInput();
-            setCreateModalCategory(question.subCategory.category.name);
+            setCreateModalCategory(question.subCategory.category.id+" : "+question.subCategory.category.name);
             var categoryInput = $("#categoryInputForCreateQuestion");
             categoryInput.change();
             $('#sSubCat').find('option[value="' + question.subCategory.name + '"]').prop("selected", true)

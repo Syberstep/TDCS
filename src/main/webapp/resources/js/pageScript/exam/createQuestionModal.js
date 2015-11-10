@@ -4,6 +4,7 @@
 
 $(document).ready(function () {
     $('[data-toggle="popover"]').popover();
+    $('#rHard').closest('.row').addClass('hidden')
 });
 
 $(document).ready(function () {
@@ -487,7 +488,7 @@ var saveCategory = function () {
             data: 'id=' + catId.val() + '&name=' + catName.val(),
             success: function (category) {
                 alert("บันทึกข้อมูลสำเร็จ");
-                setCreateModalCategory(category.name);
+                setCreateModalCategory(category.id + " : " + category.name);
                 var categoryInput = $("#categoryInputForCreateQuestion");
                 categoryInput.change();
                 hideCreateCategory()
