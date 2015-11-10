@@ -125,10 +125,6 @@ public class QueryPaperDomain extends HibernateUtil {
         criteria.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
         List<ExamPaper> papers = criteria.list();
 
-        for(ExamPaper examPaper : papers){
-            getSession().refresh(examPaper);
-        }
-
         return papers;
     }
 

@@ -8,6 +8,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="../modal/addEmployeeToInputModal.jsp" %>
 <c:set var="context" value="${pageContext.request.contextPath}"/>
+
+<style>
+    #createDateToBtn, #createDateFromBtn{
+        cursor: pointer;
+    }
+</style>
+
 <script>
     var context = '${context}';
 </script>
@@ -66,7 +73,7 @@
                     <div class="col-md-3 form-group" style="padding: 0;">
                         <div class="input-group">
                             <input id="searchCreateDateFromInput" type="text" class="form-control input-sm datepicker" data-date-format="dd/mm/yyyy" placeholder="  สร้างชุดข้อสอบตั้งแต่วันที่"/>
-                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar" href="#"></span></span>
+                            <span id="createDateFromBtn" class="input-group-addon"><span class="glyphicon glyphicon-calendar" href="#"></span></span>
                         </div>
                     </div>
                     <div class="col-sm-1 col-sm-offset-1" align="right">
@@ -75,7 +82,7 @@
                     <div class="col-md-3 form-group" style="padding: 0;">
                         <div class="input-group">
                             <input id="searchCreateDateToInput" type="text" class="form-control input-sm datepicker" data-date-format="dd/mm/yyyy" placeholder="  ถึง"/>
-                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar" href="#"></span></span>
+                            <span id="createDateToBtn" class="input-group-addon"><span class="glyphicon glyphicon-calendar" href="#"></span></span>
                         </div>
                     </div>
                 </div>
@@ -150,6 +157,18 @@
         });
         $("#searchCreateDateToInput").datepicker().on('changeDate', function(){
             $("#searchCreateDateToInput").datepicker('hide');
+        });
+
+        $("#createDateFromBtn").on('click',function(){
+            var input = $("#searchCreateDateFromInput");
+            input.datepicker("show");;
+            input.focus()
+        });
+
+        $("#createDateToBtn").on('click',function(){
+            var input = $("#searchCreateDateToInput");
+            input.datepicker("show");
+            input.focus()
         });
     });
 </script>

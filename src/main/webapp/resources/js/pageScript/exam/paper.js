@@ -81,7 +81,7 @@ $(document).ready(function(){
         });
     });
 
-    $("#tbodyManagePaper").on('click', '.checkPaper', function(){
+    $("#tbodyManagePaper").on('change', '.checkPaper', function(){
         var paperId = $(this).parent().parent().find("button").attr('id');
         pId = $(this).parent().siblings().map(function(){
             return $(this).text();
@@ -99,9 +99,20 @@ $(document).ready(function(){
             }
         }).responseText;
 
-        if(check == 'true' || $("#dropdownId"+pId).val() == 1){
-            //alert('ไม่สามารถลบชุดข้อสอบนี้ได้');
-            //this.checked = false;
+        if(check == 'true'){
+            if(!confirm('ชุดข้อสอบนี้ได้ถูกใช้งานแล้ว คุณต้องการลบชุดข้อสอบนี้ใช่หรือไม่')){
+                this.checked = false;
+
+                return false;
+            }
+            else{
+                this.checked = true;
+            }
+        }
+
+        if($("#dropdownId"+pId).val() == 1){
+            alert('ไม่สามารถลบชุดข้อสอบนี้ได้');
+            this.checked = false;
         }
     });
 
@@ -242,7 +253,7 @@ function setColorDropdown(paperId, paperStatus){
         $("#dropdownId"+paperId).css('border-color', '#33CC33');
     }
     if(paperStatus == 2) {
-        $("#dropdownId"+paperId).css('background-color', '#669999');
+        $("#dropdownId"+paperId).css('background-color', 'gray');
         $("#dropdownId"+paperId).css('border-color', '#669999');
     }
     if(paperStatus == 3) {
@@ -419,11 +430,11 @@ function generalSearchPaper(btnSearchStatus) {
                         '<td class="pSelect">'+
                         '<select id="dropdownId'+value.id+'" name="paperStatus" class="btn btn-success btn-sm" style="text-align: left;">'+
                         //'<option value="3">ยังไม่เผยแพร่</option>'+
-                        '<option value="1">เปิดใช้งาน่</option>'+
+                        '<option value="1">เปิดใช้งาน</option>'+
                         '<option value="2">ปิดใช้งาน</option>'+
                         '</select>'+
                         '</td>'+
-                        '<td class="pButton"><button id="'+value.id+'" class="btn btn-gray btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></td>'+
+                        '<td class="pButton"><button id="'+value.id+'" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></td>'+
                         '</tr>'
                     );
                     presentStatus(value.id, value.paperStatus.id);

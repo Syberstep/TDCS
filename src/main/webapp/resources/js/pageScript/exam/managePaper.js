@@ -607,7 +607,7 @@ function createPaper(){
         tempArrayQuestion.push(item);
     }
     jsonObjQuestion = JSON.stringify(tempArrayQuestion);
-    alert(questionsInPaper + " " + newQuestionScore);
+
     $.ajax({
         type: "POST",
         url:context+ "/TDCS/exam/createPaper",
@@ -633,6 +633,7 @@ function createPaper(){
 }
 
 function onLoadPageCreatePaper(){
+    $("#copyPaperField").show();
     $("#removeRowQuestionSelect").hide();
     $("#questionNotFound").show();
     $("#tbSelectedQuestionToPaper").hide();

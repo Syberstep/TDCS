@@ -60,7 +60,7 @@
                         <div class="col-md-3 form-group" style="padding: 0;">
                             <div class="input-group">
                                 <input id="searchCreateDateFromInput" type="text" class="form-control input-sm datepicker" data-date-format="dd/mm/yyyy" placeholder="  สร้างข้อสอบตั้งแต่วันที่"/>
-                                <span class="input-group-addon btn" id="calendarBtnFrom" ><span class="glyphicon glyphicon-calendar" href="#"></span></span>
+                                <span class="input-group-addon btn" id="calendarBtnFrom"><span class="glyphicon glyphicon-calendar" href="#"></span></span>
                             </div>
                         </div>
                         <div class="col-sm-1 col-sm-offset-1" align="right">
@@ -90,23 +90,23 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-2" align="right">
-                            <label style="margin-top: 3px;">ยาก :</label>
+                        <div class="col-sm-2 text-right">
+                            <label style="margin-top: 3px;">ง่าย :</label>
                         </div>
                         <div class="col-sm-2" style="padding: 0;">
-                            <input id="rHard" type="number" class="form-control input-sm" placeholder="จำนวนข้อ"/>
+                            <input id="rEasy" type="number" class="form-control input-sm" oninput="validity.valid||(value='');" placeholder="จำนวนข้อ"/>
                         </div>
                         <div class="col-sm-1 text-right">
                             <label style="margin-top: 3px;">ปานกลาง</label>
                         </div>
                         <div class="col-sm-2" style="padding: 0;">
-                            <input id="rNormal" type="number" class="form-control input-sm" placeholder="จำนวนข้อ"/>
+                            <input id="rNormal" type="number" class="form-control input-sm" oninput="validity.valid||(value='');" placeholder="จำนวนข้อ"/>
                         </div>
-                        <div class="col-sm-1 text-right">
-                            <label style="margin-top: 3px;">ง่าย</label>
+                        <div class="col-sm-1" align="right">
+                            <label style="margin-top: 3px;">ยาก</label>
                         </div>
                         <div class="col-sm-2" style="padding: 0;">
-                            <input id="rEasy" type="number" class="form-control input-sm" placeholder="จำนวนข้อ"/>
+                            <input id="rHard" type="number" class="form-control input-sm" oninput="validity.valid||(value='');" placeholder="จำนวนข้อ"/>
                         </div>
                     </div>
                     <div class="row" id="btnAdvanceSearch">
@@ -124,10 +124,21 @@
 
 <script src="${context}/resources/js/pageScript/exam/searchQuestionTemplate.js" charset="UTF-8"></script>
 <script>
-    $("#searchCreateDateFromInput").datepicker().on('changeDate', function(){
-        $("#searchCreateDateFromInput").datepicker('hide');
+//    $("#searchCreateDateFromInput").datepicker().on('changeDate', function(){
+//        $("#searchCreateDateFromInput").datepicker('hide');
+//    });
+//    $("#searchCreateDateToInput").datepicker().on('changeDate', function(){
+//        $("#searchCreateDateToInput").datepicker('hide');
+//    });
+
+    $("#searchCreateDateFromInput").datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        todayHighlight: true
     });
-    $("#searchCreateDateToInput").datepicker().on('changeDate', function(){
-        $("#searchCreateDateToInput").datepicker('hide');
+    $("#searchCreateDateToInput").datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        todayHighlight: true
     });
 </script>

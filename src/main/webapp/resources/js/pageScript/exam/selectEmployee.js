@@ -1,9 +1,5 @@
-$(document).ready(function(){
-    employeeNotFound();
-});
-
 function searchEmpName(){
-
+    employeeNotFound();
     $('.modalSearchByEmployeeNameSubmitBtn').unbind('click').click(function(){
         $("#modalSearchByEmployeeName").modal("hide");
     });
@@ -37,14 +33,13 @@ function searchEmpName(){
             success: function(data){
                 //alert(data.length);
                 if(data.length == 0){
-                    employeeNotFound()
+                    employeeNotFound();
                 }
                 else{
                     employeeFound();
                     $("#selectAllEmployeeName").show();
                     $("#selectAllEmployeeName").prop("checked", false);
                     data.forEach(function(value){
-                        //alert(value.userName);
                         $("#tbodySelectEmployeeName").append(
                             '<tr style="text-align: center;">'+
                             '<td><input type="checkbox" class="userSelectCheckbox" checkId="'+value.userId+'"></td>'+
@@ -65,7 +60,6 @@ function searchEmpName(){
         });
     }
     if($("#modalSearchByEmployeeName").hasClass('in') && $("#showEmployeeSelected").children().length > 0){
-        //alert('2');
         var i;
         var arrayEmpNameToQuery = new Array();
         var itemLenght = ($("#showEmployeeSelected").children("button")).length;
@@ -96,10 +90,10 @@ function searchEmpName(){
             async: false,
             success: function(data){
                 if(data.length == 0){
-                    $("#tbodySelectEmployeeName").empty();
-                    $("#dataNotFound").show();
+                    employeeNotFound();
                 }
                 else{
+                    employeeFound();
                     $("#tbodySelectEmployeeName").empty();
                     $("#dataNotFound").hide();
                     $("#selectAllEmployeeName").show();

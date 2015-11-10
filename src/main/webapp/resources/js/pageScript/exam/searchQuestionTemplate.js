@@ -106,6 +106,9 @@ var clearAllSearchQuestionField = function () {
     $("#searchStatusInput").val("");
     clearCreateByInput();
     $("#showEmployeeSelected").empty();
+    $("#rEasy").val("");
+    $("#rNormal").val("");
+    $("#rHard").val("");
 }
 
 $(".searchInputClearBtn").on('click', function () {

@@ -113,9 +113,9 @@
                 </div>
                 <div class="col-sm-7" style="padding: 0;">
                     <div class="form-inline">
-                        <input id="hours" class="form-control input-sm" type="number" style="width: 35%;" max="60" min="0" placeholder="ชม." required/>
+                        <input id="hours" class="form-control input-sm" type="number" style="width: 35%;" max="60" min="0" placeholder="ชม." oninput="validity.valid||(value='');" required/>
                         <label style="width: 15%;">ชั่วโมง</label>
-                        <input id="minutes" class="form-control input-sm" type="number" style="width: 35%;" max="60" min="0" placeholder="น." required/>
+                        <input id="minutes" class="form-control input-sm" type="number" style="width: 35%;" max="60" min="0" placeholder="น." oninput="validity.valid||(value='');" required/>
                         <label style="width: 10%;">นาที</label>
                     </div>
                 </div>
@@ -129,7 +129,6 @@
                 <%--</div>--%>
             <%--</div>--%>
         </div>
-        <br/>
         <div class="row" id="copyPaperField" style="display: none;">
             <div class="col-sm-6">
                 <div class="col-sm-4 col-sm-offset-1" align="right">
@@ -148,7 +147,7 @@
             </div>
         </div>
     </form>
-
+    <br/>
     <div class="row">
         <div class="col-sm-12" style="text-align: center">
             <button id="selectionQuestionBtnInpagePaper" data-toggle="modal" data-backdrop="static" class="btn btn-gray btn-sm">เลือกข้อสอบ
@@ -206,9 +205,7 @@
             <h3 id="questionNotFoundDesc">ยังไม่มีข้อสอบในชุดข้อสอบ</h3>
         </div>
     </div>
-
     <br/>
-
     <div class="row">
         <div class="col-sm-5 col-sm-offset-8">
             <label align="right" class="col-sm-2"><h5>คะแนน</h5></label>
