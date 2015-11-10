@@ -52,7 +52,7 @@
                 <tr>
                     <%--<th style="text-align: center">หมายเลขข้อสอบ</th>--%>
                     <th style="vertical-align:middle;"> <input type="checkbox" id="selectAllItem"/> </th>
-                    <th>ชนิดข้อสอบ</th>
+                    <th>ประเภทข้อสอบ</th>
                     <th>หมวดหมู่</th>
                     <th>หัวข้อเรื่อง</th>
 
@@ -87,6 +87,11 @@
     th {
         border: solid 1px white;
         text-align: center;
+        padding: 0px 0px 0px 50px;
+    }
+
+    .questionSubCategory{
+        padding: 0px 0px 0px 50px;
     }
 
     td{
