@@ -59,7 +59,7 @@
                         </div>
                         <div class="col-md-3 form-group" style="padding: 0;">
                             <div class="input-group">
-                                <input id="searchCreateDateFromInput" type="text" class="form-control input-sm datepicker" data-date-format="dd/mm/yyyy" placeholder="  สร้างข้อสอบตั้งแต่วันที่"/>
+                                <input id="searchCreateDateFromInput" type="text" class="form-control input-sm datepicker" maxlength="10" data-date-format="dd/mm/yyyy" placeholder="  สร้างข้อสอบตั้งแต่วันที่"/>
                                 <span class="input-group-addon btn" id="calendarBtnFrom"><span class="glyphicon glyphicon-calendar" href="#"></span></span>
                             </div>
                         </div>
@@ -68,7 +68,7 @@
                         </div>
                         <div class="col-md-3 form-group" style="padding: 0;">
                             <div class="input-group">
-                                <input id="searchCreateDateToInput" type="text" class="form-control input-sm datepicker" data-date-format="dd/mm/yyyy" placeholder="  ถึง"/>
+                                <input id="searchCreateDateToInput" type="text" class="form-control input-sm datepicker" maxlength="10" data-date-format="dd/mm/yyyy" placeholder="  ถึง"/>
                                 <span class="input-group-addon btn" id="calendarBtnTo" ><span class="glyphicon glyphicon-calendar" href="#"></span></span>
                             </div>
                         </div>
@@ -94,19 +94,19 @@
                             <label style="margin-top: 3px;">ง่าย :</label>
                         </div>
                         <div class="col-sm-2" style="padding: 0;">
-                            <input id="rEasy" type="number" class="form-control input-sm" oninput="validity.valid||(value='');" placeholder="จำนวนข้อ"/>
+                            <input id="rEasy" type="number" class="form-control input-sm" min="0" oninput="validity.valid||(value='');" placeholder="จำนวนข้อ"/>
                         </div>
                         <div class="col-sm-1 text-right">
                             <label style="margin-top: 3px;">ปานกลาง</label>
                         </div>
                         <div class="col-sm-2" style="padding: 0;">
-                            <input id="rNormal" type="number" class="form-control input-sm" oninput="validity.valid||(value='');" placeholder="จำนวนข้อ"/>
+                            <input id="rNormal" type="number" class="form-control input-sm" min="0" oninput="validity.valid||(value='');" placeholder="จำนวนข้อ"/>
                         </div>
                         <div class="col-sm-1" align="right">
                             <label style="margin-top: 3px;">ยาก</label>
                         </div>
                         <div class="col-sm-2" style="padding: 0;">
-                            <input id="rHard" type="number" class="form-control input-sm" oninput="validity.valid||(value='');" placeholder="จำนวนข้อ"/>
+                            <input id="rHard" type="number" class="form-control input-sm" min="0" oninput="validity.valid||(value='');" placeholder="จำนวนข้อ"/>
                         </div>
                     </div>
                     <div class="row" id="btnAdvanceSearch">

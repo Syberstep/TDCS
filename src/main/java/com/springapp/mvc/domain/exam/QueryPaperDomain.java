@@ -45,7 +45,12 @@ public class QueryPaperDomain extends HibernateUtil {
         criteria.add(Restrictions.eq("code", code));
         criteria.add(Restrictions.ne("paperStatus.id", 4));
 
-        return (ExamPaper) criteria.list().get(0);
+        if(criteria.list().size() > 0){
+            return (ExamPaper) criteria.list().get(0);
+        }
+        else{
+            return null;
+        }
     }
 
     public void createPaper(ExamPaper examPaper, List<Integer> qIds, List<Float> newScores) {
@@ -143,7 +148,6 @@ public class QueryPaperDomain extends HibernateUtil {
                 else{
                     getSession().delete(examPaper);
                 }
-//                getSession().delete(examPaper);
             }
             HibernateUtil.commitTransaction();
 

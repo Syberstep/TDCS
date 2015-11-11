@@ -8,6 +8,8 @@ import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by Phuthikorn_T on 18-Sep-15.
  */
@@ -46,6 +48,19 @@ public class QueryExamRecordDomain extends HibernateUtil {
         }
 
         return check;
+    }
+
+    public List<ExamRecord> getExamRecordByExamPaper(ExamPaper examPaper){
+
+        Criteria criteria = getSession().createCriteria(ExamRecord.class);
+        criteria.add(Restrictions.eq("paper", examPaper));
+
+        if(criteria.list().size() > 0){
+            return criteria.list();
+        }
+        else{
+            return null;
+        }
     }
 
     public void mergeUpdateExamRecord(ExamRecord examRecord){

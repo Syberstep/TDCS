@@ -7,6 +7,7 @@ import com.springapp.mvc.domain.exam.*;
 import com.springapp.mvc.pojo.Position;
 import com.springapp.mvc.pojo.User;
 import com.springapp.mvc.pojo.exam.ExamPaper;
+import com.springapp.mvc.pojo.exam.ExamRecord;
 import com.springapp.mvc.pojo.exam.PaperQuestion;
 import com.springapp.mvc.pojo.exam.Status;
 import com.springapp.mvc.util.DateUtil;
@@ -64,6 +65,9 @@ public class PaperController {
 
     @Autowired
     QueryExamRecordDomain queryExamRecordDomain;
+
+    @Autowired
+    QueryExamResultDomain queryExamResultDomain;
 
     private static final Logger logger = Logger.getLogger(PaperController.class.getName());
 
@@ -246,6 +250,28 @@ public class PaperController {
         return new ResponseEntity<String>(json, headers, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/exam/checkExamPaperIfMarkConfirmed", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<String> checkExamPaperIfMarkConfirmed(@RequestParam(value = "paperId") Integer paperId){
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json;charset=UTF-8");
+
+        Boolean check = false;
+        ExamPaper examPaper = queryPaperDomain.getPaperById(paperId);
+        List<ExamRecord> examRecord = queryExamRecordDomain.getExamRecordByExamPaper(examPaper);
+
+        if(examRecord != null){
+            check = queryExamResultDomain.checkResultIsDone(examRecord);
+            String json = new Gson().toJson(check);
+            return new ResponseEntity<String>(json, headers, HttpStatus.OK);
+        }
+        else{
+            String json = new Gson().toJson(check);
+            return new ResponseEntity<String>(json, headers, HttpStatus.OK);
+        }
+    }
+
     @RequestMapping(value = "/exam/getPaper", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<String> getPaper(@RequestParam(value = "paperId") int paperId){
@@ -284,10 +310,15 @@ public class PaperController {
         headers.add("Content-Type", "application/json;charset=UTF-8");
 
         ExamPaper paper = queryPaperDomain.getPaperByCode(paperCode);
-        List<PaperQuestion> paperQuestion = queryPaperQuestionDomain.getPaperQuestionByExamPaper(paper);
-        String json = new JSONSerializer().exclude("*.class").serialize(paperQuestion);
+        if(paper != null){
+            List<PaperQuestion> paperQuestion = queryPaperQuestionDomain.getPaperQuestionByExamPaper(paper);
+            String json = new JSONSerializer().exclude("*.class").serialize(paperQuestion);
 
-        return new ResponseEntity<String>(json, headers, HttpStatus.OK);
+            return new ResponseEntity<String>(json, headers, HttpStatus.OK);
+        }
+        else{
+            return null;
+        }
     }
 
     @RequestMapping(value = "/exam/searchPaper", method = RequestMethod.POST)

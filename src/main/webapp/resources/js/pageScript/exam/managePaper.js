@@ -68,11 +68,11 @@ $(document).ready(function(){
         randomQuestion();
     });
 
-    $("#tbodySelectQuestion").on('click', 'td:not(.xyz)', function(){
+    $("#tbodySelectQuestion").on('click','td:not(.xyz)', function(){
         $('#questionPaperDetail').modal('show');
-        var position = $(this).position().top + $(this).outerHeight(true);
-        $('#questionPaperDetail').css('top', position/1.75);
-        $('#questionPaperDetail').css('outline', 'none');
+        //var position = $(this).position().top + $(this).outerHeight(true);
+        //$('#questionPaperDetail').css('top', position/1.75);
+        //$('#questionPaperDetail').css('outline', 'none');
         var questionId = $(this).parent().find('label').attr('id');
         questionId = questionId.substring(questionId.indexOf('d')+1, questionId.length);
         showQuestionInfo(questionId);
@@ -186,13 +186,13 @@ $(document).ready(function(){
     });
     $("#removeRowQuestionSelect").on('click', function(){
         $("#tbSelectedQuestionToPaper tr").has('input[class="selectedQuestion"]:checked').remove();
+        scoreOnChange();
         if($("#tbodySelectedQuestionToPaper tr").length == 0){
             $("#removeRowQuestionSelect").hide();
             $("#tbSelectedQuestionToPaper").hide();
             $("#questionNotFound").show();
             $("#score").val(0);
         }
-        scoreOnChange();
     });
 
     $("#createPaperBtn").unbind('click').click(function(){
@@ -599,12 +599,17 @@ function createPaper(){
     var jsonObjQuestion = {};
     var tempArrayQuestion = new Array();
 
-    for(var idx = 0; idx < questionsInPaper.length; idx++){
-        var item = {
-            "qId": questionsInPaper[idx],
-            "qScore" : newQuestionScore[idx]
-        };
-        tempArrayQuestion.push(item);
+    for(var idx = 0; idx < (questionsInPaper.length - 1); idx++){
+        if((newQuestionScore[idx] == null) || (questionsInPaper[idx] == null)){
+            continue;
+        }
+        else{
+            var item = {
+                "qId": questionsInPaper[idx],
+                "qScore" : newQuestionScore[idx]
+            };
+            tempArrayQuestion.push(item);
+        }
     }
     jsonObjQuestion = JSON.stringify(tempArrayQuestion);
 
@@ -716,7 +721,7 @@ function generalSearchQuestion(btnSearchStatus) {
     else{
         categoryId = categoryId;
     }
-    if(subcategoryId == null? subcategoryId = "": subcategoryId = subcategoryId);
+    if((subcategoryId == null) || (subcategoryId == "") || (subcategoryId == "ไม่มีหัวข้อเรื่องภายใต้หมวดหมู่นี้")? subcategoryId = "": subcategoryId = subcategoryId);
     questionDescriptionSearch = $("#searchQuestionDescInput").val();
     if(questionDescriptionSearch == ""? questionDescriptionSearch = "": questionDescriptionSearch = $("#searchQuestionDescInput").val());
     questionCreateDateFromSearch = $("#searchCreateDateFromInput").val();
@@ -874,10 +879,7 @@ function generalSearchQuestion(btnSearchStatus) {
         mimeType: 'application/json',
         data: jsonObj,
         success: function (result) {
-            if(result == null){
-                dataNotFound();
-            }
-            else{
+            if(result.length > 0){
                 dataFound();
                 $("#tbodySelectQuestion").empty();
                 result.forEach(function(value){
@@ -890,7 +892,7 @@ function generalSearchQuestion(btnSearchStatus) {
                         (value.choices).forEach(function(value2){
                             if(Number(value.status.id) == 3){
                                 str = str +'<td style="display: none;"><label id="labelChoice'+j+value.id+'">'+value2.description+'</td>'+
-                                    '<td style="display: none;"><label id="labelChoiceCorrection1'+value.id+'">'+value2.correction.value+'</td>';
+                                    '<td style="display: none;"><label id="labelChoiceCorrection'+j+value.id+'">'+value2.correction+'</td>';
                             }
                             j = j+1;
                         });
@@ -919,6 +921,9 @@ function generalSearchQuestion(btnSearchStatus) {
                     );
                 });
             }
+            else{
+                dataNotFound();
+            }
         },
         error: function () {
             alert('ไม่พบข้อสอบ');
@@ -927,8 +932,8 @@ function generalSearchQuestion(btnSearchStatus) {
     searchQEasy = 0;
     searchQNormal = 0;
     searchQHard = 0;
-    categoryId = "";
-    subcategoryId = "";
+    //categoryId = "";
+    //subcategoryId = "";
     arrayEmpNameToQuery = [];
     tempArray = [];
     tmpQ = [];
@@ -1233,6 +1238,14 @@ function randomQuestion(){
     }
     if(subcategoryId == null? subcategoryId = "": subcategoryId = subcategoryId);
 
+    questionsInPaper = [];
+    $("#tbodySelectedQuestionToPaper tr input:checkbox").each(function(){
+        var temp = $(this).parent().siblings().map(function(){
+            return $(this).text();
+        }).get(0);
+        questionsInPaper.push(temp);
+    });
+
     var randEasy = $("#randEasy").val();
     var randNormal = $("#randNormal").val();
     var randHard = $("#randHard").val();
@@ -1383,10 +1396,17 @@ function randomQuestion(){
                             var str = "";
                             if (value.choices != null) {
                                 var i = 1;
+                                //for(var i = 0; i < value.choices.length; i++){
+                                //    if (Number(value.status.id) == 3) {
+                                //        str = str + '<td style="display: none;"><label id="labelChoice' + i + value.id + '">' + value.choices[i].description + '</td>' +
+                                //            '<td style="display: none;"><label id="labelChoiceCorrection1' + value.id + '">' + value.choices[i].correction + '</td>';
+                                //    }
+                                //    i = i + 1;
+                                //}
                                 (value.choices).forEach(function (value2) {
                                     if (Number(value.status.id) == 3) {
                                         str = str + '<td style="display: none;"><label id="labelChoice' + i + value.id + '">' + value2.description + '</td>' +
-                                            '<td style="display: none;"><label id="labelChoiceCorrection1' + value.id + '">' + value2.correction.value + '</td>';
+                                            '<td style="display: none;"><label id="labelChoiceCorrection' + i + value.id + '">' + value2.correction + '</td>';
                                     }
                                     i = i + 1;
                                 });
@@ -1442,16 +1462,16 @@ function showQuestionInfo(qId){
     $("#scoreDetail").text($("#labelScore"+qId).text());
     $("#questionDescDetail").text($("#labelQuestionDesc"+qId).text());
 
-
     if(Number($("#labelQuestionTypeId"+qId).text()) == 1){
         $("#choiceDetailContainer").show();
         for(var j = 1; j < 5; j ++ ){
-            if($("#labelChoiceCorrection"+j+qId).text() == 1 ){
+            if($("#labelChoiceCorrection"+j+qId).text() == 'true'){
                 $("#choiceDetail"+j).text($("#labelChoice"+j+qId).text());
+                $("#correctDetail"+j).children('span').show();
             }
             else{
                 $("#choiceDetail"+j).text($("#labelChoice"+j+qId).text());
-                $("#correctDetail"+j).hide();
+                $("#correctDetail"+j).children('span').hide();
             }
         }
     }

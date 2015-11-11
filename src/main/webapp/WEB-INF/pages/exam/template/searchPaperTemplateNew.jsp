@@ -27,13 +27,13 @@
         <div class="panel-body">
             <div class="row">
                 <div class="col-sm-2 text-right">
-                    <label>รหัสชุดข้อสอบ :</label>
+                    <label style="margin-top: 5px;">รหัสชุดข้อสอบ :</label>
                 </div>
                 <div class="col-md-3 form-group" style="padding: 0;">
-                    <input id="paperCodeSearch" type="text" class="form-control input-sm" placeholder="รหัสชุดข้อสอบ"/>
+                    <input id="paperCodeSearch" type="text" class="form-control input-sm" maxlength="5" placeholder="รหัสชุดข้อสอบ"/>
                 </div>
                 <div class="col-sm-2" align="right">
-                    <label for="searchScoreToInput">ชื่อชุดข้อสอบ :</label>
+                    <label style="margin-top: 5px;" for="searchScoreToInput">ชื่อชุดข้อสอบ :</label>
                 </div>
                 <div class="col-md-3 form-group" style="padding: 0;">
                     <input id="paperName" type="text" class="form-control input-sm" placeholder="ชื่อชุดข้อสอบ"/>
@@ -68,41 +68,41 @@
                 <br/>
                 <div class="row">
                     <div class="col-sm-2" align="right">
-                        <label for="searchCreateDateFromInput" class="control-label">วันที่สร้าง :</label>
+                        <label for="searchCreateDateFromInput" style="margin-top: 5px;" class="control-label">วันที่สร้าง :</label>
                     </div>
                     <div class="col-md-3 form-group" style="padding: 0;">
-                        <div class="input-group">
-                            <input id="searchCreateDateFromInput" type="text" class="form-control input-sm datepicker" data-date-format="dd/mm/yyyy" placeholder="  สร้างชุดข้อสอบตั้งแต่วันที่"/>
+                        <div id="pStartTime" class="input-group date">
+                            <input id="searchCreateDateFromInput" type="text" class="form-control input-sm datepicker" maxlength="10" data-date-format="dd/mm/yyyy" placeholder="  สร้างชุดข้อสอบตั้งแต่วันที่"/>
                             <span id="createDateFromBtn" class="input-group-addon"><span class="glyphicon glyphicon-calendar" href="#"></span></span>
                         </div>
                     </div>
                     <div class="col-sm-1 col-sm-offset-1" align="right">
-                        <label for="searchCreateDateToInput">ถึง :</label>
+                        <label for="searchCreateDateToInput" style="margin-top: 5px;">ถึง :</label>
                     </div>
                     <div class="col-md-3 form-group" style="padding: 0;">
-                        <div class="input-group">
-                            <input id="searchCreateDateToInput" type="text" class="form-control input-sm datepicker" data-date-format="dd/mm/yyyy" placeholder="  ถึง"/>
+                        <div id="pToTime" class="input-group date">
+                            <input id="searchCreateDateToInput" type="text" class="form-control input-sm datepicker" maxlength="10" data-date-format="dd/mm/yyyy" placeholder="  ถึง"/>
                             <span id="createDateToBtn" class="input-group-addon"><span class="glyphicon glyphicon-calendar" href="#"></span></span>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-2" align="right">
-                        <label>คะแนน :</label>
+                        <label style="margin-top: 5px;">คะแนน :</label>
                     </div>
                     <div class="col-md-3 form-group" style="padding: 0;">
-                        <input id="searchScoreFromInput" type="text" class="form-control input-sm" placeholder="คะแนนตั้งแต่"/>
+                        <input id="searchScoreFromInput" type="number" class="form-control input-sm" oninput="validity.valid||(value='');"  placeholder="คะแนนตั้งแต่"/>
                     </div>
                     <div class="col-sm-1 col-sm-offset-1" align="right">
-                        <label for="searchScoreToInput">ถึง :</label>
+                        <label for="searchScoreToInput" style="margin-top: 5px;">ถึง :</label>
                     </div>
                     <div class="col-md-3 form-group" style="padding: 0;">
-                        <input id="searchScoreToInput" type="text" class="form-control input-sm" placeholder="ถึง"/>
+                        <input id="searchScoreToInput" type="number" class="form-control input-sm" oninput="validity.valid||(value='');" placeholder="ถึง"/>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-2" align="right">
-                        <label>สถานะ :</label>
+                        <label style="margin-top: 5px;">สถานะ :</label>
                     </div>
                     <div class="col-md-3 form-group" style="padding: 0;">
                         <select id="searchPaperStatus" class="form-control input-sm">
@@ -152,12 +152,12 @@
 
         $(".datepicker").datepicker();
 
-        $("#searchCreateDateFromInput").datepicker().on('changeDate', function(){
-            $("#searchCreateDateFromInput").datepicker('hide');
-        });
-        $("#searchCreateDateToInput").datepicker().on('changeDate', function(){
-            $("#searchCreateDateToInput").datepicker('hide');
-        });
+//        $("#searchCreateDateFromInput").datepicker().on('changeDate', function(){
+//            $("#searchCreateDateFromInput").datepicker('hide');
+//        });
+//        $("#searchCreateDateToInput").datepicker().on('changeDate', function(){
+//            $("#searchCreateDateToInput").datepicker('hide');
+//        });
 
         $("#createDateFromBtn").on('click',function(){
             var input = $("#searchCreateDateFromInput");
