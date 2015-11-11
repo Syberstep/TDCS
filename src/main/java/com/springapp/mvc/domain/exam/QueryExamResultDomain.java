@@ -2,6 +2,7 @@ package com.springapp.mvc.domain.exam;
 
 import com.springapp.mvc.pojo.User;
 import com.springapp.mvc.pojo.Position;
+import com.springapp.mvc.pojo.exam.ExamPaper;
 import com.springapp.mvc.pojo.exam.ExamRecord;
 import com.springapp.mvc.pojo.exam.ExamResult;
 import com.springapp.mvc.util.HibernateUtil;
@@ -92,5 +93,28 @@ public class QueryExamResultDomain extends HibernateUtil {
 
     public void updateExamResult(ExamResult examResult) {
         getSession().merge(examResult);
+    }
+
+//    Add By Mr.Wanchana K
+    public Boolean checkResultIsDone(List<ExamRecord> examRecord){
+
+        Boolean check = false;
+        Criteria criteria = getSession().createCriteria(ExamResult.class);
+        criteria.add(Restrictions.in("examRecord", examRecord));
+
+        if(criteria.list().size() != 0){
+            List<ExamResult> examResults = criteria.list();
+            for(int i = 0; i < (examResults.size() - 1); i++){
+                if(examResults.get(i).getStatus().getId() == 7){
+                    check = false;
+                }
+                else{
+                    check = true;
+                    break;
+                }
+            }
+        }
+
+        return check;
     }
 }

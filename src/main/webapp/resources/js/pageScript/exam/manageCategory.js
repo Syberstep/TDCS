@@ -224,7 +224,7 @@ function listcat() {
         }
     });
 
-    var search = $("#categoryName").val();
+    //var search = $("#categoryName").val();
     $("#categoryName").typeahead('destroy').typeahead({
         source: availableall,
         minLength: 0,

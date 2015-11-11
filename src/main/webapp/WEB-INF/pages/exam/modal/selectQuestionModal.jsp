@@ -113,7 +113,7 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-md-2 text-right">วิชา :</div>
+                    <div class="col-md-2 text-right">หมวดหมู่ :</div>
                     <span class="col-md-2" id="categoryDetail"></span>
 
                     <div class="col-md-2 col-sm-offset-1 text-right">หัวข้อเรื่อง :</div>
@@ -139,39 +139,40 @@
                     <div class="col-md-2 text-right">คะแนน :</div>
                     <span class="col-md-2" id="scoreDetail"></span>
                 </div>
-                <div class="row">
-                    <div class="col-md-2 text-right">คำถาม :</div>
-                    <span class="col-md-8" id="questionDescDetail"></span>
-                </div>
-
+                <%--<div class="row">--%>
+                    <%--<div class="col-md-2 text-right">คำถาม :</div>--%>
+                    <%--<span class="col-md-8" id="questionDescDetail"></span>--%>
+                <%--</div>--%>
             </div>
             <div class="modal-footer">
                 <div id="choiceDetailContainer">
+                    <div class="row">
+                        <div class="col-md-2 text-right">คำถาม :</div>
+                        <span class="col-md-8 text-left" id="questionDescDetail"></span>
+                    </div><br/>
                     <div class="row">
                         <div class="col-md-1 " id="correctDetail1"><span class="glyphicon glyphicon-ok "
                                                                          style="color:rgb(92, 184, 92);"></span></div>
                         <div class="col-md-1">ก :</div>
                         <span class="col-md-8 text-left" id="choiceDetail1"></span>
-                        <%--<div class="col-md-1 " id="correctDetail1"><span class="glyphicon glyphicon-ok "--%>
-                                                                         <%--style="color:rgb(92, 184, 92);"></span></div>--%>
                     </div>
                     <div class="row">
-                        <div class="col-md-1 col-md-offset-1">ข :</div>
-                        <span class="col-md-8 text-left" id="choiceDetail2"></span>
                         <div class="col-md-1 " id="correctDetail2"><span class="glyphicon glyphicon-ok "
                                                                          style="color:rgb(92, 184, 92);"></span></div>
+                        <div class="col-md-1">ข :</div>
+                        <span class="col-md-8 text-left" id="choiceDetail2"></span>
                     </div>
                     <div class="row">
-                        <div class="col-md-1 col-md-offset-1">ค :</div>
-                        <span class="col-md-8 text-left" id="choiceDetail3"></span>
                         <div class="col-md-1 " id="correctDetail3"><span class="glyphicon glyphicon-ok "
                                                                          style="color:rgb(92, 184, 92);"></span></div>
+                        <div class="col-md-1">ค :</div>
+                        <span class="col-md-8 text-left" id="choiceDetail3"></span>
                     </div>
                     <div class="row">
-                        <div class="col-md-1 col-md-offset-1">ง :</div>
-                        <span class="col-md-8 text-left" id="choiceDetail4"></span>
                         <div class="col-md-1 " id="correctDetail4"><span class="glyphicon glyphicon-ok "
                                                                          style="color:rgb(92, 184, 92);"></span></div>
+                        <div class="col-md-1">ง :</div>
+                        <span class="col-md-8 text-left" id="choiceDetail4"></span>
                     </div>
                 </div>
             </div>

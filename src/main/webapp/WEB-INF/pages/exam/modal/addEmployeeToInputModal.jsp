@@ -23,8 +23,9 @@
         line-height: 100px;
         color: #00647f;
     }
+
     #modalSearchByEmployeeName{
-        /*z-index: 10;*/
+
     }
 
 </style>

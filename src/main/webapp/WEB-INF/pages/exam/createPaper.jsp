@@ -44,9 +44,9 @@
 
 </style>
 
+<h3>สร้างชุดข้อสอบ</h3>
+<hr>
 <div class="container">
-    <h3>สร้างชุดข้อสอบ</h3>
-    <hr>
     <div class="row">
         <button id="createPaperBtn" class="btn btn-success btn-sm" type="button">บันทึก</button>
         <button id="updatePaperBtn" class="btn btn-success btn-sm" type="button" style="display: none;">บันทึก</button>
@@ -72,7 +72,7 @@
                 </div>
             </div>
             <div class="col-sm-6">
-                <div class="col-sm-3" align="right">
+                <div class="col-sm-4" align="right">
                     <label for="newPaperName" class="label-control"><h5 style="margin-top: 5px">ชื่อชุดข้อสอบ :</h5>
                     </label>
                 </div>
@@ -92,14 +92,14 @@
                 </div>
             </div>
             <div class="col-sm-6">
-                <div class="col-sm-3" align="right">
+                <div class="col-sm-4" align="right">
                     <span style="color:red;">*</span><label for="newPaperForPosition" class="label-control"><h5
-                        style="margin-top: 5px">ตำแหน่ง :</h5></label>
+                        style="margin-top: 5px">ประเภทผู้สอบ :</h5></label>
                 </div>
                 <div class="col-sm-7" style="padding: 0;">
                     <select id="newPaperForPosition" class="form-control input-sm">
                         <option active>เลือกตำแหน่ง</option>
-                        <option value="0"></option>
+                        <option value="0">ทั้งหมด</option>
                         <option value="1">Software Developer Trainee</option>
                         <option value="2">Assistant Business Analyst</option>
                     </select>
@@ -207,13 +207,13 @@
     </div>
     <br/>
     <div class="row">
-        <div class="col-sm-5 col-sm-offset-8">
-            <label align="right" class="col-sm-2"><h5>คะแนน</h5></label>
-            <div class="col-sm-3">
+        <div class="col-sm-4 col-sm-offset-8">
+            <label align="right" class="col-sm-2" style="bottom: 3px;"><h5>คะแนน</h5></label>
+            <div class="col-sm-4">
                 <input class="form-control input-sm" readonly="true" name="score" id="score" style="text-align: center">
             </div>
-            <label align="right" class="col-sm-1"><h5>เต็ม</h5></label>
-            <div class="col-sm-3">
+            <label align="right" class="col-sm-1" style="bottom: 3px;"><h5>เต็ม</h5></label>
+            <div class="col-sm-4">
                 <input class="form-control input-sm" readonly="true" name="score" id="maxScore" style="text-align: center">
             </div>
         </div>
