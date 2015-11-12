@@ -19,7 +19,7 @@ public class Status implements Serializable {
     private String name;
 
     @Column(name = "STATUS_DESCRIPTION")
-private String description;
+    private String description;
 
     public Integer getId() {
         return id;

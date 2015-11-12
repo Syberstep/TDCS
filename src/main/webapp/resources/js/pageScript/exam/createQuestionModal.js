@@ -274,6 +274,8 @@ var createQuestionModalClearInput = function () {
     //correctRadioNotChecked.parent().removeClass('success');
     //correctRadioNotChecked.show();
     //correctRadioNotChecked.parent().children('div').hide();
+    hideCreateCategory()
+    hideCreateSubCategory()
 }
 
 var setCreateModalCategory = function (category) {
@@ -436,6 +438,7 @@ $("#categoryInputForCreateQuestion").on('change', function () {
 var hideCreateCategory = function () {
     $("#categoryCreateContainer").addClass("hidden")
     $("#categorySelectContainer").removeClass("hidden")
+
 }
 var showCreateCategory = function () {
     $("#categorySelectContainer").addClass("hidden")

@@ -83,6 +83,7 @@ public class QueryExamResultDomain extends HibernateUtil {
         criteria.createAlias("examRecord.paper", "paper");
         criteria.createAlias("examRecord.user", "user");
         criteria.createAlias("paper.createBy", "createBy");
+        criteria.createAlias("er.status","status");
         if (userId.size()!=0){
 
             criteria.add(Restrictions.in("createBy.userId", userId));
@@ -107,13 +108,13 @@ public class QueryExamResultDomain extends HibernateUtil {
 //            .add(Projections.property("examRecord.postTestRecord"), "postTestRecord");
 //
 //        criteria.setProjection(Projections.distinct(projList));
+        criteria.addOrder(Order.asc("status.id"));
         criteria.addOrder(Order.desc("paper.id"));
         criteria.addOrder(Order.desc("user.userId"));
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
         List<ExamResult> empList = criteria.list();
         return empList;
     }
-
     public void updateExamResult(ExamResult examResult) {
         getSession().merge(examResult);
     }

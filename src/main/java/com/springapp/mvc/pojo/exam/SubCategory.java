@@ -5,6 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by Phuthikorn_T on 6/30/2015.
@@ -30,6 +31,8 @@ public class SubCategory implements Serializable {
     @ManyToOne
     @JoinColumn(name="SUB_CATEGORY_CREATE_BY",referencedColumnName = "USER_ID")
     private User createBy;
+
+
 
     public Integer getId() {
         return id;

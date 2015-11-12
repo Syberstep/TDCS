@@ -10,7 +10,12 @@
 <c:set var="context" value="${pageContext.request.contextPath}"/>
 <script>
     var context = '${context}';
+
+    if('${status}' == ''||'${status}' == 'staff'){
+        window.location.href = context+"/TDCS/index.html";
+    }
 </script>
+
 
 
 <div class="container row">

@@ -11,6 +11,10 @@
 <c:set var="context" value="${pageContext.request.contextPath}"/>
 <script>
     var context = '${context}';
+
+    if('${status}' == 'user' || '${status}' == ''){
+        window.location.href =context+ "/TDCS/index.html";
+    }
 </script>
 
 <%--<%@include file="modal/createQuestionModal.jsp" %>--%>
@@ -87,10 +91,6 @@
     th {
         border: solid 1px white;
         text-align: center;
-        padding: 0px 0px 0px 50px;
-    }
-
-    .questionSubCategory{
         padding: 0px 0px 0px 50px;
     }
 

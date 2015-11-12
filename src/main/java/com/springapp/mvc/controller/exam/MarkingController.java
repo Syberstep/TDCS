@@ -6,11 +6,16 @@ import com.springapp.mvc.pojo.User;
 import com.springapp.mvc.pojo.exam.ExamAnswerRecord;
 import com.springapp.mvc.pojo.exam.ExamMarkingRecord;
 import com.springapp.mvc.pojo.exam.ExamResult;
+import com.springapp.mvc.pojo.exam.Status;
 import com.springapp.mvc.util.DateUtil;
 import com.springapp.mvc.util.HibernateUtil;
+import flexjson.JSONSerializer;
 import org.hibernate.Hibernate;
 import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -62,7 +67,7 @@ public class MarkingController {
         ExamResult examResult = queryExamResultDomain.getExamResultById(resultId);
         Hibernate.initialize(examResult.getExamRecord().getPaper().getQuestions());
         Hibernate.initialize(examResult.getExamRecord().getExamAnswerRecords());
-        for(ExamAnswerRecord ear : examResult.getExamRecord().getExamAnswerRecords()){
+        for (ExamAnswerRecord ear : examResult.getExamRecord().getExamAnswerRecords()) {
             Hibernate.initialize(ear.getQuestion().getChoices());
             Hibernate.initialize(ear.getQuestion().getPapers());
         }
@@ -74,13 +79,22 @@ public class MarkingController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/exam/marking/submit")
     @ResponseBody
-    public void submitMarking(HttpServletRequest request, HttpServletResponse response
+    public ResponseEntity<String> submitMarking(HttpServletRequest request, HttpServletResponse response
             , @RequestParam(value = "resultId", required = true) Integer resultId
             , @RequestParam(value = "markingRecord", required = true) JSONArray markingRecord
             , @RequestParam(value = "comment", required = false) String comment
             , @RequestParam(value = "confirmation", required = true) Boolean confirmation) throws Exception {
 
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json;charset=UTF-8");
+        String json = new JSONSerializer().exclude("*.class").serialize("hello");
+        Status markConfirmedStatus = queryStatusDomain.getMarkConfirmedStatus();
         ExamResult examResult = queryExamResultDomain.getExamResultById(resultId);
+        if (examResult.getStatus() == markConfirmedStatus) {
+            json = new JSONSerializer().exclude("*.class").serialize(markConfirmedStatus);
+            return new ResponseEntity<String>(json, headers, HttpStatus.I_AM_A_TEAPOT);
+        }
+
         User currentUser = queryUserDomain.getCurrentUser(request);
         examResult.setMarkedBy(currentUser);
         examResult.setComment(comment);
@@ -117,9 +131,9 @@ public class MarkingController {
                 subjectiveScore += (score);
             }
             examResult.setSubjectiveScore(subjectiveScore);
-            if(confirmation){
+            if (confirmation) {
                 examResult.setStatus(queryStatusDomain.getMarkConfirmedStatus());
-            }else {
+            } else {
                 examResult.setStatus(queryStatusDomain.getMarkedStatus());
             }
 
@@ -131,6 +145,9 @@ public class MarkingController {
             e.printStackTrace();
             throw e;
         }
+
+        return new ResponseEntity<String>(json, headers, HttpStatus.OK);
+
 
     }
 

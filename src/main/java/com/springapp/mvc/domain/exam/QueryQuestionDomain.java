@@ -163,10 +163,12 @@ public class QueryQuestionDomain extends HibernateUtil {
         if (categoryId != null && categoryId != "") {
             Category category = queryCategoryDomain.getCategoryById(categoryId);
             criteria.add(Restrictions.eq("subCategory.category", category));
-            if (subCategoryName != null && subCategoryName != "") {
-                criteria.add(Restrictions.eq("subCategory", querySubCategoryDomain.getSubCategoryByNameAndCategory(subCategoryName, category)));
-            }
+
         }
+        if (subCategoryName != null && subCategoryName != "") {
+            criteria.add(Restrictions.in("subCategory", querySubCategoryDomain.getSubCategoryByName(subCategoryName)));
+        }
+
         if (createByJsonArray != null && createByJsonArray.length() != 0) {
             try {
                 List<Integer> userIds = new ArrayList<Integer>();
