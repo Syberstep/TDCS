@@ -1,11 +1,4 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: PTang_000
-  Date: 7/29/2015
-  Time: 1:13 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <c:set var="context" value="${pageContext.request.contextPath}"/>
 <script>
@@ -13,7 +6,7 @@
 </script>
 <script>
     if ('${status}' == 'user' || '${status}' == '') {
-        window.location.href = context+"/TDCS/index.html";
+        window.location.href = context + "/TDCS/index.html";
     }
 </script>
 
@@ -197,40 +190,25 @@
                         </div>
                     </div>
                     <div class="row ">
-                            <%--<div class="col-md-offset-7 col-md-2 text-right"><h5>คะแนน :</h5></div>--%>
-                        <%--<div class="col-md-3 col-md-offset-8">--%>
-                            <%--<div class="col-md-5" align="right">--%>
-                                <%--<h5>คะแนน :</h5>--%>
-                            <%--</div>--%>
-                            <%--<div class=" col-md-7">--%>
-                                <%--<input class="form-control scoreInputObjective" min=0--%>
-                                       <%--oninput="validity.valid||(value='');"--%>
-                                       <%--type="number" step="0.1"--%>
-                                       <%--value="0"--%>
-                                       <%--maxScore="${paperQuestion.score}"--%>
-                                       <%--disabled>--%>
-                            <%--</div>--%>
-                        <%--</div>--%>
-                        <%--<div class="col-md-1"><h5>/&nbsp;--%>
-                            <c:forEach var="paperQuestion" items="${examResult.examRecord.paper.questions}">
+                        <c:forEach var="paperQuestion" items="${examResult.examRecord.paper.questions}">
 
                             <c:if test="${paperQuestion.pk.question.id == answerRecord.question.id}">
-                            <div class="col-md-3 col-md-offset-8">
-                                <div class="col-md-5" align="right">
-                                    <h5>คะแนน :</h5>
+                                <div class="col-md-3 col-md-offset-8">
+                                    <div class="col-md-5" align="right">
+                                        <h5>คะแนน :</h5>
+                                    </div>
+                                    <div class=" col-md-7">
+                                        <input class="form-control scoreInputObjective" min=0
+                                               oninput="validity.valid||(value='');"
+                                               type="number" step="0.1"
+                                               value="0"
+                                               maxScore="${paperQuestion.score}"
+                                               disabled>
+                                    </div>
                                 </div>
-                                <div class=" col-md-7">
-                                    <input class="form-control scoreInputObjective" min=0
-                                           oninput="validity.valid||(value='');"
-                                           type="number" step="0.1"
-                                           value="0"
-                                           maxScore="${paperQuestion.score}"
-                                           disabled>
-                                </div>
-                            </div>
-                            <div class="col-md-1"><h5>/&nbsp;
-                            <span class="maxScore">${paperQuestion.score}</span></h5></div>
-                        </c:if>
+                                <div class="col-md-1"><h5>/&nbsp;
+                                    <span class="maxScore">${paperQuestion.score}</span></h5></div>
+                            </c:if>
 
                         </c:forEach>
 
@@ -252,6 +230,9 @@
               placeholder="แสดงความคิดเห็น...">${examResult.comment}</textarea>
     </div>
     <br>
+    <div class="row">
+        <div class="col-md-2"></div>
+    </div>
 
     <div class="row">
         <div class="col-md-2 text-right"><h5>คะแนนรวม :</h5></div>
@@ -263,13 +244,24 @@
                 <div class="maxScore">/ ${examResult.examRecord.paper.maxScore}</div>
             </h5>
         </div>
-        <div class="col-md-offset-4 col-md-2">
-            <button class="btn btn-primary submitMarkingBtn <c:if test="${examResult.status.id == 7}">hidden</c:if>"
-                    style="width: 100%;" data-toggle="modal"
-                    data-target="#submitMarkingModal">บันทึกผลตรวจ
-            </button>
-        </div>
-        <div class="col-md-2">
+
+        <c:if test="${examResult.status.id  != 7}">
+            <div class="col-md-offset-2 col-md-2">
+                <%--<button class="btn btn-primary submitMarkingBtn "--%>
+                        <%--style="width: 100%;" data-toggle="modal"--%>
+                        <%--data-target="#submitMarkingModal">บันทึกผลตรวจ--%>
+                <%--</button>--%>
+                <button id="confirmSubmitMarkingCONFIRM" class="btn btn-success btn-block" data-dismiss="modal">
+                    ส่งผลตรวจ
+                </button>
+            </div>
+            <div class="col-md-2">
+                <button id="confirmSubmitMarking" class="btn btn-primary btn-block" data-dismiss="modal">บันทึกผลตรวจ
+                </button>
+            </div>
+        </c:if>
+
+        <div class="col-md-2 <c:if test="${examResult.status.id  == 7}">col-md-offset-6</c:if>">
             <button class="btn btn-danger" id="cancleMarkingBtn" style="width: 100%;">ยกเลิก</button>
         </div>
     </div>
@@ -297,13 +289,13 @@
                         </button>
                         &nbsp;
                     </span>
-                        <button id="confirmSubmitMarking" class="btn btn-primary" data-dismiss="modal">บันทึกผลตรวจ
-                        </button>
-                        &nbsp;
-                        <button id="confirmSubmitMarkingCONFIRM" class="btn btn-success" data-dismiss="modal">
-                            ยืนยันผลตรวจ
-                        </button>
-                        &nbsp;
+                        <%--<button id="confirmSubmitMarking" class="btn btn-primary" data-dismiss="modal">บันทึกผลตรวจ--%>
+                        <%--</button>--%>
+                        <%--&nbsp;--%>
+                        <%--<button id="confirmSubmitMarkingCONFIRM" class="btn btn-success" data-dismiss="modal">--%>
+                            <%--ยืนยันผลตรวจ--%>
+                        <%--</button>--%>
+                        <%--&nbsp;--%>
                         <button id="cancleSubmitMarking" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
                     </div>
                 </div>

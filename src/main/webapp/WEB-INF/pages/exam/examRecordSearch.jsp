@@ -29,6 +29,7 @@
         border-radius: 5px;
         margin-top: -15px;
     }
+
     #paperNotFoundDesc {
         text-align: center;
         vertical-align: middle;
@@ -36,6 +37,8 @@
         color: #00647f;
     }
 </style>
+
+<tiles:insertTemplate template="/WEB-INF/pages/exam/modal/addEmployeeToInputModal.jsp"/>
 
 <h3>ตรวจข้อสอบ</h3>
 <hr>
@@ -48,36 +51,40 @@
             <div class="form-horizontal">
                 <div class="row">
                     <div class="col-sm-6">
-                        <label class="col-sm-4 control-label ">ชุดข้อสอบ :</label>
+                        <label class="col-sm-4 control-label text-right">ชุดข้อสอบ :</label>
 
                         <div class="col-sm-6 input-group">
-                            <input id="searchPaperInput" class="form-control">
+                            <input id="searchPaperInput" class="form-control input-sm">
                                     <span class="input-group-addon">
-                                        <i class="glyphicon glyphicon-search" style="cursor: pointer; height: 20px;"
-                                           onclick="listSearchPaper()"></i>
+                                        <i style="cursor: pointer; height: 20px;"
+                                           onclick="listSearchPaper()">
+                                            <span class="glyphicon glyphicon-search"></span>
+                                        </i>
                                     </span>
                         </div>
                     </div>
                     <div class="col-sm-6">
-                        <label class="col-sm-3 control-label " style="text-align: left">ชื่อนักศึกษา :</label>
+                        <label class="col-sm-3 control-label text-right">ชื่อนักศึกษา :</label>
+
                         <div class="col-md-6 input-group ">
-                            <input id="searchNameTrainee" class="form-control" >
-                                    <span class="input-group-addon" >
-                                        <i class="glyphicon glyphicon-search" style="cursor: pointer; height: 20px;"
-                                           onclick="listNameTrainee()"></i>
+                            <input id="searchNameTrainee" class="form-control input-sm">
+                                    <span class="input-group-addon input-group-sm input-sm">
+                                        <i style="cursor: pointer; height: 20px;"
+                                           onclick="listNameTrainee()">
+                                            <span class="glyphicon glyphicon-search"></span>
+                                        </i>
                                     </span>
                         </div>
                     </div>
-
                 </div>
-                <div class="row" style="margin: 15px 0 0 9px">
-                        <%--<%@include file="template/selectCreateByInput.jsp" %>--%>
-                    <tiles:insertTemplate template="/WEB-INF/pages/exam/template/selectCreateByInput.jsp"/>
+                <h5></h5>
 
+                <div class="row">
                     <div class="col-sm-6">
-                        <label class="col-sm-3 control-label " style="text-align: right; margin-left: 16px">ตำแหน่ง :</label>
-                        <div class="col-sm-6 input-group">
-                            <select id="forPosition" class="form-control"style="margin-left: 14px;width: 105%">
+                        <label class="col-sm-4 control-label text-right">ตำแหน่ง :</label>
+
+                        <div class="col-sm-6" style="padding:0">
+                            <select id="forPosition" class="form-control input-sm">
                                 <option value="0">ทั้งหมด</option>
                                 <option value="1">Software Developer Trainee</option>
                                 <option value="2">Assistant Business Analyst</option>
@@ -85,6 +92,15 @@
                         </div>
                     </div>
                 </div>
+                <h5></h5>
+
+                <div class="row" style="margin: 0 0 0 9px">
+                    <%--<%@include file="template/selectCreateByInput.jsp" %>--%>
+                    <div class="row">
+                        <tiles:insertTemplate template="/WEB-INF/pages/exam/template/selectCreateByInput.jsp"/>
+                    </div>
+                </div>
+
                 <div class="col-md-offset-1" id="showEmployeeSelected" width="100%; ">
 
                 </div>
@@ -96,7 +112,8 @@
                 <div class="row" id="btnSearch">
                     <div class="col-md-12 text-center">
                         <button id="btnExamRecordSearch" class="btn btn-primary btn btn-sm" type="button">ค้นหา</button>
-                        <button id="btnExamRecordSearchClearInput" class="btn btn-gray btn btn-sm" type="button">ล้างข้อมูล
+                        <button id="btnExamRecordSearchClearInput" class="btn btn-gray btn btn-sm" type="button">
+                            ล้างข้อมูล
                         </button>
                     </div>
                 </div>
@@ -164,29 +181,29 @@
 <%-----------------------------------------------confirm modal------------------------------------------- --%>
 <!-- alertModal-->
 <%--<div id="alertModalRemark" class="modal fade">--%>
-    <%--<div class="modal-dialog modal-sm">--%>
-        <%--<div class="modal-content">--%>
-            <%--<div class="modal-header">--%>
-                <%--<center>--%>
-                    <%--<label><h4>ตรวจข้อสอบซ้ำ</h4></label>--%>
-                <%--</center>--%>
-            <%--</div>--%>
-            <%--<div class="modal-footer border">--%>
-                <%--<center>--%>
-                    <%--<button id="testResultBtn" class="btn btn-sm btn-primary" data-dismiss="modal" >Pre-test--%>
-                    <%--</button>--%>
-                    <%--<button id="cancleBtn" class="btn btn-sm btn-danger"--%>
-                            <%--data-dismiss="modal">ยกเลิก--%>
-                    <%--</button>--%>
-                <%--</center>--%>
-            <%--</div>--%>
-        <%--</div>--%>
-        <%--<!-- /.modal-content -->--%>
-    <%--</div>--%>
-    <%--<!-- /.modal-dialog -->--%>
+<%--<div class="modal-dialog modal-sm">--%>
+<%--<div class="modal-content">--%>
+<%--<div class="modal-header">--%>
+<%--<center>--%>
+<%--<label><h4>ตรวจข้อสอบซ้ำ</h4></label>--%>
+<%--</center>--%>
+<%--</div>--%>
+<%--<div class="modal-footer border">--%>
+<%--<center>--%>
+<%--<button id="testResultBtn" class="btn btn-sm btn-primary" data-dismiss="modal" >Pre-test--%>
+<%--</button>--%>
+<%--<button id="cancleBtn" class="btn btn-sm btn-danger"--%>
+<%--data-dismiss="modal">ยกเลิก--%>
+<%--</button>--%>
+<%--</center>--%>
+<%--</div>--%>
+<%--</div>--%>
+<%--<!-- /.modal-content -->--%>
+<%--</div>--%>
+<%--<!-- /.modal-dialog -->--%>
 <%--</div>--%>
 <%--<!-- /.modal -->--%>
 <%--<%@include file="modal/addEmployeeToInputModal.jsp" %>--%>
-<tiles:insertTemplate template="/WEB-INF/pages/exam/modal/addEmployeeToInputModal.jsp"/>
+
 <script type="text/javascript" src="<c:url value="/resources/js/pageScript/exam/examRecordSearch.js" />"></script>
 <%--end class row--%>

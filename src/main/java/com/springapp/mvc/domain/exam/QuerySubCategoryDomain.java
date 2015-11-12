@@ -1,6 +1,7 @@
 package com.springapp.mvc.domain.exam;
 
 import com.springapp.mvc.pojo.exam.Category;
+import com.springapp.mvc.pojo.exam.Question;
 import com.springapp.mvc.pojo.exam.SubCategory;
 import com.springapp.mvc.util.HibernateUtil;
 import org.hibernate.Criteria;
@@ -11,8 +12,10 @@ import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Logger;
 import org.hibernate.criterion.*;
 
@@ -56,6 +59,7 @@ public class QuerySubCategoryDomain extends HibernateUtil {
         projection.add(Projections.property("category.name"), "name");
         projection.add(Projections.property("subCategory.id"), "subId");
         projection.add(Projections.property("subCategory.name"), "subName");
+//        projection.add(Projections.property("subCategory.questions"),"questions");
 
         criteria.setProjection(projection);
         criteria.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
@@ -110,6 +114,12 @@ public class QuerySubCategoryDomain extends HibernateUtil {
         getSession().merge(subCategory);
         getSession().flush();
         HibernateUtil.commitTransaction();
+    }
+
+    public List<SubCategory> getSubCategoryByName(String subName){
+        Criteria criteria = getSession().createCriteria(SubCategory.class);
+        criteria.add(Restrictions.eq("name", subName));
+        return criteria.list();
     }
 
 
@@ -209,7 +219,7 @@ public class QuerySubCategoryDomain extends HibernateUtil {
             criteria.add(Restrictions.like("category.name", "%" + categoryName + "%").ignoreCase());
         }
 
-        criteria.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
+//        criteria.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
         List<SubCategory> subCategories = criteria.list();
         closeSession();
         return subCategories;
@@ -248,14 +258,14 @@ public class QuerySubCategoryDomain extends HibernateUtil {
 
         return subId;
     }
-    public List<SubCategory> getSubCategoryToDropDown(String categoryId, String categoryName) {
+    public List<SubCategory> getSubCategoryToDropDown(String categoryIdOrName) {
         Criteria criteria = getSession().createCriteria(SubCategory.class, "SubCategory");
         criteria.createAlias("SubCategory.category", "category");
         criteria.addOrder(Order.asc("category.id"));
 
-                if (!categoryId.equals("")) {
-            Criterion cri = Restrictions.like("category.id", "%" + categoryId + "%").ignoreCase();
-            Criterion cri2 =Restrictions.like("category.name", "%" + categoryId + "%").ignoreCase();
+                if (!categoryIdOrName.equals("") && categoryIdOrName != null) {
+            Criterion cri = Restrictions.like("category.id", "%" + categoryIdOrName + "%").ignoreCase();
+            Criterion cri2 =Restrictions.like("category.name", "%" + categoryIdOrName + "%").ignoreCase();
 
             criteria.add(Restrictions.or(cri,cri2));
         }
@@ -281,5 +291,18 @@ public class QuerySubCategoryDomain extends HibernateUtil {
 //        closeSession();
 //        return LOVSubCategory;
 //    }
+
+    public Set<Integer> getUsedSubCategoryIds(){
+        Criteria criteria1 = getSession().createCriteria(Question.class, "q");
+        criteria1.createAlias("q.subCategory", "subCategory");
+        criteria1.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+        List<Question> qList = criteria1.list();
+        Set<Integer> usedSubCatIds = new HashSet<Integer>();
+        for(Question q : qList){
+            usedSubCatIds.add(q.getSubCategory().getId());
+        }
+        return usedSubCatIds;
+
+    }
 }
 

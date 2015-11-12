@@ -238,7 +238,7 @@ var listSearchQuestion = function (btn) {
             '<td class="questionScore">' + q.score + '</td>' +
             '<td class="questionCreateBy">' + q.createBy.thFname + ' ' + q.createBy.thLname + '</td>' +
             '<td class="questionCreateDate">' + formattedDate + '</td>' +
-            '<td class="questionEditColumn"><button class="detailEditBtn btn btn-gray btn-block" value="' + q.id + '"><span class="glyphicon glyphicon-pencil"></span></button></td>' +
+            '<td class="questionEditColumn"><button class="detailEditBtn btn btn-primary btn-block" value="' + q.id + '"><span class="glyphicon glyphicon-pencil"></span></button></td>' +
             "</tr>")
             $("#searchCatNotFound").hide();
             if (q.description.length > 100) {

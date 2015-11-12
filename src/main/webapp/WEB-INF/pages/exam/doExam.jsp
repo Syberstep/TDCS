@@ -8,6 +8,10 @@
     if ('${status}' == '') {
         window.location.href = context+"/TDCS/index.html";
     }
+
+    if('${status}' == 'staff' || '${status}' == ''){
+        window.location.href =context+ "/TDCS/index.html";
+    }
 </script>
 
 <c:if test="${user != null && examRecord != null}">
