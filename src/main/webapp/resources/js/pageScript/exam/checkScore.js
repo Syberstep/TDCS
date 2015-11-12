@@ -3,27 +3,33 @@
  */
 
 $('.resultDetail').on('click',function(){
+    $('#alertModalResult').modal('show');
     var resultId = $(this).attr('resultId');
     updateResultDetail(resultId)
 })
-
+var i;
 var updateResultDetail = function(resultId){
     $.ajax({
         type:"POST",
-        url:context+'/TDCS/exam/checkScore/getResultDetail',
+        url:context+'/TDCS/exam/checkScore/getResultDetail2',
         data:{
             resultId:resultId
         },
         success:function(res){
             clearDetailModal()
-            if(res != null) {
-                $('#objectiveShowScore').text(res.objectiveScore);
-                $('#subjectiveShowScore').text(res.subjectiveScore);
-                $('#commentTextArea').val(res.comment);
-                $('#markedByShow').text(res.markedBy.thFname + " " + res.markedBy.thLname);
-                var sumScoreShowText = "คะแนนที่ได้ = " + (parseFloat(res.objectiveScore) + parseFloat(res.subjectiveScore)) + " / " + res.examRecord.paper.maxScore
-                $('#sumScoreShow').text(sumScoreShowText);
-            }else{
+            if(res.size != 0) {
+               //for(i=0; i<res[0].examRecord.examAnswerRecords.length;i++){
+               //    $("#tbodyCheckScore").append(
+               //        '<tr>' +
+               //        '<td><label >'+res[0].examRecord.examAnswerRecords[i].question.subCategory.category.name+'</label></td>' +
+               //        '<td><label >'+res[0].examRecord.examAnswerRecords[i].question.subCategory.name+'</label></td>' +
+               //        '<td><label >vxcv</label></td>' +
+               //        '<td><label >vxcvc</label></td>' +
+               //        '</tr>'
+               //    );
+               //}
+            }
+            else{
                 $('#showScore').modal('hide')
                 alert('ไม่มีบันทึกการตรวจข้อสอบ')
             }
@@ -37,9 +43,5 @@ var updateResultDetail = function(resultId){
 }
 
 var clearDetailModal = function(){
-    $('#objectiveShowScore').text("");
-    $('#subjectiveShowScore').text("");
-    $('#commentTextArea').val("");
-    $('#markedByShow').text("");
-    $('#sumScoreShow').text("");
+    $('#tbodyCheckScore').text("");
 }
