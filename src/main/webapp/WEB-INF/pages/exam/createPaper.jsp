@@ -88,7 +88,7 @@
                         style="margin-top: 5px">คะแนน :</h5></label>
                 </div>
                 <div class="col-sm-7" style="padding: 0;">
-                    <input id="newPaperScore" class="form-control input-sm" type="text" placeholder="โปรดกรอกคะแนน" required/>
+                    <input id="newPaperScore" class="form-control input-sm" type="number" min="0" oninput="validity.valid||(value='');" placeholder="โปรดกรอกคะแนน" required/>
                 </div>
             </div>
             <div class="col-sm-6">
