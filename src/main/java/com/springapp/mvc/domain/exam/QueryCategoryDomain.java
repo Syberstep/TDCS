@@ -1,6 +1,7 @@
 package com.springapp.mvc.domain.exam;
 
 import com.springapp.mvc.pojo.exam.Category;
+import com.springapp.mvc.pojo.exam.SubCategory;
 import com.springapp.mvc.util.BeanUtils;
 import com.springapp.mvc.util.HibernateUtil;
 import org.hibernate.*;
@@ -107,10 +108,29 @@ public class QueryCategoryDomain extends HibernateUtil {
 
     public void editCategory(Category category){
 
-        HibernateUtil.beginTransaction();
-        getSession().merge(category);
-        HibernateUtil.commitTransaction();
-        HibernateUtil.closeSession();
+        try{
+            HibernateUtil.beginTransaction();
+            getSession().merge(category);
+            HibernateUtil.commitTransaction();
+        } catch(Exception e){
+            System.out.println("======ERROR while edit category======\n"+e);
+        } finally {
+            HibernateUtil.closeSession();
+        }
+
+    }
+
+    public Boolean checkCategoryInUse(Category category){
+
+        Criteria criteria = getSession().createCriteria(SubCategory.class);
+        criteria.add(Restrictions.eq("category", category));
+
+        if(criteria.list().size() > 0){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     public List<Category> searchCategory(String  categoryId){

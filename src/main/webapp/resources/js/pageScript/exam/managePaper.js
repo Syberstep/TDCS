@@ -148,12 +148,11 @@ $(document).ready(function(){
         //viewQuestions();
         dataNotFound();
         if($("#tbSelectQuestion #tbodySelectQuestion tr").length == 0){
-            //$("#removeRowQuestionSelect").hide()
             $("#questionsAreEmpty").show();
-            $("#removeRowSelected").attr('disabled', 'disabled');
             $("#addQuestionBtn").attr('disabled', 'disabled');
             $("#tbSelectQuestion").hide();
         }
+        clearAllSearchQuestionField();
     });
 
     $("#checkQuestionAll").click(function(event){
@@ -380,7 +379,6 @@ function viewQuestions(){
     if($("#tbodySelectQuestion tr").length != 0 && $("#tbodySelectedQuestionToPaper tr").length != 0){
         $("#tbSelectQuestion").show();
         $("#questionsAreEmpty").hide();
-        $("#removeRowSelected").removeAttr('disabled');
         $("#addQuestionBtn").removeAttr('disabled');
         allQuestionIdOnTableCreatePaper = [];
         $("#tbodySelectedQuestionToPaper tr input:checkbox").each(function(){
@@ -954,7 +952,7 @@ function generalSearchQuestion(btnSearchStatus) {
 
 function dataNotFound(){
     $("#addQuestionBtn").hide();
-    $("#removeRowQuestionSelect").hide();
+    //$("#removeRowQuestionSelect").hide();
     $("#questionsAreEmpty").show();
     $("#removeRowSelected").attr('disabled', 'disabled');
     $("#addQuestionBtn").attr('disabled', 'disabled');
@@ -1312,16 +1310,16 @@ function randomQuestion(){
                     dataFound();
                     $("#questionNotFound").hide();
                     $("#checkQuestionAll").attr('checked', false);
-                    $("#tbSelectedQuestionToPaper").show();
-                    //$("#tbodySelectedQuestionToPaper").empty();
 
                     if (data.length < questionCount) {
                         if (!confirm('ข้อสอบไม่เพียงพอ ต้องการดำเนินการต่อหรือไม่')) {
-                            if (questionCount == 0) {
-                                dataNotFound();
+                            if($("#tbodySelectedQuestionToPaper tr").length > 0){
                                 return false;
                             }
-                            else {
+                            else{
+                                $("#tbSelectedQuestionToPaper").hide();
+                                $("#questionNotFound").show();
+                                dataNotFound();
                                 return false;
                             }
                         }
@@ -1364,6 +1362,7 @@ function randomQuestion(){
                     }
 
                     if (data.length == questionCount) {
+                        $("#tbSelectedQuestionToPaper").show();
                         data.forEach(function (value) {
                             var createDate = new Date(value.createDate);
                             var dateFormat = createDate.getDate() + " " + getMonthFormat(Number(createDate.getMonth()) + 1) + " " + createDate.getFullYear();
@@ -1401,6 +1400,7 @@ function randomQuestion(){
                     }
 
                     if(questionCount == 0){
+                        alert('4');
                         data.forEach(function (value) {
                             var createDate = new Date(value.createDate);
                             var dateFormat = createDate.getDate() + " " + getMonthFormat(Number(createDate.getMonth()) + 1) + " " + createDate.getFullYear();
