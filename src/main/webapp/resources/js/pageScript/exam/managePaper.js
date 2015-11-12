@@ -599,9 +599,16 @@ function createPaper(){
     var jsonObjQuestion = {};
     var tempArrayQuestion = new Array();
 
-    for(var idx = 0; idx < (questionsInPaper.length - 1); idx++){
+    for(var idx = 0; idx < questionsInPaper.length; idx++){
         if((newQuestionScore[idx] == null) || (questionsInPaper[idx] == null)){
-            continue;
+            if(newQuestionScore[idx] == null){
+                alert('empty newQuestionScore' + newQuestionScore);
+                break;
+            }
+            if(questionsInPaper[idx] == null){
+                alert('empty questionsInPaper' + questionsInPaper);
+                break;
+            }
         }
         else{
             var item = {

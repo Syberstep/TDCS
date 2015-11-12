@@ -42,13 +42,13 @@
                                 </div>
 
                                 <div class="col-md-3 input-group" >
-
-                                        <input id="categoryName" class="form-control"  type="text"placeholder="ค้นหาหมวดหมู่" >
-                                    <%--onkeydown="listcat()"--%>
-                                        <span class="input-group-addon" >
-                                            <i class="glyphicon glyphicon-search" onclick="listcat()" style="cursor: pointer; height: 20px;"></i>
-                                        </span>
-
+                                    <input id="categoryName" class="form-control input-sm"  type="text"placeholder="รหัสหมวดหมู่ : ชื่อหมวดหมู่" >
+                                <%--onkeydown="listcat()"--%>
+                                    <span class="input-group-addon input-group-sm" >
+                                        <i onclick="listcat()" style="cursor: pointer; height: 20px;">
+                                            <span class="glyphicon glyphicon-search"></span>
+                                        </i>
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -68,15 +68,8 @@
 
         </div>
     </div>
-
-
-
-
-
     <div class="row">
-
         <div>
-
             <button id="addCategory" data-toggle="modal" data-target="#createCat" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-plus"></span></button>
             <button id="deleteCategory" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-minus"></span></button>
             </div>
@@ -87,11 +80,9 @@
                         <th style="text-align: center; color: white;">รหัสหมวดหมู่</th>
                         <th style="text-align: center; color: white;">หมวดหมู่</th>
                         <th id="thEdit" style="text-align: center; color: white;">แก้ไข</th>
-                        <%--<th id="thDelete" style="text-align: center; color: white;">ลบ</th>--%>
                     </tr>
                 </thead>
                 <tbody id="tbodyCategory">
-                <col width="10%"/>
                     <%--<c:forEach var="category" items="${LIST_OF_CATEOGRIES}">--%>
                         <%--<tr>--%>
                             <%--<td>${category.id}</td>--%>
