@@ -263,12 +263,16 @@ public class QuestionController {
 
         JSONArray jsonArray = new JSONArray(jsonObj);
         JSONObject jObj = jsonArray.getJSONObject(0);
+        String str = jObj.getString("allQuestionIdOnTableCreatePaper");
+        String allQuestionIdOnTableCreatePaper = "";
 
-        String allQuestionIdOnTableCreatePaper = jObj.getString("allQuestionIdOnTableCreatePaper");
-        JSONArray jsonArray2 = new JSONArray(allQuestionIdOnTableCreatePaper);
-        for (int idx = 0; idx < jsonArray2.length(); idx++) {
-            JSONObject jObj2 = jsonArray2.getJSONObject(idx);
-            qIdsNotSearch.add(jObj2.getInt("qId"));
+        if(!str.equals("")){
+            allQuestionIdOnTableCreatePaper = jObj.getString("allQuestionIdOnTableCreatePaper");
+            JSONArray jsonArray2 = new JSONArray(allQuestionIdOnTableCreatePaper);
+            for (int idx = 0; idx < jsonArray2.length(); idx++) {
+                JSONObject jObj2 = jsonArray2.getJSONObject(idx);
+                qIdsNotSearch.add(jObj2.getInt("qId"));
+            }
         }
 
         Integer check = new Integer(jObj.getString("thFname"));
