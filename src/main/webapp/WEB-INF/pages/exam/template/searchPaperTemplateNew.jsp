@@ -150,7 +150,7 @@
             }
         });
 
-        $(".datepicker").datepicker();
+//        $(".datepicker").datepicker();
 
         $("#searchCreateDateFromInput").datepicker().on('changeDate', function(){
             $("#searchCreateDateFromInput").datepicker('hide');

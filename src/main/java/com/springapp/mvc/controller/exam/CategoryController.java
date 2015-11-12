@@ -104,8 +104,35 @@ public class CategoryController {
         headers.add("Content-Type", "application/json;charset=UTF-8");
 
         List<Category> categories = queryCategoryDomain.searchCategory(categoryId);
-        logger.info(String.valueOf(categories+"++++++++++++++++++++++++++++++++++"));
+        logger.info(String.valueOf(categories + "++++++++++++++++++++++++++++++++++"));
         String json = new Gson().toJson(categories);
+
+        return new ResponseEntity<String>(json, headers, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/exam/getCategoryById", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<String> getCategoryById(@RequestParam(value="categoryId", required = true) String categoryId) {
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json;charset=UTF-8");
+
+        Category category = queryCategoryDomain.getCategoryById(categoryId);
+        String json = new Gson().toJson(category);
+
+        return new ResponseEntity<String>(json, headers, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/exam/checkCategoryInUse", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<String> checkCategoryInUse(@RequestParam(value="categoryId", required = true) String categoryId) {
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json;charset=UTF-8");
+
+        Category category = queryCategoryDomain.getCategoryById(categoryId);
+        Boolean check = queryCategoryDomain.checkCategoryInUse(category);
+        String json = new Gson().toJson(check);
 
         return new ResponseEntity<String>(json, headers, HttpStatus.OK);
     }

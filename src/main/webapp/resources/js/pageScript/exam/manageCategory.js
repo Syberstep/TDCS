@@ -2,7 +2,8 @@ $("#dropdownExamEmp").attr('class', 'dropdown-toggle active');
 
 $(document).ready(function () {
 
-    viewCategory();
+    //viewCategory();
+    searchResultNotFound();
     $("#deleteCategory").on('click', function () {
         deleteCategory();
     });
@@ -16,8 +17,10 @@ $(document).ready(function () {
     });
     $("#selectAllCheckbox").prop('checked', false);
     $("#selectAllCheckbox").on('click', function () {
+
+
         if (this.checked) {
-            $(".selectCheckbox").each(function () {
+            $(".selectCheckbox:not(':disabled')").each(function () {
                 this.checked = true;
             })
         }
@@ -34,8 +37,53 @@ $(document).ready(function () {
 
     });
 
-
+    //$("#categoryId").val('');
+    //$("#categoryName").val('');
+    //$("#searchNotFound").hide();
+    $("#searchCategory").click(function(){
+        search();
+    });
+    $("#resetBtnSearchCategory").on('click', function(){
+        $("#categoryId").val('');
+        $("#categoryName").val('');
+    });
 });
+
+function checkCategoryNameInUse(categoryId){
+    var check = $.ajax({
+        type: "POST",
+        url: context + "/TDCS/exam/checkCategoryInUse",
+        async: false,
+        data: {
+            categoryId: categoryId
+        },
+        success: function(data){
+            $("#data" + categoryId).text(data.name);
+        },
+        error: function(){
+            alert('เกิดข้อผิดพลาด');
+        }
+    }).responseText;
+
+    return check;
+}
+
+function onLoadPageAfterCreateOrDeleteCategorySuccessful(){
+    viewCategory();
+}
+
+function searchResultNotFound(){
+    $("#searchCatNotFound").show();
+    $("#tblCategory").hide();
+    $("#deleteCategory").hide();
+}
+
+function searchResultFound(){
+    $("#searchCatNotFound").hide();
+    $("#tblCategory").show();
+    $("#deleteCategory").show();
+}
+
 function viewCategory() {
 
     $("#tbodyCategory").empty();
@@ -47,21 +95,27 @@ function viewCategory() {
         async: false,
         success: function (data) {
             data.forEach(function (value) {
+                var check = checkCategoryNameInUse(value.id);
+                var str = "";
+                if(check == 'true'){
+                      str = 'disabled';
+                }
+
                 $("#tbodyCategory").append(
                     '<tr>' +
-                    '<td class="col-sm-1" style="text-align: center;"><input class="selectCheckbox" type="checkbox" cateId="' + value.id + '"/></td>' +
-                    '<td class="col-sm-2" style="text-align: center;"><label id="id' + value.id + '">' + value.id + '</label>' +
+                    '<td class="col-sm-1" style="text-align: center;"><input class="selectCheckbox" type="checkbox" '+str+' cateId="' + value.id + '"/></td>' +
+                    '<td class="col-sm-3" style="text-align: center;"><label id="id' + value.id + '">' + value.id + '</label>' +
                     '<input id="editId' + value.id + '" class="form-control input-sm" type="text" value="' + value.id + '" style="display: none;">' +
                     '<td><label id="data' + value.id + '">' + value.name + '</label>' +
                     '<input id="editData' + value.id + '" class="form-control input-sm" type="text" value="' + value.name + '" style="display: none;">' +
                     '</td>' +
-                    '<td class="col-sm-1" style="text-align: center;"><button id="editBtn' + value.id + '" class="btn btn-gray btn-sm" onclick="editCategory(' + "'" + value.id + "'" + ')"><span class="glyphicon glyphicon-pencil"></span></button>' +
-                    '<button class="btn btn-success btn-sm" id="save"'+value.id+'" style="display: none;" type="button" onclick="updateCategory('+ "'" +value.id+ "'"+')"><span class="glyphicon glyphicon-ok"></span></button>' +
-                    '<button class="btn btn-danger btn-sm" id="cancel'+value.id+'" style="display: none;" type="button" onclick="updateCategory('+ "'" +value.id+ "'"+')"><span class="glyphicon glyphicon-remove"></span></button>'+
-                    //'&nbsp;<button id="updateBtn' + value.id + '" class="btn btn-primary btn-sm" style="display: none;" onclick="updateCategory(' + "'" + value.id + "'" + ')"><span class="glyphicon glyphicon-pencil"></span></button></td>' +
-                    //    '<td style="text-align: center;"><button class="btn btn-danger" id="deleteBtn'+value.id+'" type="button" onclick="deleteCategory('+ "'" +value.id+ "'"+')"><span class="glyphicon glyphicon-trash"></span></button></td>'+
+                    '<td class="col-sm-1" style="text-align: center; padding-right: 0; padding-left: 0;"><button id="editBtn' + value.id + '" class="btn btn-primary btn-sm" onclick="editCategory(' + "'" + value.id + "'" + ')"><span class="glyphicon glyphicon-pencil"></span></button>' +
+                    '<button class="btn btn-success btn-sm" id="save' + value.id + '" style="display: none; margin: 5px;" type="button" onclick="updateCategory(' + "'" + value.id + "'" + ')"><span class="glyphicon glyphicon-ok"></span></button>' +
+                    '<button class="btn btn-danger btn-sm" id="cancel' + value.id + '" style="display: none;" type="button" onclick="cancel(' + "'" + value.id + "'" + ')"><span class="glyphicon glyphicon-remove"></span></button>' +
+                        //'&nbsp;<button id="updateBtn' + value.id + '" class="btn btn-primary btn-sm" style="display: none;" onclick="updateCategory(' + "'" + value.id + "'" + ')"><span class="glyphicon glyphicon-pencil"></span></button></td>' +
+                        //    '<td style="text-align: center;"><button class="btn btn-danger" id="deleteBtn'+value.id+'" type="button" onclick="deleteCategory('+ "'" +value.id+ "'"+')"><span class="glyphicon glyphicon-trash"></span></button></td>'+
 
-                    '</td>'+
+                    '</td>' +
                     '</tr>'
                 )
             });
@@ -70,6 +124,15 @@ function viewCategory() {
             alert('error while request...');
         }
     });
+}
+
+function cancel(categoryId) {
+    $("#editBtn" + categoryId).show();
+    $("#data" + categoryId).show();
+    $("#thEdit").text("แก้ไข");
+    $("#editData" + categoryId).hide();
+    $("#save" + categoryId).hide();
+    $("#cancel" + categoryId).hide();
 }
 
 function deleteCategory() {
@@ -86,9 +149,8 @@ function deleteCategory() {
                 catId: catId
             },
             success: function () {
-
                 alert("ลบข้อมูลสำเร็จ");
-                window.location.reload();
+                onLoadPageAfterCreateOrDeleteCategorySuccessful();
             },
             error: function () {
                 alert("ลบข้อมูลไม่สำเร็จ");
@@ -102,7 +164,7 @@ function editCategory(categoryId) {
     $("#editBtn" + categoryId).hide();
     $("#data" + categoryId).hide();
     $("#thEdit").text("บันทึก");
-    //$("#editData" + categoryId).show();
+    $("#editData" + categoryId).show();
     //$("#updateBtn" + categoryId).show();
     $("#save" + categoryId).show();
     $("#cancel" + categoryId).show();
@@ -123,19 +185,38 @@ function updateCategory(categoryId) {
             complete: function (xhr) {
                 if (xhr.readyState == 4) {
                     if (xhr.status == 200) {
-                        alert("แก้ไขข้อมูลสำเร็จ");
-                        //viewCategory();
-                        window.location.reload();
+                        //alert("แก้ไขข้อมูลสำเร็จ");
+                        cancel(id);
+                        getCategoryUpdated(id);
                     }
                     else {
                         alert("แก้ไขข้อมูลไม่สำเร็จ");
+                        return false;
                     }
                 } else {
                     alert("แก้ไขข้อมูลไม่สำเร็จ");
+                    return false;
                 }
             }
         });
     }
+}
+
+function getCategoryUpdated(categoryId) {
+    $.ajax({
+        type: "POST",
+        url: context + "/TDCS/exam/getCategoryById",
+        async: false,
+        data: {
+            categoryId: categoryId
+        },
+        success: function(data){
+            $("#data" + categoryId).text(data.name);
+        },
+        error: function(){
+            alert('เกิดข้อผิดพลาด');
+        }
+    });
 }
 
 function saveCategory() {
@@ -165,9 +246,6 @@ function saveCategory() {
         return false;
     }
 
-
-    ///////////////////////
-
     var categoryName = $("#categoryNameText").val();
     var categoryId = $("#categoryIdText").val();
 
@@ -178,12 +256,12 @@ function saveCategory() {
         success: function () {
             //alert('เพิ่มวิชา ' + categoryName + ' สำเร็จ ');
             alert("บันทึกข้อมูลสำเร็จ");
-            window.location.reload();
+            onLoadPageAfterCreateOrDeleteCategorySuccessful();
         },
         error: function (xhr) {
             if (xhr.status == 418) {
                 alert('บันทึกข้อมูลไม่สำเร็จ : รหัสหมวดหมู่นี้มีอยู่แล้วในระบบ')
-            }else{
+            } else {
                 alert('บันทึกข้อมูลไม่สำเร็จ : ไม่ทราบสาเหตุ')
             }
         }
@@ -227,5 +305,61 @@ function listcat() {
         maxLength: 2
     }).focus().val("").keyup().val(search);
 
-};
+}
 
+
+function search(){
+
+    var categoryIdRequest = $("#categoryName").val();
+    //var categoryNameRequest = $("#categoryName").val();
+    categoryIdRequest +=' ';
+    categoryIdRequest =categoryIdRequest.substr(0,categoryIdRequest.indexOf(' '));
+
+    //categoryNameRequest = categoryNameRequest.substr(8);
+    //alert(categoryIdRequest+'--'+categoryNameRequest);
+    //alert(categoryIdRequest);
+
+    var data = $.ajax({
+        type: "POST",
+        url: context+"/TDCS/exam/searchCategory",
+        data: {
+            id: categoryIdRequest
+        },
+        async: false,
+        success: function (data) {
+            if(data.length > 0){
+                searchResultFound();
+                $("#tbodyCategory").empty();
+                data.forEach(function (value) {
+                    var check = checkCategoryNameInUse(value.category.id);
+                    var str = "";
+                    if(check == 'true'){
+                        str = 'disabled';
+                    }
+
+                    $("#tbodyCategory").append(
+                        '<tr>' +
+                        '<td class="col-sm-1" style="text-align: center;"><input class="selectCheckbox" type="checkbox" '+str+' cateId="' + value.category.id + '"/></td>' +
+                        '<td class="col-sm-3" style="text-align: center;"><label id="id' + value.category.id + '">' + value.category.id + '</label>' +
+                        '<input id="editId' + value.category.id + '" class="form-control input-sm" type="text" value="' + value.category.id + '" style="display: none;">' +
+                        '<td><label id="data' + value.category.id + '">' + value.category.name + '</label>' +
+                        '<input id="editData' + value.category.id + '" class="form-control input-sm" type="text" value="' + value.category.name + '" style="display: none;">' +
+                        '</td>' +
+                        '<td class="col-sm-1" style="text-align: center; padding-right: 0; padding-left: 0;"><button id="editBtn' + value.category.id + '" class="btn btn-primary btn-sm" onclick="editCategory(' + "'" + value.category.id + "'" + ')"><span class="glyphicon glyphicon-pencil"></span></button>' +
+                        '<button class="btn btn-success btn-sm" id="save' + value.category.id + '" style="display: none; margin: 5px;" type="button" onclick="updateCategory(' + "'" + value.category.id + "'" + ')"><span class="glyphicon glyphicon-ok"></span></button>' +
+                        '<button class="btn btn-danger btn-sm" id="cancel' + value.category.id + '" style="display: none;" type="button" onclick="cancel(' + "'" + value.category.id + "'" + ')"><span class="glyphicon glyphicon-remove"></span></button>' +
+
+                        '</td>' +
+                        '</tr>'
+                    )
+                });
+            }
+            else{
+                searchResultNotFound();
+            }
+        },
+        error: function(){
+            alert("error");
+        }
+    })
+}

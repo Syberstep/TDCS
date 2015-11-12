@@ -71,6 +71,8 @@ $(document).ready(function(){
                     sumPaperScore = 0;
                 }
                 else{
+                    $("#tbodySelectedQuestionToPaper").empty();
+                    $("#score").val(0);
                     $("#tbSelectedQuestionToPaper").hide();
                     $("#removeRowQuestionSelect").hide();
                     $("#questionNotFound").show();
