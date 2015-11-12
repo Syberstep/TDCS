@@ -600,23 +600,28 @@ function createPaper(){
     var tempArrayQuestion = new Array();
 
     for(var idx = 0; idx < questionsInPaper.length; idx++){
-        if((newQuestionScore[idx] == null) || (questionsInPaper[idx] == null)){
-            if(newQuestionScore[idx] == null){
-                alert('empty newQuestionScore' + newQuestionScore);
-                break;
-            }
-            if(questionsInPaper[idx] == null){
-                alert('empty questionsInPaper' + questionsInPaper);
-                break;
-            }
-        }
-        else{
-            var item = {
-                "qId": questionsInPaper[idx],
-                "qScore" : newQuestionScore[idx]
-            };
-            tempArrayQuestion.push(item);
-        }
+        //if((newQuestionScore[idx] == null) || (questionsInPaper[idx] == null)){
+        //    if(newQuestionScore[idx] == null){
+        //        alert('empty newQuestionScore' + newQuestionScore);
+        //        break;
+        //    }
+        //    if(questionsInPaper[idx] == null){
+        //        alert('empty questionsInPaper' + questionsInPaper);
+        //        break;
+        //    }
+        //}
+        //else{
+        //    var item = {
+        //        "qId": questionsInPaper[idx],
+        //        "qScore" : newQuestionScore[idx]
+        //    };
+        //    tempArrayQuestion.push(item);
+        //}
+        var item = {
+            "qId": questionsInPaper[idx],
+            "qScore" : newQuestionScore[idx]
+        };
+        tempArrayQuestion.push(item);
     }
     jsonObjQuestion = JSON.stringify(tempArrayQuestion);
 
