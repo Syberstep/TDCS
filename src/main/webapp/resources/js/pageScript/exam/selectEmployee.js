@@ -1,3 +1,19 @@
+var checkCurrent3 = 0;
+var checkAll3 = 0;
+
+$(document).ready(function(){
+    $("#tbodySelectEmployeeName").on('click', '.userSelectCheckbox', function(){
+        $("#selectAllEmployeeName").checked = false;
+        counterStrike();
+        if(checkCurrent3 != checkAll3){
+            $("#selectAllEmployeeName").prop('checked', false);
+        }
+        else{
+            $("#selectAllEmployeeName").prop('checked', true);
+        }
+    });
+});
+
 function searchEmpName(){
     employeeNotFound();
     $('.modalSearchByEmployeeNameSubmitBtn').unbind('click').click(function(){
@@ -37,6 +53,10 @@ function searchEmpName(){
                 }
                 else{
                     employeeFound();
+
+                    checkAll3 = 0;
+                    checkAll3 = data.length;
+
                     $("#selectAllEmployeeName").show();
                     $("#selectAllEmployeeName").prop("checked", false);
                     data.forEach(function(value){
@@ -94,6 +114,8 @@ function searchEmpName(){
                 }
                 else{
                     employeeFound();
+                    checkAll3 = 0;
+                    checkAll3 = data.length;
                     $("#tbodySelectEmployeeName").empty();
                     $("#dataNotFound").hide();
                     $("#selectAllEmployeeName").show();
@@ -160,6 +182,8 @@ function getEmployee(){
             }
             else{
                 employeeFound();
+                checkAll3 = 0;
+                checkAll3 = data.length;
                 $("#dataNotFound").hide();
                 $("#selectAllEmployeeName").show();
                 $("#selectAllEmployeeName").prop("checked", false);
@@ -194,6 +218,15 @@ function employeeFound(){
     $("#tbEmployee").parent().parent().show();
     $("#tbodySelectEmployeeName").empty();
     $("#dataNotFound").hide();
+}
+
+function counterStrike(){
+    checkCurrent3 = 0;
+    $(".userSelectCheckbox").each(function () {
+        if($(this).is(':checked')){
+            checkCurrent3 = checkCurrent3 + 1;
+        }
+    });
 }
 
 jQuery.fn.cleanWhitespace = function() {
