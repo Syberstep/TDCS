@@ -144,7 +144,6 @@ $(document).ready(function(){
 
         $("#checkPaperAll").checked = false;
         counter();
-        alert(checkCurrent + " " + checkAll);
         if(checkCurrent != checkAll){
             $("#checkPaperAll").prop('checked', false);
         }
@@ -279,7 +278,7 @@ function getAllPapers(){
                     '<option value="2">ปิดการใช้งาน</option>'+
                     '</select>'+
                     '</td>'+
-                    '<td class="pButton"><button id="'+value.id+'" class="btn btn-gray btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></td>'+
+                    '<td class="pButton"><button id="'+value.id+'" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></td>'+
                     '</tr>'
                 );
                 presentStatus(value.id, value.paperStatus.id);
@@ -320,7 +319,7 @@ function setColorDropdown(paperId, paperStatus){
     }
     if(paperStatus == 2) {
         $("#dropdownId"+paperId).css('background-color', 'gray');
-        $("#dropdownId"+paperId).css('border-color', '#669999');
+        $("#dropdownId"+paperId).css('border-color', 'gray');
     }
     if(paperStatus == 3) {
         $("#dropdownId"+paperId).css('background-color', '#33CCFF');

@@ -100,7 +100,7 @@ $(document).ready(function () {
             )
             data.forEach(function (value) {
                 $("#selectSubCategoryToSelectionForRandom").append(
-                    '<option >' + value.subName + '</option>'
+                    '<option >' + value.id + " : " +value.subName + '</option>'
                 )
             });
 
