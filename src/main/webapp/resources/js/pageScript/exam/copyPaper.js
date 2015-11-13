@@ -24,6 +24,7 @@ $(document).ready(function(){
                     dataFound();
                     questionsInPaper = [];
                     $("#questionNotFound").hide();
+                    $("#removeRowQuestionSelect").show();
                     $("#tbSelectedQuestionToPaper").show();
                     $("#tbodySelectedQuestionToPaper").empty();
                     for(var i = 0; i < value.length; i ++){

@@ -13,6 +13,8 @@ var tempArray = new Array();
 var paperIdArray = new Array();
 var checkTime;
 var checkScore;
+var checkAll;
+var checkCurrent;
 
 $(document).ready(function(){
 
@@ -139,6 +141,17 @@ $(document).ready(function(){
             alert('ไม่สามารถลบชุดข้อสอบนี้ได้');
             this.checked = false;
         }
+
+        $("#checkPaperAll").checked = false;
+        counter();
+        alert(checkCurrent + " " + checkAll);
+        if(checkCurrent != checkAll){
+            $("#checkPaperAll").prop('checked', false);
+        }
+        else{
+            $("#checkPaperAll").prop('checked', true);
+        }
+
     });
 
     $("#checkPaperAll").on('click', function(){
@@ -443,6 +456,9 @@ function generalSearchPaper(btnSearchStatus) {
             mimeType: 'application/json',
             data: jsonObjz,
             success: function (data) {
+                checkAll = 0;
+                $("#checkPaperAll").prop('checked', false);
+
                 if(data.length == 0){
                     paperNotFound();
                 }
@@ -484,7 +500,12 @@ function generalSearchPaper(btnSearchStatus) {
                             str1 = "disabled";
                             str2 = "disabled";
                         }
-                        else if(value.paperStatus.id == 1){
+
+                        if((check == 'false') && (value.paperStatus.id != 1)){
+                            checkAll = checkAll + 1;
+                        }
+
+                        if(value.paperStatus.id == 1){
                             str1 = "disabled";
                             str2 = "";
                         }
@@ -596,3 +617,12 @@ function timediff(start_actual_time, end_actual_time) {
         checkTime = false;
     }
 };
+
+function counter(){
+    checkCurrent = 0;
+    $(".checkPaper:not(':disabled')").each(function () {
+        if($(this).is(':checked')){
+            checkCurrent = checkCurrent + 1;
+        }
+    });
+}
