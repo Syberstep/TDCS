@@ -32,6 +32,9 @@ public class QueryPaperQuestionDomain extends HibernateUtil{
         criteria.add(Restrictions.eq("pk.examPaper", examPaper));
         List<PaperQuestion> paperQuestions = criteria.list();
 
+        for(PaperQuestion pq: paperQuestions){
+            getSession().refresh(pq);
+        }
         return paperQuestions;
     }
 }

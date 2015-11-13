@@ -30,6 +30,12 @@ var searchQNormal = 0;
 var searchQHard = 0;
 var previousNumber = 1;
 
+var checkAll = 0;
+var checkCurrent;
+
+var checkAll2 = 0;
+var checkCurrent2;
+
 $(document).ready(function(){
 
     var value = getValueFromUrl();
@@ -152,6 +158,8 @@ $(document).ready(function(){
             $("#addQuestionBtn").attr('disabled', 'disabled');
             $("#tbSelectQuestion").hide();
         }
+        categoryId = "";
+        subcategoryId = "";
         clearAllSearchQuestionField();
     });
 
@@ -167,6 +175,29 @@ $(document).ready(function(){
             });
         }
     });
+
+    $("#tbodySelectQuestion").on('click', '.selectQ', function(){
+        $("#checkQuestionAll").checked = false;
+        countTbSelectQuestion();
+        if(checkCurrent != checkAll){
+            $("#checkQuestionAll").prop('checked', false);
+        }
+        else{
+            $("#checkQuestionAll").prop('checked', true);
+        }
+    });
+
+    $("#tbodySelectedQuestionToPaper").on('click', '.selectedQuestion', function(){
+        countTbSelectedQuestionToPaper();
+        $(".checkAllQuestionFromCreatePaperPage").checked = false;
+        if(checkCurrent2 != checkAll2){
+            $(".checkAllQuestionFromCreatePaperPage").prop('checked', false);
+        }
+        else{
+            $(".checkAllQuestionFromCreatePaperPage").prop('checked', true);
+        }
+    });
+
     $(".checkAllQuestionFromCreatePaperPage").click(function(){
         if(this.checked){
             $(".selectedQuestion").each(function(){
@@ -186,6 +217,16 @@ $(document).ready(function(){
     $("#removeRowQuestionSelect").on('click', function(){
         $("#tbSelectedQuestionToPaper tr").has('input[class="selectedQuestion"]:checked').remove();
         scoreOnChange();
+        questionsInPaper = [];
+        checkAll2 = 0;
+        $("#tbodySelectedQuestionToPaper tr input:checkbox").each(function(){
+            var temp = $(this).parent().siblings().map(function(){
+                return $(this).text();
+            }).get(0);
+            questionsInPaper.push(temp);
+
+            checkAll2 = checkAll2 + 1;
+        });
         if($("#tbodySelectedQuestionToPaper tr").length == 0){
             $("#removeRowQuestionSelect").hide();
             $("#tbSelectedQuestionToPaper").hide();
@@ -203,6 +244,7 @@ $(document).ready(function(){
         if(minutes == ""? minutes = 0: minutes =  $("#minutes").val());
         hours = $("#hours").val();
         if(hours == ""? hours = 0: hours = $("#hours").val());
+
         createPaper();
     });
 
@@ -314,7 +356,13 @@ $("#addQuestionBtn").unbind('click').click(function(){
         }).get(0);
         addQuestionToPaper(qId);
         scoreOnChange();
+
+        checkAll2 = checkAll2 + 1;
     });
+
+    if(checkAll2 > 0){
+        $("#removeRowQuestionSelect").show();
+    }
 });
 
 function viewQuestions(){
@@ -466,6 +514,7 @@ function addQuestionToPaper(qId){
     questionIdString = [];
     questionIdString.push(qId);
     var newScore = $('#labelScore'+qId).text();
+
     $("#tbSelectedQuestionToPaper").show();
     $("#tbodySelectedQuestionToPaper").append(
         '<tr>'+
@@ -889,6 +938,9 @@ function generalSearchQuestion(btnSearchStatus) {
         mimeType: 'application/json',
         data: jsonObj,
         success: function (result) {
+            checkAll = result.length;
+            $("#checkQuestionAll").prop('checked', false);
+
             if(result.length > 0){
                 dataFound();
                 $("#tbodySelectQuestion").empty();
@@ -952,7 +1004,6 @@ function generalSearchQuestion(btnSearchStatus) {
 
 function dataNotFound(){
     $("#addQuestionBtn").hide();
-    //$("#removeRowQuestionSelect").hide();
     $("#questionsAreEmpty").show();
     $("#removeRowSelected").attr('disabled', 'disabled');
     $("#addQuestionBtn").attr('disabled', 'disabled');
@@ -961,8 +1012,7 @@ function dataNotFound(){
 
 function dataFound(){
     $("#addQuestionBtn").show();
-    $("#removeRowQuestionSelect").show();
-    //$("#removeRowQuestionSelect").attr('disabled', 'disabled');
+    //$("#removeRowQuestionSelect").show();
     $("#questionsAreEmpty").hide();
     $("#removeRowSelected").removeAttr('disabled');
     $("#addQuestionBtn").removeAttr('disabled');
@@ -1325,6 +1375,8 @@ function randomQuestion(){
                         }
                         else {
                             data.forEach(function (value) {
+                                $("#tbSelectedQuestionToPaper").show();
+                                $("#removeRowQuestionSelect").show();
                                 var createDate = new Date(value.createDate);
                                 var dateFormat = createDate.getDate() + " " + getMonthFormat(Number(createDate.getMonth()) + 1) + " " + createDate.getFullYear();
 
@@ -1363,6 +1415,7 @@ function randomQuestion(){
 
                     if (data.length == questionCount) {
                         $("#tbSelectedQuestionToPaper").show();
+                        $("#removeRowQuestionSelect").show();
                         data.forEach(function (value) {
                             var createDate = new Date(value.createDate);
                             var dateFormat = createDate.getDate() + " " + getMonthFormat(Number(createDate.getMonth()) + 1) + " " + createDate.getFullYear();
@@ -1374,51 +1427,6 @@ function randomQuestion(){
                                     if (Number(value.status.id) == 3) {
                                         str = str + '<td style="display: none;"><label id="labelChoice' + i + value.id + '">' + value2.description + '</td>' +
                                             '<td style="display: none;"><label id="labelChoiceCorrection1' + value.id + '">' + value2.correction.value + '</td>';
-                                    }
-                                    i = i + 1;
-                                });
-                            }
-
-                            $("#tbodySelectedQuestionToPaper").append(
-                                '<tr>' +
-                                '<td style="display: none;"><label id="labelQuestionId' + value.id + '">' + value.id + '</td>' +
-                                '<td style="display: none;"><label id="labelCreateDateId' + value.id + '">' + value.createDate + '</td>' +
-                                '<td style="text-align: center;"><input class="selectedQuestion" name="selectQ" type="checkbox"/></td>' +
-                                '<td style="text-align: center;"><label id="labelQuestionTypeDesc' + value.id + '">' + value.questionType.description + '</td>' +
-                                '<td style="text-align: left;"><label id="labelCategoryName' + value.id + '">' + value.subCategory.category.name + '<label></td>' +
-                                '<td style="text-align: left;"><label id="labelSubCategoryName' + value.id + '">' + value.subCategory.name + '</label></td>' +
-                                '<td style="text-align: left;"><label id="labelQuestionDesc' + value.id + '">' + value.description + '</label></td>' +
-                                '<td style="text-align: center;"><label id="labelDiffDesc' + value.id + '">' + value.difficultyLevel.description + '</td>' +
-                                '<td><input id="newScore' + value.id + '" onchange="scoreOnChange()" name="newScore" type="number" class="form-control input-sm"  min="1" max="50" value="' + value.score + '"/></td>' +
-
-                                '<td style="text-align: center;"><label id="labelQuestionCreateBy' + value.id + '">' + value.createBy.thFname + " " + value.createBy.thLname + '</td>' +
-                                '<td style="display: none;"><label id="labelQuestionCreateDate' + value.id + '">' + value.createDate + '</td>' +
-
-                                '</tr>'
-                            );
-                        });
-                    }
-
-                    if(questionCount == 0){
-                        alert('4');
-                        data.forEach(function (value) {
-                            var createDate = new Date(value.createDate);
-                            var dateFormat = createDate.getDate() + " " + getMonthFormat(Number(createDate.getMonth()) + 1) + " " + createDate.getFullYear();
-
-                            var str = "";
-                            if (value.choices != null) {
-                                var i = 1;
-                                //for(var i = 0; i < value.choices.length; i++){
-                                //    if (Number(value.status.id) == 3) {
-                                //        str = str + '<td style="display: none;"><label id="labelChoice' + i + value.id + '">' + value.choices[i].description + '</td>' +
-                                //            '<td style="display: none;"><label id="labelChoiceCorrection1' + value.id + '">' + value.choices[i].correction + '</td>';
-                                //    }
-                                //    i = i + 1;
-                                //}
-                                (value.choices).forEach(function (value2) {
-                                    if (Number(value.status.id) == 3) {
-                                        str = str + '<td style="display: none;"><label id="labelChoice' + i + value.id + '">' + value2.description + '</td>' +
-                                            '<td style="display: none;"><label id="labelChoiceCorrection' + i + value.id + '">' + value2.correction + '</td>';
                                     }
                                     i = i + 1;
                                 });
@@ -1457,6 +1465,9 @@ function randomQuestion(){
                 }).get(0);
                 questionsInPaper.push(qId);
             });
+
+            checkAll2 = 0;
+            checkAll2 = questionsInPaper.length;
         },
         error: function(){
             alert('เกิดข้อผิดพลาด');
@@ -1549,3 +1560,22 @@ function validateNumber(id){
         previousNumber = $(this).val();
     });
 }
+
+function countTbSelectQuestion(){
+    checkCurrent = 0;
+    $(".selectQ").each(function () {
+        if($(this).is(':checked')){
+            checkCurrent = checkCurrent + 1;
+        }
+    });
+}
+
+function countTbSelectedQuestionToPaper(){
+    checkCurrent2 = 0;
+    $(".selectedQuestion").each(function () {
+        if($(this).is(':checked')){
+            checkCurrent2 = checkCurrent2 + 1;
+        }
+    });
+}
+

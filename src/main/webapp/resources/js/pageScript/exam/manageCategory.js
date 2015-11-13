@@ -1,7 +1,7 @@
 $("#dropdownExamEmp").attr('class', 'dropdown-toggle active');
-
+var checkAll;
+var checkCurrent;
 $(document).ready(function () {
-
     //viewCategory();
     searchResultNotFound();
     $("#deleteCategory").on('click', function () {
@@ -11,14 +11,18 @@ $(document).ready(function () {
         saveCategory();
     });
 
-
-    $(".selectCheckbox").on('click', function () {
-        $("#selectAllCheckbox").prop('checked', false);
+    $("#tbodyCategory").on('click', '.selectCheckbox', function(){
+        $("#selectAllCheckbox").checked = false;
+        count();
+        if(checkCurrent != checkAll){
+            $("#selectAllCheckbox").prop('checked', false);
+        }
+        else{
+            $("#selectAllCheckbox").prop('checked', true);
+        }
     });
     $("#selectAllCheckbox").prop('checked', false);
     $("#selectAllCheckbox").on('click', function () {
-
-
         if (this.checked) {
             $(".selectCheckbox:not(':disabled')").each(function () {
                 this.checked = true;
@@ -37,9 +41,6 @@ $(document).ready(function () {
 
     });
 
-    //$("#categoryId").val('');
-    //$("#categoryName").val('');
-    //$("#searchNotFound").hide();
     $("#searchCategory").click(function(){
         search();
     });
@@ -187,7 +188,8 @@ function updateCategory(categoryId) {
                     if (xhr.status == 200) {
                         //alert("แก้ไขข้อมูลสำเร็จ");
                         cancel(id);
-                        getCategoryUpdated(id);
+                        $("#data" + categoryId).show();
+                        $("#data" + categoryId).text(name);
                     }
                     else {
                         alert("แก้ไขข้อมูลไม่สำเร็จ");
@@ -223,13 +225,8 @@ function saveCategory() {
     var countError = 0;
     var elementFirst;
     var element = [$("#categoryIdText"), $("#categoryNameText")];
-    //if($("#password").val()!=$("#cpassword").val()){
-    //    $("#password").val("");
-    //    $("#cpassword").val("");
-    //}
     for (var i = 0; i < element.length; i++) {
         if (element[i].val() == "") {
-//            alert(element[i].val()+"~~~"+element[i].selector);
             countError++;
             if (countError == 0) {
                 elementFirst = element[i].selector;
@@ -240,8 +237,6 @@ function saveCategory() {
         }
     }
     if (countError > 0) {
-//        alert(elementFirst);
-//        $("#btnSubmit").click();
         alert("กรุณากรอกข้อมูล");
         return false;
     }
@@ -290,7 +285,6 @@ function listcat() {
             data.forEach(function (value) {
                 availableall.push(value.id + ' : ' + value.name);
             });
-            //alert("SUCC");
         },
         error: function (data) {
             alert('error while request...');
@@ -309,15 +303,9 @@ function listcat() {
 
 
 function search(){
-
     var categoryIdRequest = $("#categoryName").val();
-    //var categoryNameRequest = $("#categoryName").val();
     categoryIdRequest +=' ';
     categoryIdRequest =categoryIdRequest.substr(0,categoryIdRequest.indexOf(' '));
-
-    //categoryNameRequest = categoryNameRequest.substr(8);
-    //alert(categoryIdRequest+'--'+categoryNameRequest);
-    //alert(categoryIdRequest);
 
     var data = $.ajax({
         type: "POST",
@@ -330,11 +318,18 @@ function search(){
             if(data.length > 0){
                 searchResultFound();
                 $("#tbodyCategory").empty();
+
+                checkAll = 0;
+                $("#selectAllCheckbox").prop('checked', false);
+
                 data.forEach(function (value) {
                     var check = checkCategoryNameInUse(value.category.id);
                     var str = "";
                     if(check == 'true'){
                         str = 'disabled';
+                    }
+                    if(check == 'false'){
+                        checkAll = checkAll + 1;
                     }
 
                     $("#tbodyCategory").append(
@@ -361,5 +356,14 @@ function search(){
         error: function(){
             alert("error");
         }
-    })
+    });
+}
+
+function count(){
+    checkCurrent = 0;
+    $(".selectCheckbox:not(':disabled')").each(function () {
+        if($(this).is(':checked')){
+            checkCurrent = checkCurrent + 1;
+        }
+    });
 }
