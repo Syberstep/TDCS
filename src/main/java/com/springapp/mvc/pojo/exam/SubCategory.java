@@ -66,4 +66,26 @@ public class SubCategory implements Serializable {
         this.createBy = createBy;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof SubCategory)) return false;
+
+        SubCategory that = (SubCategory) o;
+
+        if (!getId().equals(that.getId())) return false;
+        if (!getName().equals(that.getName())) return false;
+        if (!getCategory().equals(that.getCategory())) return false;
+        return !(getCreateBy() != null ? !getCreateBy().equals(that.getCreateBy()) : that.getCreateBy() != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getId().hashCode();
+        result = 31 * result + getName().hashCode();
+        result = 31 * result + getCategory().hashCode();
+        result = 31 * result + (getCreateBy() != null ? getCreateBy().hashCode() : 0);
+        return result;
+    }
 }

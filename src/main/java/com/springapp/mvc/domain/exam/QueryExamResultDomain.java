@@ -35,29 +35,6 @@ public class QueryExamResultDomain extends HibernateUtil {
         criteria.add(Restrictions.eq("er.id", id));
         return (ExamResult) criteria.uniqueResult();
     }
-//create by JOB
-    public List<ExamResult> getExamResultById2(Integer id){
-        Criteria criteria = getSession().createCriteria(ExamResult.class,"er");
-        criteria.createAlias("er.status", "status");
-        criteria.createAlias("er.examRecord", "examRecord");
-        criteria.createAlias("examRecord.examAnswerRecords", "examAnswerRecords");
-        criteria.createAlias("examAnswerRecords.question", "question");
-        criteria.createAlias("question.subCategory", "subCategory");
-        criteria.createAlias("subCategory.category", "category");
-        criteria.add(Restrictions.eq("er.id", id));
-//        criteria.setProjection(Projections.projectionList()
-//                .add(Projections.groupProperty("question.id"))
-//                .add(Projections.groupProperty("question"))
-//                .add(Projections.groupProperty("category.name"))
-//                .add(Projections.groupProperty("subCategory.id")));
-
-//        criteria.addOrder(Order.desc("category.name")).addOrder(Order.desc("subCategory.name"));
-        criteria.addOrder(Order.desc("category.id"));
-//        criteria.addOrder(Order.desc("subCategory.id"));
-        criteria.setResultTransformer(criteria.DISTINCT_ROOT_ENTITY);
-        List<ExamResult> empList = criteria.list();
-        return empList;
-    }
 
     public List<ExamResult> getUserResult(User user) {
         Criteria criteria = getSession().createCriteria(ExamResult.class, "result");
