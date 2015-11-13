@@ -60,6 +60,8 @@ function deleteSubCategory(subCategoryId) {
             },
             async: false,
             success: function () {
+                alert(' ลบข้อมูลสำเร็จ ');
+                search()
             },
             error: function (xhr) {
                 if(xhr.status == 418){
@@ -70,9 +72,6 @@ function deleteSubCategory(subCategoryId) {
             }
         });
     })
-    alert(' ลบข้อมูลสำเร็จ ');
-
-    window.location.reload();
 }
 
 function editSubCategory(subcategoryId) {

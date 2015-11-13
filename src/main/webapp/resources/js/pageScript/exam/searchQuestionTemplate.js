@@ -1,6 +1,4 @@
 $(document).ready(function () {
-
-
     $("#advanceBtn").click(function () {
         var str = $("#search").prop('outerHTML') + "&nbsp" + $("#clear").prop('outerHTML');
         $("#advanceBody").collapse('toggle');
@@ -17,19 +15,16 @@ $(document).ready(function () {
             $("#btnAdvanceSearch").hide();
         }
     });
-
-
     $(".datepicker").datepicker();
-
 })
 
-$("#calendarBtnFrom").on('click',function(){
+$("#calendarBtnFrom").on('click', function () {
     var input = $("#searchCreateDateFromInput")
     input.datepicker("show")
     input.focus()
 })
 
-$("#calendarBtnTo").on('click',function(){
+$("#calendarBtnTo").on('click', function () {
     var input = $("#searchCreateDateToInput")
     input.datepicker("show")
     input.focus()
@@ -38,28 +33,40 @@ $("#calendarBtnTo").on('click',function(){
 var searchQuestionResultList
 
 var getSearchQuestionResultListBasic = function () {
-    submitSearchQuestion('basic')
+    submitSearchQuestion('basic', 1)
     return searchQuestionResultList
 }
 
 var getSearchQuestionResultListAdv = function () {
-    submitSearchQuestion('adv')
+    submitSearchQuestion('adv', 1)
     return searchQuestionResultList
 }
 
-var submitSearchQuestion = function (mode) {
+var getSearchQuestionResultListPageChange = function (page) {
+    submitSearchQuestion("pageChange", page);
+    return searchQuestionResultList
+}
+
+var SI
+
+var submitSearchQuestion = function (mode, page) {
     searchResultReady = false;
-    var SI = { // SearchInput
-        category: getSearchCategoryInputValueId(),
-        subCategory: getSearchSubCategoryInputValue(),
-        createBy: getUserIds(),
-        //questionId: null,
-        questionDesc: null,
-        createDateFrom: null,
-        createDateTo: null,
-        scoreFrom: null,
-        scoreTo: null
-        //status: null
+    if (mode != "pageChange") {
+        SI = { // SearchInput
+            category: getSearchCategoryInputValueId(),
+            subCategory: getSearchSubCategoryInputValue(),
+            createBy: getUserIds(),
+            //questionId: null,
+            questionDesc: null,
+            createDateFrom: null,
+            createDateTo: null,
+            scoreFrom: null,
+            scoreTo: null
+            //status: null
+            ,page: 1
+        }
+    }else{
+        SI.page = parseInt(page)
     }
 
     if (mode == 'adv') {
@@ -72,7 +79,7 @@ var submitSearchQuestion = function (mode) {
 
     var ajaxDat = $.ajax({
         type: "POST",
-        url: context+"/TDCS/exam/searchQuestion",
+        url: context + "/TDCS/exam/searchQuestion",
         async: false,
         data: {
             categoryId: SI.category,
@@ -83,8 +90,10 @@ var submitSearchQuestion = function (mode) {
             createDateFrom: SI.createDateFrom,
             createDateTo: SI.createDateTo,
             scoreFrom: SI.scoreFrom,
-            scoreTo: SI.scoreTo
+            scoreTo: SI.scoreTo,
             //status: SI.status
+            page: SI.page,
+            itemOnPage: itemOnPage
         },
         success: function (dat) {
             searchQuestionResultList = dat
@@ -115,7 +124,7 @@ $(".searchInputClearBtn").on('click', function () {
     clearAllSearchQuestionField();
 })
 
-$("#advBtnReset").unbind('click').click(function(){
+$("#advBtnReset").unbind('click').click(function () {
     alert('hi');
 });
 

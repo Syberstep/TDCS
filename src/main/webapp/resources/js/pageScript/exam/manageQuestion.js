@@ -1,32 +1,46 @@
 /**
  * Created by Phuthikorn_T on 14/8/2558.
  */
+var pagination = $('#pagination')
+var itemOnPage =5;
+
+$(function () {
+    pagination.pagination({
+        items: 0,
+        itemsOnPage: itemOnPage,
+        cssStyle: 'light-theme',
+        onPageClick: function () {
+            listSearchQuestion("pageChange",pagination.pagination("getCurrentPage"))
+        }
+    });
+});
 
 $(document).ready(function () {
     $("#searchCatNotFound").hide();
     clearAllSearchQuestionField()
-    $('#selectAllItem').prop('checked',false)
+    $('#selectAllItem').prop('checked', false)
     //listSearchQuestion();
+    pagination.pagination("destroy")
 
 //    ---------------------------------------------------------------------
 
 })
 
-$('tbody').on('change','.questionSelectBox',function(){
+$('tbody').on('change', '.questionSelectBox', function () {
 
-    if($('.questionSelectBox').size() == $('.questionSelectBox:checked').size()){
-        $('#selectAllItem').prop('checked',true)
-    }else{
-        $('#selectAllItem').prop('checked',false)
+    if ($('.questionSelectBox').size() == $('.questionSelectBox:checked').size()) {
+        $('#selectAllItem').prop('checked', true)
+    } else {
+        $('#selectAllItem').prop('checked', false)
     }
 })
 
-$('body').on('click','.detailEditBtn', function () {
+$('body').on('click', '.detailEditBtn', function () {
     $('#questionDetailModal').modal('hide')
     $('#submitCreateBtn').text('ยืนยัน');
     $('#createQuestModalTitle').text('แก้ไขข้อสอบ');
     var qId = $(this).closest('tr').attr('questionId');
-    if(qId == undefined){
+    if (qId == undefined) {
         qId = $(this).val()
     }
     setEditModalParameter(qId);
@@ -129,7 +143,13 @@ editQuestion = function () { // THIS FUNCTION IS CALLED FROM webapp/WEB-INF/page
                 alert('แก้ไขข้อมูลสำเร็จ');
                 if (q != null) {
                     var createDate = new Date(q.createDate);
-                    var formattedDate = createDate.getDate() + "/" + (parseInt(createDate.getMonth()) + 1) + "/" + createDate.getFullYear();
+                    var updateDate = new Date(q.updateDate);
+                    var formattedDate
+                    if(updateDate == null){
+                        formattedDate = createDate.getDate() + "/" + (parseInt(createDate.getMonth()) + 1) + "/" + createDate.getFullYear();
+                    }else{
+                        formattedDate = updateDate.getDate() + "/" + (parseInt(updateDate.getMonth()) + 1) + "/" + updateDate.getFullYear();
+                    }
                     $("#tableBody").prepend('<tr questionId=' + q.id + '>' +
                     '<td class="questionSelect"><input type="checkbox" class="questionSelectBox"/></td>' +
                     '<td class="questionType">' + q.questionType.description + '</td>' +
@@ -143,7 +163,6 @@ editQuestion = function () { // THIS FUNCTION IS CALLED FROM webapp/WEB-INF/page
 
                     $('tr[questionId="' + questionId + '"]').remove();
                 }
-
             },
             error: function () {
                 alert('แก้ไขข้อมูลไม่สำเร็จ');
@@ -165,7 +184,7 @@ var setEditModalParameter = function (questionId) {
         },
         success: function (question) {
             createQuestionModalClearInput();
-            setCreateModalCategory(question.subCategory.category.id+" : "+question.subCategory.category.name);
+            setCreateModalCategory(question.subCategory.category.id + " : " + question.subCategory.category.name);
             var categoryInput = $("#categoryInputForCreateQuestion");
             categoryInput.change();
             $('#sSubCat').find('option[value="' + question.subCategory.name + '"]').prop("selected", true)
@@ -207,14 +226,18 @@ var deleteQuestions = function (questionIds) {
 
 }
 
-var listSearchQuestion = function (btn) {
+var listSearchQuestion = function (btn, page) {
     var data = null;
-
-    if (btn == undefined || btn.attr('id') != 'advSearchBtn') {
-        data = getSearchQuestionResultListBasic();
-    }
-    else {
-        data = getSearchQuestionResultListAdv();
+    var itemCount = 0;
+    if (btn != "pageChange") {
+        if (btn.attr('id') != 'advSearchBtn') {
+            data = getSearchQuestionResultListBasic();
+        }
+        else {
+            data = getSearchQuestionResultListAdv();
+        }
+    }else{
+        data = getSearchQuestionResultListPageChange(page)
     }
 
     $("tbody").empty();
@@ -224,6 +247,7 @@ var listSearchQuestion = function (btn) {
     }
     if (!(data.length > 0)) {
         $("#searchCatNotFound").show()
+        $('#pagination').pagination('destroy');
     } else {
         data.forEach(function (q) {
             var createDate = new Date(q.createDate);
@@ -244,10 +268,15 @@ var listSearchQuestion = function (btn) {
             if (q.description.length > 100) {
                 $('td[class="questionDescription"]:last').append("....")
             }
+            if(itemCount == 0){
+                itemCount = q.itemCount;
+            }
         })
 
         $('tbody tr td:not(.questionSelect)').css('cursor', 'pointer');
         $('.questionSelectBox').css('cursor', 'pointer');
+        pagination.pagination('redraw');
+        pagination.pagination("updateItems",itemCount);
     }
 }
 
@@ -257,6 +286,7 @@ var listSearchQuestion = function (btn) {
 $(".searchInputSubmitBtn").on('click', function () {
     listSearchQuestion()
 })
+
 
 
 

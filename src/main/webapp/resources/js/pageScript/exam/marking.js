@@ -126,7 +126,7 @@ var submitMarking = function (confirmation) {
         },
         error: function (xhr) {
             if (xhr.status = 418) {
-                alert('บันทึกข้อมูลล้มเหลว : ข้อสอบอยู่ในสถานะ '+xhr.description)
+                alert('บันทึกข้อมูลล้มเหลว : ข้อสอบอยู่ในสถานะ ' + xhr.description)
             } else {
                 alert('บันทึกข้อมูลล้มเหลว')
             }

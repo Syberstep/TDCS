@@ -96,16 +96,13 @@ public class QuerySubCategoryDomain extends HibernateUtil {
 
         Criteria criteria = getSession().createCriteria(SubCategory.class);
         criteria.add(Restrictions.eq("id", subCategoryId));
-//        SubCategory subCategory = (SubCategory) criteria;
+        SubCategory subCat = (SubCategory)criteria.uniqueResult();
 
+        HibernateUtil.beginTransaction();
 //        SubCategory sc = new SubCategory();
 //        sc.setId(subCategoryId);
 //        getSession().delete(sc);
-
-        HibernateUtil.beginTransaction();
-        SubCategory sc = new SubCategory();
-        sc.setId(subCategoryId);
-        getSession().delete(sc);
+        getSession().delete(subCat);
         HibernateUtil.commitTransaction();
     }
 

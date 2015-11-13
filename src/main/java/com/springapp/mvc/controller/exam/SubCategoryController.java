@@ -96,15 +96,13 @@ public class SubCategoryController {
     public ResponseEntity deleteSubCategory(@ModelAttribute("id") Integer subCategoryId) {
 
         SubCategory subCategory = querySubCategoryDomain.getSubCategoryById(subCategoryId);
-        if (queryQuestionDomain.searchQuestionQuery(null, subCategory.getName(), null, null, null, null, null, null, null, null).isEmpty()) {
-            if (queryQuestionDomain.searchQuestionQuery(null, subCategory.getName(), null, null, null, null, null, null, null, queryStatusDomain.getDeletedStatus().getId().toString()).isEmpty()) {
+        if (queryQuestionDomain.searchQuestionQuery(null, subCategory.getName(), null, null, null, null, null, null, null, null, null, null).isEmpty()) {
+            if (queryQuestionDomain.searchQuestionQuery(null, subCategory.getName(), null, null, null, null, null, null, null, queryStatusDomain.getDeletedStatus().getId(), null, null).isEmpty()) {
                 querySubCategoryDomain.deleteSubCategory(subCategoryId);
             }
         } else {
             return new ResponseEntity((HttpStatus.I_AM_A_TEAPOT));
         }
-
-
         return new ResponseEntity(HttpStatus.OK);
     }
 
