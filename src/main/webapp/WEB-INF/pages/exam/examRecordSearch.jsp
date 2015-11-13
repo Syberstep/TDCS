@@ -85,7 +85,7 @@
 
                         <div class="col-sm-6" style="padding:0">
                             <select id="forPosition" class="form-control input-sm">
-                                <option value="0">ทั้งหมด</option>
+                                <option value="0"></option>
                                 <option value="1">Software Developer Trainee</option>
                                 <option value="2">Assistant Business Analyst</option>
                             </select>
