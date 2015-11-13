@@ -587,10 +587,14 @@ function scoreDiff(sFrom, sTo){
             $("#searchScoreFromInput").css('border-color', 'red');
             $("#searchScoreToInput").css('border-color', 'red');
         }
-        else{
+        if(Number(sFrom) < Number(sTo)){
             $("#searchScoreFromInput").css('border-color', '');
             $("#searchScoreToInput").css('border-color', '');
         }
+    }
+    else{
+        $("#searchScoreFromInput").css('border-color', '');
+        $("#searchScoreToInput").css('border-color', '');
     }
     return checkScore;
 }
