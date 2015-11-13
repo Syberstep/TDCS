@@ -139,7 +139,7 @@ public class QueryQuestionDomain extends HibernateUtil {
             getSession().delete(question);
             commitTransaction();
             closeSession();
-        }else{
+        } else {
             question.setStatus(queryStatusDomain.getDeletedStatus());
             beginTransaction();
             getSession().merge(question);
@@ -152,7 +152,7 @@ public class QueryQuestionDomain extends HibernateUtil {
                                               JSONArray createByJsonArray, String questionId,
                                               String questionDesc, String createDateFrom,
                                               String createDateTo, String scoreFrom,
-                                              String scoreTo, String statusId) {
+                                              String scoreTo, Integer statusId, Integer page, Integer maxRows) {
 
         Criteria criteria = getSession().createCriteria(Question.class, "q");
         criteria.createAlias("q.subCategory", "subCategory");
@@ -232,16 +232,27 @@ public class QueryQuestionDomain extends HibernateUtil {
         if (scoreTo != null && scoreTo.trim().length() != 0) {
             criteria.add(Restrictions.le("q.score", Float.parseFloat(scoreTo)));
         }
-        if (statusId != null && statusId.trim().length() != 0) {
+        if (statusId != null) {
             criteria.add(Restrictions.eq("status.id", statusId));
         } else {
             criteria.add(Restrictions.eq("status.id", 3));
         }
 
+//        if (page != null && page > 0) {
+//            if (maxRows != null && maxRows > 0) {
+//                if (page - 1 == 0) {
+//                    criteria.setFirstResult(1);
+//                } else {
+//                    criteria.setFirstResult((page - 1) * maxRows);
+//                }
+//                criteria.setMaxResults(maxRows);
+//            }
+//        }
+
         criteria.addOrder(Order.asc("q.createDate")).addOrder(Order.desc("q.id"));
 
         List<Question> resultList = criteria.list();
-        for(Question q : resultList){
+        for (Question q : resultList) {
             getSession().refresh(q);
         }
 
@@ -320,8 +331,8 @@ public class QueryQuestionDomain extends HibernateUtil {
     }
 
     public List<Question> advanceSearchQuestion(List users, String catId, Integer subId, List<Integer> qIds, String qDesc
-                                                , String qCreateDateFrom, String qCreateDateTo, String qScoreFrom
-                                                , String qScoreTo, Integer searchQEasy, Integer searchQNormal, Integer searchQHard) throws ParseException {
+            , String qCreateDateFrom, String qCreateDateTo, String qScoreFrom
+            , String qScoreTo, Integer searchQEasy, Integer searchQNormal, Integer searchQHard) throws ParseException {
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
         Date dateFrom = null;
@@ -378,13 +389,13 @@ public class QueryQuestionDomain extends HibernateUtil {
         if (!qScoreTo.equals("")) {
             criteria.add(Restrictions.le("score", scoreTo));
         }
-        if (searchQEasy != 0){
+        if (searchQEasy != 0) {
             criteria.add(Restrictions.eq("difficulty.level", 1));
         }
-        if (searchQNormal != 0){
+        if (searchQNormal != 0) {
             criteria.add(Restrictions.eq("difficulty.level", 2));
         }
-        if (searchQHard != 0){
+        if (searchQHard != 0) {
             criteria.add(Restrictions.eq("difficulty.level", 3));
         }
 
@@ -397,30 +408,27 @@ public class QueryQuestionDomain extends HibernateUtil {
         Difficulty difficulty3 = queryDifficultyDomain.getDifficultyByInteger(3);
         List<Question> questions = new ArrayList();
 
-        if(searchQEasy != 0 || searchQNormal != 0 || searchQHard != 0){
+        if (searchQEasy != 0 || searchQNormal != 0 || searchQHard != 0) {
             int i;
-            for(i = 0; i < tmp.size(); i++){
-                if(tmp.get(i).getDifficultyLevel().equals(difficulty1)){
+            for (i = 0; i < tmp.size(); i++) {
+                if (tmp.get(i).getDifficultyLevel().equals(difficulty1)) {
                     tmp1.add(tmp.get(i));
                 }
-                if(tmp.get(i).getDifficultyLevel().equals(difficulty2)){
+                if (tmp.get(i).getDifficultyLevel().equals(difficulty2)) {
                     tmp2.add(tmp.get(i));
                 }
-                if(tmp.get(i).getDifficultyLevel().equals(difficulty3)){
+                if (tmp.get(i).getDifficultyLevel().equals(difficulty3)) {
                     tmp3.add(tmp.get(i));
                 }
             }
         }
-        if (searchQEasy != 0){
+        if (searchQEasy != 0) {
             return tmp1;
-        }
-        else if (searchQNormal != 0){
+        } else if (searchQNormal != 0) {
             return tmp2;
-        }
-        else if (searchQHard != 0){
+        } else if (searchQHard != 0) {
             return tmp3;
-        }
-        else{
+        } else {
             return tmp;
         }
     }
@@ -432,11 +440,11 @@ public class QueryQuestionDomain extends HibernateUtil {
         criteria.createAlias("subCategory.category", "category");
         criteria.add(Restrictions.ne("status.id", 4));
 
-        if (level != 0){
+        if (level != 0) {
             criteria.add(Restrictions.eq("difficultyLevel.level", level));
         }
 
-        if (qIds != null){
+        if (qIds != null) {
             criteria.add(Restrictions.not(Restrictions.in("question.id", qIds)));
         }
 

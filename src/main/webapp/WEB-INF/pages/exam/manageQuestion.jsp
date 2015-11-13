@@ -12,8 +12,8 @@
 <script>
     var context = '${context}';
 
-    if('${status}' == 'user' || '${status}' == ''){
-        window.location.href =context+ "/TDCS/index.html";
+    if ('${status}' == 'user' || '${status}' == '') {
+        window.location.href = context + "/TDCS/index.html";
     }
 </script>
 
@@ -24,7 +24,7 @@
 
 <script>
     if ('${status}' == 'user' || '${status}' == '') {
-        window.location.href = context+"/TDCS/index.html";
+        window.location.href = context + "/TDCS/index.html";
     }
 </script>
 
@@ -51,32 +51,39 @@
                     </button>
                 </div>
             </div>
-            <table class="table">
-                <thead class="bg-primary label-primary small">
-                <tr>
-                    <%--<th style="text-align: center">หมายเลขข้อสอบ</th>--%>
-                    <th style="vertical-align:middle;"> <input type="checkbox" id="selectAllItem"/> </th>
-                    <th>ประเภทข้อสอบ</th>
-                    <th>หมวดหมู่</th>
-                    <th>หัวข้อเรื่อง</th>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="bg-primary label-primary small">
+                    <tr>
+                        <%--<th style="text-align: center">หมายเลขข้อสอบ</th>--%>
+                        <th style="vertical-align:middle;"><input type="checkbox" id="selectAllItem"/></th>
+                        <th>ประเภทข้อสอบ</th>
+                        <th>หมวดหมู่</th>
+                        <th>หัวข้อเรื่อง</th>
 
-                    <th width="35%">คำถาม</th>
-                    <%--<th style="text-align: center">ระดับความยาก</th>--%>
-                    <th>คะแนน</th>
-                    <th>ผู้สร้าง</th>
-                    <th>วันที่สร้าง</th>
-                    <th>แก้ไข</th>
-                    <%--<th style="text-align: center">Action</th>--%>
-                </tr>
-                </thead>
-                <tbody align="center" id="tableBody">
+                        <th width="35%">คำถาม</th>
+                        <%--<th style="text-align: center">ระดับความยาก</th>--%>
+                        <th>คะแนน</th>
+                        <th>ผู้สร้าง</th>
+                        <th>วันที่สร้าง</th>
+                        <th>แก้ไข</th>
+                        <%--<th style="text-align: center">Action</th>--%>
+                    </tr>
+                    </thead>
+                    <tbody align="center" id="tableBody">
 
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row">
+                <div class="col-md-12 clearfix">
+                    <div id="pagination" class="pagination light-theme simple-pagination" style="float:right" ></div>
+                </div>
+            </div>
 
             <div class="bg-info" id="searchCatNotFound" hidden>
                 <%--<p class="bg-info">--%>
-                <h3 id="searchCatDescNotFound" style="text-align: center;" >ไม่พบข้อมูลที่ค้นหา</h3>
+                <h3 id="searchCatDescNotFound" style="text-align: center;">ไม่พบข้อมูลที่ค้นหา</h3>
                 <%--</p>--%>
             </div>
 
@@ -86,6 +93,10 @@
 </div>
 
 <script src="${context}/resources/js/pageScript/exam/manageQuestion.js" charset="UTF-8"></script>
+<script type="text/javascript" src="${context}/resources/js/jquery.simplePagination.js"></script>
+<link type="text/css" rel="stylesheet" href="${context}/resources/css/simplePagination.css"/>
+
+
 
 <style>
     th {
@@ -94,15 +105,15 @@
         padding: 0px 0px 0px 50px;
     }
 
-    td{
+    td {
         vertical-align: middle;
     }
 
-    #tableBody td{
+    #tableBody td {
         font-size: 13px;
     }
 
-    #searchCatNotFound{
+    #searchCatNotFound {
         background-color: #b2e0ff;
         height: 100px;
         display: none;
@@ -111,7 +122,8 @@
         border-radius: 5px;
         margin-top: -15px;
     }
-    #searchCatDescNotFound{
+
+    #searchCatDescNotFound {
         text-align: center;
         vertical-align: middle;
         line-height: 100px;

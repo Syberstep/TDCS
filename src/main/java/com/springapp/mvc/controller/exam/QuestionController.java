@@ -2,6 +2,7 @@ package com.springapp.mvc.controller.exam;
 
 import com.springapp.mvc.domain.QueryUserDomain;
 import com.springapp.mvc.domain.exam.*;
+import com.springapp.mvc.pojo.User;
 import com.springapp.mvc.pojo.exam.*;
 import com.springapp.mvc.util.DateUtil;
 import com.springapp.mvc.util.HibernateUtil;
@@ -516,15 +517,36 @@ public class QuestionController {
             @RequestParam(value = "createDateTo", required = false) String createDateTo,
             @RequestParam(value = "scoreFrom", required = false) String scoreFrom,
             @RequestParam(value = "scoreTo", required = false) String scoreTo,
+            @RequestParam(value = "page",required = false)Integer page,
+            @RequestParam(value = "itemOnPage",required = false)Integer maxRows,
             HttpServletRequest request, HttpServletResponse response
     ) {
         List<Question> questions = queryQuestionDomain.searchQuestionQuery(
                 catId, subCatName, createByJsonArray, null,
                 questionDesc, createDateFrom, createDateTo,
-                scoreFrom, scoreTo, null
+                scoreFrom, scoreTo, null, page, maxRows
         );
+        Integer rowCounts = questions.size();
 
-        String json = new JSONSerializer().include("choices").exclude("*.class").serialize(questions);
+        Integer startPoint = 1;
+        if(page != 1){
+            startPoint = (page-1)*maxRows;
+        }
+        Integer endPoint = startPoint+maxRows;
+        if(endPoint > rowCounts){
+            endPoint = rowCounts;
+        }
+
+        List<Question> questionsSubList = questions.subList(startPoint-1,endPoint-1);
+
+        List<SearchQuestionReturnObject> returnObjects = new ArrayList<SearchQuestionReturnObject>();
+
+        for(Question q : questionsSubList){
+            SearchQuestionReturnObject returnObject = new SearchQuestionReturnObject(q,rowCounts);
+            returnObjects.add(returnObject);
+        }
+
+        String json = new JSONSerializer().include("choices").exclude("*.class").serialize(returnObjects);
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json;charset=UTF-8");
@@ -532,4 +554,108 @@ public class QuestionController {
     }
 }
 
+class SearchQuestionReturnObject{
+    private Integer id;
+    private String description;
+    private SubCategory subCategory;
+    private User createBy;
+    private Date createDate;
+    private Date updateDate;
+    private User updateBy;
+    private Float score;
+    private Integer itemCount;
+    private QuestionType questionType;
 
+    public SearchQuestionReturnObject(Question q, Integer itemCount) {
+        this.id = q.getId();
+        this.description = q.getDescription();
+        this.subCategory = q.getSubCategory();
+        this.createBy = q.getCreateBy();
+        this.createDate = q.getCreateDate();
+        this.updateDate = q.getUpdateDate();
+        this.updateBy = q.getUpdateBy();
+        this.score = q.getScore();
+        this.itemCount = itemCount;
+        this.questionType = q.getQuestionType();
+    }
+
+    public QuestionType getQuestionType() {
+        return questionType;
+    }
+
+    public void setQuestionType(QuestionType questionType) {
+        this.questionType = questionType;
+    }
+
+    public Integer getItemCount() {
+        return itemCount;
+    }
+
+    public void setItemCount(Integer itemCount) {
+        this.itemCount = itemCount;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public SubCategory getSubCategory() {
+        return subCategory;
+    }
+
+    public void setSubCategory(SubCategory subCategory) {
+        this.subCategory = subCategory;
+    }
+
+    public User getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(User createBy) {
+        this.createBy = createBy;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public Date getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
+    }
+
+    public User getUpdateBy() {
+        return updateBy;
+    }
+
+    public void setUpdateBy(User updateBy) {
+        this.updateBy = updateBy;
+    }
+
+    public Float getScore() {
+        return score;
+    }
+
+    public void setScore(Float score) {
+        this.score = score;
+    }
+}
