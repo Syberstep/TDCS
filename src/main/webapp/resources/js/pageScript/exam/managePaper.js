@@ -270,6 +270,8 @@ $(document).ready(function(){
         });
         minutes =  $("#minutes").val();
         hours = $("#hours").val();
+        if(minutes == ""? minutes = 0: minutes =  $("#minutes").val());
+        if(hours == ""? hours = 0: hours =  $("#hours").val());
         updatePaper();
     });
 
@@ -1126,6 +1128,7 @@ function showUpdatePaper(paperId){
                 sumScore(value[i].score);
                 $("#score").val(sumPaperScore);
             }
+            checkAll2 = value.length;
             sumPaperScore = 0;
         },
         error: function(){
@@ -1202,6 +1205,7 @@ function showPaperInfo(pId){
 }
 
 function onLoadPageUpdatePaper(){
+    countTbSelectedQuestionToPaper();
     $("h3:not('#questionNotFoundDesc'):not('#questionsAreEmptyDesc')").text('แก้ไขชุดข้อสอบ');
     $("#createPaperBtn").hide();
     $("#updatePaperBtn").show();
