@@ -1,9 +1,12 @@
 /**
  * Created by Jobz on 6/10/2558.
  */
-//$(document).ready(function(){
-//    searchExampaper();
-//});
+
+$(document).ready(function(){
+    //searchExampaper();
+    $("#paperNotFound").show();
+});
+
 $("#btnExamRecordSearch").on('click',function() {
     searchExampaper();
 });
@@ -70,6 +73,8 @@ function searchExampaper(){
                 $("#paperNotFound").show();
                 $('#tbExamRecordSearch').hide();
             //alert("ไม่พบข้อมูล");
+            }else{
+                $(".table-container").removeClass('hidden')
             }
             //data.forEach(function(value){
             var indexTestResult = 0;

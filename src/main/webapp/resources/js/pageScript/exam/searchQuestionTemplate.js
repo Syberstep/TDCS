@@ -118,6 +118,7 @@ var clearAllSearchQuestionField = function () {
     $("#rEasy").val("");
     $("#rNormal").val("");
     $("#rHard").val("");
+    $("#selectSubCategoryToSelection").find('option[value=""]').prop('selected',true);
 }
 
 $(".searchInputClearBtn").on('click', function () {

@@ -124,29 +124,32 @@
 <div>
     <div class="row">
         <div class="col-md-12">
-            <table id="tbExamRecordSearch" class="table table-bordered table-responsive table-hover">
-                <thead class="bg-primary small">
-                <tr>
-                    <th class="text-center">รหัสชุดข้อสอบ</th>
-                    <th class="text-center">ชื่อชุดข้อสอบ</th>
-                    <th class="text-center">ชื่อผู้สอบ</th>
-                    <th class="text-center">ตำแหน่ง</th>
-                    <th class="text-center">คะแนนสอบ</th>
-                    <%--<th class="text-center">คะแนนPost-Test</th>--%>
-                    <th class="text-center">คะเเนนเต็ม</th>
-                    <th class="text-center">สร้างโดย</th>
-                    <th class="text-center">สถานะ</th>
-                    <%--<th class="text-center">Review</th>--%>
-                </tr>
-                </thead>
+            <div class="table-responsive table-container hidden">
+                <table id="tbExamRecordSearch" class="table table-bordered table-responsive table-hover">
+                    <thead class="bg-primary small">
+                    <tr>
+                        <th class="text-center">รหัสชุดข้อสอบ</th>
+                        <th class="text-center">ชื่อชุดข้อสอบ</th>
+                        <th class="text-center">ชื่อผู้สอบ</th>
+                        <th class="text-center">ตำแหน่ง</th>
+                        <th class="text-center">คะแนนสอบ</th>
+                        <%--<th class="text-center">คะแนนPost-Test</th>--%>
+                        <th class="text-center">คะเเนนเต็ม</th>
+                        <th class="text-center">สร้างโดย</th>
+                        <th class="text-center">สถานะ</th>
+                        <%--<th class="text-center">Review</th>--%>
+                    </tr>
+                    </thead>
 
-                <!---------------------------------------------------- Generate Table --------------------------------------------------------------------------------->
-                <tbody id="tbodyExamRecord">
-                </tbody>
-                <div id="paperNotFound" width="100%">
-                    <h3 id="paperNotFoundDesc">ไม่พบชุดข้อสอบ</h3>
-                </div>
-            </table>
+                    <!---------------------------------------------------- Generate Table --------------------------------------------------------------------------------->
+                    <tbody id="tbodyExamRecord">
+                    </tbody>
+
+                </table>
+            </div>
+            <div id="paperNotFound" width="100%">
+                <h3 id="paperNotFoundDesc">ไม่พบชุดข้อสอบ</h3>
+            </div>
         </div>
     </div>
 </div>

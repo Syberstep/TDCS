@@ -23,15 +23,12 @@
                 <div class="row">
                     <%@include file="selectCreateByInput.jsp" %>
                 </div>
-
                 <div class="col-sm-9">
                     <div id="showEmployeeSelected" class="col-sm-12 col-sm-offset-2">
                     </div>
                 </div>
                 <div id="btnSearch">
                     <div class="col-md-12 text-center">
-                        <br/>
-                        <%--<button id="generalSearchButtonInModalSelectionQuestion" class="btn btn-primary btn-sm searchInputSubmitBtn" type="button">ค้นหา</button>--%>
                         <button id="generalSearchButtonInModalSelectionQuestion" class="btn btn-primary btn-sm searchSubmitBtn" type="button">ค้นหา</button>
                         <button id="resetInputSearchQuestion" class="btn btn-gray btn-sm searchInputClearBtn" type="button">ล้างข้อมูล</button>
                     </div>
@@ -124,13 +121,6 @@
 
 <script src="${context}/resources/js/pageScript/exam/searchQuestionTemplate.js" charset="UTF-8"></script>
 <script>
-//    $("#searchCreateDateFromInput").datepicker().on('changeDate', function(){
-//        $("#searchCreateDateFromInput").datepicker('hide');
-//    });
-//    $("#searchCreateDateToInput").datepicker().on('changeDate', function(){
-//        $("#searchCreateDateToInput").datepicker('hide');
-//    });
-
     $("#searchCreateDateFromInput").datepicker({
         format: 'dd/mm/yyyy',
         autoclose: true,

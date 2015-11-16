@@ -536,6 +536,9 @@ public class QuestionController {
         if(endPoint > rowCounts){
             endPoint = rowCounts;
         }
+        if(endPoint == 0){
+            endPoint = 1;
+        }
 
         List<Question> questionsSubList = questions.subList(startPoint-1,endPoint-1);
 
