@@ -186,7 +186,7 @@ function updateCategory(categoryId) {
             complete: function (xhr) {
                 if (xhr.readyState == 4) {
                     if (xhr.status == 200) {
-                        //alert("แก้ไขข้อมูลสำเร็จ");
+                        alert("แก้ไขข้อมูลสำเร็จ");
                         listcat();
                         cancel(id);
                         $("#data" + categoryId).show();
@@ -296,7 +296,7 @@ function listcat() {
     $("#categoryName").typeahead('destroy').typeahead({
         source: availableall,
         minLength: 0,
-        //items: 20,
+        items: 20,
         maxLength: 2
     }).focus().val("").keyup().val(search);
 
