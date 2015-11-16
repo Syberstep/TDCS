@@ -151,4 +151,17 @@ public class CategoryController {
 //
 //        return new ResponseEntity<String>(json, headers, HttpStatus.OK);
 //    }
+
+    @RequestMapping(value = "/exam/checkCategoryCode", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<String> checkCategoryCode(@RequestParam(value="code", required = true) String code) {
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json;charset=UTF-8");
+
+        Boolean check = queryCategoryDomain.checkCateoryCode(code);
+        String json = new Gson().toJson(check);
+
+        return new ResponseEntity<String>(json, headers, HttpStatus.OK);
+    }
 }

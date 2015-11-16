@@ -133,6 +133,19 @@ public class QueryCategoryDomain extends HibernateUtil {
         }
     }
 
+    public Boolean checkCateoryCode(String code){
+
+        Criteria criteria = getSession().createCriteria(Category.class);
+        criteria.add(Restrictions.eq("id", code));
+
+        if(criteria.list() != null){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
     public List<Category> searchCategory(String  categoryId){
 
         Criteria criteria = getSession().createCriteria(Category.class, "category");

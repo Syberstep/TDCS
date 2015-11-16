@@ -1,6 +1,9 @@
 $("#dropdownExamEmp").attr('class', 'dropdown-toggle active');
 var checkAll;
 var checkCurrent;
+var categoryIdArray = new Array();
+
+
 $(document).ready(function () {
     //viewCategory();
     searchResultNotFound();
@@ -101,7 +104,6 @@ function viewCategory() {
                 if(check == 'true'){
                       str = 'disabled';
                 }
-
                 $("#tbodyCategory").append(
                     '<tr>' +
                     '<td class="col-sm-1" style="text-align: center;"><input class="selectCheckbox" type="checkbox" '+str+' cateId="' + value.id + '"/></td>' +
@@ -242,6 +244,12 @@ function saveCategory() {
         return false;
     }
 
+    //if(checkCategoryCode($("#categoryIdText").val()) == 'false'){
+    //    alert('รหัสหมวดหมู่ซ้ำ');
+    //    $("#categoryIdText").attr('style', 'border:solid 1px red');
+    //    return false;
+    //}
+
     var categoryName = $("#categoryNameText").val();
     var categoryId = $("#categoryIdText").val();
 
@@ -252,6 +260,7 @@ function saveCategory() {
         success: function () {
             //alert('เพิ่มวิชา ' + categoryName + ' สำเร็จ ');
             alert("บันทึกข้อมูลสำเร็จ");
+            $("#createCat").modal('hide');
             onLoadPageAfterCreateOrDeleteCategorySuccessful();
         },
         error: function (xhr) {
@@ -368,3 +377,19 @@ function count(){
         }
     });
 }
+
+//function checkCategoryCode(code){
+//
+//    var check = $.ajax({
+//        type: "POST",
+//        url: context + "/TDCS/exam/checkCategoryCode",
+//        async: false,
+//        data: {
+//            code : code
+//        },
+//        success: function(check){
+//        }
+//    }).responseText;
+//
+//    return check;
+//}

@@ -38,7 +38,7 @@
                 <div class="row">
                     <div class="form-group">
                         <div class="col-md-12 text-center">
-                            <input id="submitCreateCategoryBtn" class="btn btn-primary btn-sm" type="submit"  value="บันทึก"/>
+                            <input id="submitCreateCategoryBtn" class="btn btn-primary btn-sm" type="submit" value="บันทึก"/>
                             <button id="hiddenBtn2" class="btn btn-danger btn-sm" >ยกเลิก</button>
                         </div>
                     </div>
