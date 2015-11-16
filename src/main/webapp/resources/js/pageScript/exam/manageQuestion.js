@@ -277,6 +277,7 @@ var listSearchQuestion = function (btn, page) {
         $('.questionSelectBox').css('cursor', 'pointer');
         pagination.pagination('redraw');
         pagination.pagination("updateItems",itemCount);
+        console.log(itemCount)
     }
 }
 

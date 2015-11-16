@@ -104,6 +104,9 @@ public class QueryPaperDomain extends HibernateUtil {
         if (paperForPosition != null) {
             examPaper.setPosition(paperForPosition);
         }
+        else{
+            examPaper.setPosition(null);
+        }
 
         getSession().merge(examPaper);
 
