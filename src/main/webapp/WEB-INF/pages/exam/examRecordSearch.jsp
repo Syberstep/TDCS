@@ -91,6 +91,18 @@
                             </select>
                         </div>
                     </div>
+                    <div class="col-sm-6">
+                        <label class="col-sm-3 control-label text-right">สถานะ :</label>
+
+                        <div class="col-sm-6" style="padding: 0">
+                        <select id="forStatus" class="form-control input-sm">
+                            <option value="0"></option>
+                            <option value="1">รอตรวจ</option>
+                            <option value="2">ตรวจแล้ว</option>
+                            <option value="3">ส่งผลตรวจแล้ว</option>
+                        </select>
+                        </div>
+                    </div>
                 </div>
                 <h5></h5>
 

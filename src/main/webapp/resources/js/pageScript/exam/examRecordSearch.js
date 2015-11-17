@@ -21,6 +21,7 @@ function clearInput(){
 }
 var itemLenght;
 var code;
+var status;
 var position;
 var traineeNameEmpId;
 var arrayItemToQuery = new Array();
@@ -31,6 +32,7 @@ function searchExampaper(){
     code = $("#searchPaperInput").val();
     position = $("#forPosition").val();
     code = code.substr(0, code.indexOf(' '));
+    status = $('#forStatus').val()
     traineeNameEmpId = $('#searchNameTrainee').val();
     traineeNameEmpId = traineeNameEmpId.substr(0, traineeNameEmpId.indexOf(':'));
     if(itemLenght > 0) {
@@ -50,7 +52,8 @@ function searchExampaper(){
     var a = {
         code: code,
         position : position,
-        empId : traineeNameEmpId
+        empId : traineeNameEmpId,
+        status : status
     }
     tempArray.push(a);
     arrayItemToQuery= [];

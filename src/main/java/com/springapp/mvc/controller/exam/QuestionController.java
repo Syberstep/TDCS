@@ -105,7 +105,7 @@ public class QuestionController {
     @ResponseBody
     public ResponseEntity<String> editQuestion(ModelMap model,
                                                @RequestParam(value = "questionId", required = true) Integer questionId,
-                                               @RequestParam(value = "categoryName", required = true) String catName,
+                                               @RequestParam(value = "categoryId", required = true) String catId,
                                                @RequestParam(value = "subCategoryName", required = true) String subCatName,
                                                @RequestParam(value = "questionDesc", required = true) String qDesc,
                                                @RequestParam(value = "choiceDescArray", required = false) List<String> cDescList,
@@ -115,7 +115,7 @@ public class QuestionController {
                                                @RequestParam(value = "score", required = true) Float score
             , HttpServletRequest request, HttpServletResponse response) {
 
-        Category category = queryCategoryDomain.getCategoryByName(catName);
+        Category category = queryCategoryDomain.getCategoryById(catId);
         SubCategory subCategory = querySubCategoryDomain.getSubCategoryByNameAndCategory(subCatName, category);
         QuestionType questionType = queryQuestionTypeDomain.getQuestionTypeById(questionTypeId);
         Difficulty difficulty = queryDifficultyDomain.getDifficultyByInteger(difficultyLevel);
@@ -142,6 +142,7 @@ public class QuestionController {
                 queryChoiceDomain.deleteChoiceFromQuestion(question);
                 queryChoiceDomain.insertAllChoice(question, cDescList, correctChoice);
                 queryQuestionDomain.mergeQuestion(question);
+                HibernateUtil.getSession().refresh(question);
 
                 HibernateUtil.commitTransaction();
                 HibernateUtil.closeSession();
@@ -150,6 +151,7 @@ public class QuestionController {
 
                 question.setStatus(queryStatusDomain.getDeletedStatus());
                 queryQuestionDomain.mergeQuestion(question);
+                HibernateUtil.getSession().refresh(question);
 
                 newQuestion = cloneQuestion(question, request);
                 newQuestion.setDescription(qDesc);
@@ -267,7 +269,7 @@ public class QuestionController {
         String str = jObj.getString("allQuestionIdOnTableCreatePaper");
         String allQuestionIdOnTableCreatePaper = "";
 
-        if(!str.equals("")){
+        if (!str.equals("")) {
             allQuestionIdOnTableCreatePaper = jObj.getString("allQuestionIdOnTableCreatePaper");
             JSONArray jsonArray2 = new JSONArray(allQuestionIdOnTableCreatePaper);
             for (int idx = 0; idx < jsonArray2.length(); idx++) {
@@ -328,43 +330,40 @@ public class QuestionController {
         } else {
             int idx = 0;
             List<Question> questionsAdvanceResult = new ArrayList<Question>();
-            if((searchQEasy == 0) && (searchQNormal == 0) && (searchQHard == 0)){
+            if ((searchQEasy == 0) && (searchQNormal == 0) && (searchQHard == 0)) {
                 questionsAdvanceResult = queryQuestionDomain.advanceSearchQuestion(empNameSearch, categorySearch, subCategoryId, qIdsNotSearch, qDesc,
-                                                                                   qCreateDateFrom, qCreateDateTo, qScoreFrom, qScoreTo, searchQEasy, searchQNormal, searchQHard);
+                        qCreateDateFrom, qCreateDateTo, qScoreFrom, qScoreTo, searchQEasy, searchQNormal, searchQHard);
             }
-            if(searchQEasy != 0){
+            if (searchQEasy != 0) {
                 List<Question> tmp1 = queryQuestionDomain.advanceSearchQuestion(empNameSearch, categorySearch, subCategoryId, qIdsNotSearch, qDesc,
-                                                                                qCreateDateFrom, qCreateDateTo, qScoreFrom, qScoreTo, searchQEasy, 0, 0);
-                if(searchQEasy <= tmp1.size()){
-                    for(idx = 0; idx < searchQEasy; idx ++){
+                        qCreateDateFrom, qCreateDateTo, qScoreFrom, qScoreTo, searchQEasy, 0, 0);
+                if (searchQEasy <= tmp1.size()) {
+                    for (idx = 0; idx < searchQEasy; idx++) {
                         questionsAdvanceResult.add(tmp1.get(idx));
                     }
-                }
-                else{
+                } else {
                     return null;
                 }
             }
-            if(searchQNormal != 0){
+            if (searchQNormal != 0) {
                 List<Question> tmp2 = queryQuestionDomain.advanceSearchQuestion(empNameSearch, categorySearch, subCategoryId, qIdsNotSearch, qDesc,
-                                                                                qCreateDateFrom, qCreateDateTo, qScoreFrom, qScoreTo, 0, searchQNormal, 0);
-                if(searchQNormal <= tmp2.size()){
-                    for(idx = 0; idx < searchQNormal; idx ++){
+                        qCreateDateFrom, qCreateDateTo, qScoreFrom, qScoreTo, 0, searchQNormal, 0);
+                if (searchQNormal <= tmp2.size()) {
+                    for (idx = 0; idx < searchQNormal; idx++) {
                         questionsAdvanceResult.add(tmp2.get(idx));
                     }
-                }
-                else{
+                } else {
                     return null;
                 }
             }
-            if(searchQHard != 0){
+            if (searchQHard != 0) {
                 List<Question> tmp3 = queryQuestionDomain.advanceSearchQuestion(empNameSearch, categorySearch, subCategoryId, qIdsNotSearch, qDesc,
-                                                                                qCreateDateFrom, qCreateDateTo, qScoreFrom, qScoreTo, 0, 0, searchQHard);
-                if(searchQHard <= tmp3.size()){
-                    for(idx = 0; idx < searchQHard; idx ++){
+                        qCreateDateFrom, qCreateDateTo, qScoreFrom, qScoreTo, 0, 0, searchQHard);
+                if (searchQHard <= tmp3.size()) {
+                    for (idx = 0; idx < searchQHard; idx++) {
                         questionsAdvanceResult.add(tmp3.get(idx));
                     }
-                }
-                else{
+                } else {
                     return null;
                 }
             }
@@ -405,7 +404,7 @@ public class QuestionController {
         return new ResponseEntity<String>(json, headers, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/exam/randomQuestions", method= RequestMethod.POST)
+    @RequestMapping(value = "/exam/randomQuestions", method = RequestMethod.POST)
     public ResponseEntity<String> randExamPaper(@RequestBody String obj) throws JSONException {
 
         HttpHeaders headers = new HttpHeaders();
@@ -423,9 +422,9 @@ public class QuestionController {
         String subCategoryName = "";
 
         JSONArray jsonArray = new JSONArray(obj);
-        for(int index = 0; index < jsonArray.length(); index++){
+        for (int index = 0; index < jsonArray.length(); index++) {
             JSONObject jsonObject = jsonArray.getJSONObject(index);
-            if(index == 0){
+            if (index == 0) {
                 randEasy = jsonObject.getInt("randEasy");
                 randNormal = jsonObject.getInt("randNormal");
                 randHard = jsonObject.getInt("randHard");
@@ -435,67 +434,67 @@ public class QuestionController {
             qIds.add(new Integer(jsonObject.getInt("qid")));
         }
 
-        if(!subCategoryName.equals("")){
+        if (!subCategoryName.equals("")) {
             subCategoryId = querySubCategoryDomain.getSubCategoryIdByName(subCategoryName);
         }
 
-        if(randEasy != 0){
+        if (randEasy != 0) {
             List index = new ArrayList();
             List<Question> questionsEasy = queryQuestionDomain.getQuestionsByLevel(1, qIds, categoryId, subCategoryId);
 //            if(questionsEasy.size() < randEasy){
 //                json = null;
 //                return new ResponseEntity<String>(json, headers, HttpStatus.OK);
 //            }
-            if(questionsEasy.size() >= randEasy){
-                for(i = 0; i < questionsEasy.size(); i ++){
+            if (questionsEasy.size() >= randEasy) {
+                for (i = 0; i < questionsEasy.size(); i++) {
                     index.add(i);
                 }
-                for(int j = 0; j < randEasy; j ++){
+                for (int j = 0; j < randEasy; j++) {
                     Collections.shuffle(index);
                     questions.add(questionsEasy.get((Integer) index.get(0)));
                     index.remove(0);
                 }
             }
         }
-        if(randNormal != 0){
+        if (randNormal != 0) {
             List index2 = new ArrayList();
             List<Question> questionsNormal = queryQuestionDomain.getQuestionsByLevel(2, qIds, categoryId, subCategoryId);
 //            if(questionsNormal.size() < randNormal){
 //                json = null;
 //                return new ResponseEntity<String>(json, headers, HttpStatus.OK);
 //            }
-            if(questionsNormal.size() >= randNormal){
-                for(i = 0; i < questionsNormal.size(); i ++){
+            if (questionsNormal.size() >= randNormal) {
+                for (i = 0; i < questionsNormal.size(); i++) {
                     index2.add(i);
                 }
-                for(int j = 0; j < randNormal; j ++){
+                for (int j = 0; j < randNormal; j++) {
                     Collections.shuffle(index2);
                     questions.add(questionsNormal.get((Integer) index2.get(0)));
                     index2.remove(0);
                 }
             }
         }
-        if(randHard != 0){
+        if (randHard != 0) {
             List index3 = new ArrayList();
             List<Question> questionsHard = queryQuestionDomain.getQuestionsByLevel(3, qIds, categoryId, subCategoryId);
 //            if(questionsHard.size() < randNormal){
 //                json = null;
 //                return new ResponseEntity<String>(json, headers, HttpStatus.OK);
 //            }
-            if(questionsHard.size() >= randHard){
-                for(i = 0; i < questionsHard.size(); i ++){
+            if (questionsHard.size() >= randHard) {
+                for (i = 0; i < questionsHard.size(); i++) {
                     index3.add(i);
                 }
-                for(int j = 0; j < randHard; j ++){
+                for (int j = 0; j < randHard; j++) {
                     Collections.shuffle(index3);
                     questions.add(questionsHard.get((Integer) index3.get(0)));
                     index3.remove(0);
                 }
             }
         }
-        if((randEasy == 0) && (randHard == 0) && (randNormal == 0)){
+        if ((randEasy == 0) && (randHard == 0) && (randNormal == 0)) {
             List<Question> questionList = queryQuestionDomain.getQuestionsByLevel(0, qIds, categoryId, subCategoryId);
-            for(Object idx: questionList){
+            for (Object idx : questionList) {
                 questions.add((Question) idx);
             }
         }
@@ -517,8 +516,8 @@ public class QuestionController {
             @RequestParam(value = "createDateTo", required = false) String createDateTo,
             @RequestParam(value = "scoreFrom", required = false) String scoreFrom,
             @RequestParam(value = "scoreTo", required = false) String scoreTo,
-            @RequestParam(value = "page",required = false)Integer page,
-            @RequestParam(value = "itemOnPage",required = false)Integer maxRows,
+            @RequestParam(value = "page", required = false) Integer page,
+            @RequestParam(value = "itemOnPage", required = false) Integer maxRows,
             HttpServletRequest request, HttpServletResponse response
     ) {
         List<Question> questions = queryQuestionDomain.searchQuestionQuery(
@@ -529,23 +528,26 @@ public class QuestionController {
         Integer rowCounts = questions.size();
 
         Integer startPoint = 1;
-        if(page != 1){
-            startPoint = (page-1)*maxRows;
+        if (page != 1) {
+            startPoint = ((page - 1) * maxRows) + 1;
         }
-        Integer endPoint = startPoint+maxRows;
-        if(endPoint > rowCounts){
-            endPoint = rowCounts;
-        }
-        if(endPoint == 0){
-            endPoint = 1;
+        Integer endPoint = startPoint + maxRows;
+        if (endPoint > rowCounts) {
+            endPoint = rowCounts + 1;
         }
 
-        List<Question> questionsSubList = questions.subList(startPoint-1,endPoint-1);
+        List<Question> questionsSubList = null;
+        if (startPoint - 1 == endPoint - 1 || endPoint < startPoint) {
+            questionsSubList = questions.subList(startPoint - 1, endPoint);
+        } else {
+            questionsSubList = questions.subList(startPoint - 1, endPoint - 1);
+        }
+
 
         List<SearchQuestionReturnObject> returnObjects = new ArrayList<SearchQuestionReturnObject>();
 
-        for(Question q : questionsSubList){
-            SearchQuestionReturnObject returnObject = new SearchQuestionReturnObject(q,rowCounts);
+        for (Question q : questionsSubList) {
+            SearchQuestionReturnObject returnObject = new SearchQuestionReturnObject(q, rowCounts);
             returnObjects.add(returnObject);
         }
 
@@ -557,7 +559,7 @@ public class QuestionController {
     }
 }
 
-class SearchQuestionReturnObject{
+class SearchQuestionReturnObject {
     private Integer id;
     private String description;
     private SubCategory subCategory;

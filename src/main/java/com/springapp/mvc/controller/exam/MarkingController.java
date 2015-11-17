@@ -71,6 +71,7 @@ public class MarkingController {
             Hibernate.initialize(ear.getQuestion().getChoices());
             Hibernate.initialize(ear.getQuestion().getPapers());
         }
+        HibernateUtil.getSession().refresh(examResult);
         modelMap.addAttribute("examResult", examResult);
         modelMap.addAttribute("user", queryUserDomain.getCurrentUser(request));
 
@@ -136,7 +137,7 @@ public class MarkingController {
             } else {
                 examResult.setStatus(queryStatusDomain.getMarkedStatus());
             }
-
+            examResult.setVersion(examResult.getVersion()+1);
             queryExamResultDomain.updateExamResult(examResult);
 
             HibernateUtil.commitTransaction();
@@ -150,6 +151,27 @@ public class MarkingController {
 
 
     }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/exam/marking/checkCurrentVersion")
+    @ResponseBody
+    public ResponseEntity<String> checkCurrentVersion(@RequestParam(value = "version",required = true)Integer version,
+                                                      @RequestParam(value = "resultId",required = true)Integer resultId){
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json;charset=UTF-8");
+
+        Boolean isCurrent = null;
+        ExamResult examResult = queryExamResultDomain.getExamResultById(resultId);
+        HibernateUtil.getSession().refresh(examResult);
+        if (examResult.getVersion() == version){
+            isCurrent = true;
+        }else{
+            isCurrent = false;
+        }
+
+        String json = new JSONSerializer().exclude("*.class").serialize(isCurrent);
+        return new ResponseEntity<String>(json, headers, HttpStatus.OK);
+    }
+
 
 }
 

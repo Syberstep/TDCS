@@ -166,7 +166,7 @@ public class QueryQuestionDomain extends HibernateUtil {
 
         }
         if (subCategoryName != null && subCategoryName != "") {
-            criteria.add(Restrictions.in("subCategory", querySubCategoryDomain.getSubCategoryByName(subCategoryName)));
+            criteria.add(Restrictions.eq("subCategory.name", subCategoryName));
         }
 
         if (createByJsonArray != null && createByJsonArray.length() != 0) {

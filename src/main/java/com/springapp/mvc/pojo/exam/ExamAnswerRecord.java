@@ -26,6 +26,7 @@ public class ExamAnswerRecord implements Serializable {
     @JoinColumn(name="ANSWER_OBJECTIVE")
     private Choice answerObjective;
 
+    @Lob
     @Column(name="ANSWER_SUBJECTIVE")
     private String answerSubjective;
 

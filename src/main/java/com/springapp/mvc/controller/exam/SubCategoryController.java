@@ -195,11 +195,38 @@ public class SubCategoryController {
 
         List<SubCategory> subCategoriesToDropDown = querySubCategoryDomain.getSubCategoryToDropDown(categoryIdOrName);
 
+        List<SubCategory> duplicates = new ArrayList<SubCategory>();
+        Set<String> attributes = new HashSet<String>();
+//        for(SubCategory x : subCategoriesToDropDown) {
+        for(int i = 0;i<subCategoriesToDropDown.size();i++){
+            if(attributes.contains(subCategoriesToDropDown.get(i).getName())) {
+                duplicates.add(subCategoriesToDropDown.get(i));
+            }
+            attributes.add(subCategoriesToDropDown.get(i).getName());
+        }
+        subCategoriesToDropDown.removeAll(duplicates);
+
+//        subCategoriesToDropDown = removeDuplicates(subCategoriesToDropDown);
+
         String json = new Gson().toJson(subCategoriesToDropDown);
         return new ResponseEntity<String>(json, headers, HttpStatus.OK);
     }
-
+//
+//    public List<SubCategory> removeDuplicates(List<SubCategory> listWithDuplicates){
+//
+//        Iterator<SubCategory> iter = listWithDuplicates.iterator();
+//        Map<String, SubCategory> map = new HashMap<String, SubCategory>();
+//        while(iter.hasNext()){
+//            SubCategory i = iter.next();
+//            if(!map.containsKey(i.getName())){
+//                map.put(i.getName(), i);
+//            }
+//        }
+//        return (List<SubCategory>)map.values();
+//    }
 }
+
+
 
 class SubCategoryAndUsed {
     private Integer id;

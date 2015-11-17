@@ -5,6 +5,7 @@ import com.springapp.mvc.pojo.Position;
 import com.springapp.mvc.pojo.exam.ExamPaper;
 import com.springapp.mvc.pojo.exam.ExamRecord;
 import com.springapp.mvc.pojo.exam.ExamResult;
+import com.springapp.mvc.pojo.exam.Status;
 import com.springapp.mvc.util.HibernateUtil;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
@@ -31,7 +32,7 @@ public class QueryExamResultDomain extends HibernateUtil {
 
     public ExamResult getExamResultById(Integer id){
         Criteria criteria = getSession().createCriteria(ExamResult.class,"er");
-        criteria.createAlias("er.status","status");
+        criteria.createAlias("er.status", "status");
         criteria.add(Restrictions.eq("er.id", id));
         return (ExamResult) criteria.uniqueResult();
     }
@@ -54,7 +55,7 @@ public class QueryExamResultDomain extends HibernateUtil {
     /**
      * Created by JobzPC on 7/10/2558.
      */
-    public List<ExamResult> getAllExamResult(List<Integer> userId,String code,Position posiId,String empId) {
+    public List<ExamResult> getAllExamResult(List<Integer> userId,String code,Position posiId,String empId,Status status) {
         Criteria criteria = getSession().createCriteria(ExamResult.class, "er");
         criteria.createAlias("er.examRecord", "examRecord");
         criteria.createAlias("examRecord.paper", "paper");
@@ -73,6 +74,10 @@ public class QueryExamResultDomain extends HibernateUtil {
         }
         if (!(empId.equals(""))) {
             criteria.add(Restrictions.like("user.empId", "%" + empId + "%"));
+        }
+
+        if(status != null){
+            criteria.add(Restrictions.eq("er.status",status));
         }
 //        ProjectionList projList = Projections.projectionList()
 //                .add(Projections.property("er.id"), "id")

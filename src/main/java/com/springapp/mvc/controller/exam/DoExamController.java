@@ -193,7 +193,7 @@ public class DoExamController {
             }else {
                 examResult.setStatus(queryStatusDomain.getPendingStatus());
             }
-
+            examResult.setVersion(0);
             queryExamResultDomain.saveExamResult(examResult);
 
             HibernateUtil.commitTransaction();

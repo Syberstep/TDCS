@@ -127,7 +127,7 @@ var listSubCategory = function () {
             success: function (data) {
                 data.forEach(function (value) {
                     $("#selectSubCategoryToSelection").append(
-                        '<option >' + value.SubCategory.name + '</option>'
+                        '<option >' + value.name + '</option>'
                     )
                 });
             },
@@ -157,7 +157,7 @@ var listSubCategory = function () {
             success: function (data) {
                 data.forEach(function (value) {
                     $("#selectSubCategoryToSelection").append(
-                        '<option >' + value.SubCategory.name + '</option>'
+                        '<option >' + value.name + '</option>'
                     )
                 });
 
