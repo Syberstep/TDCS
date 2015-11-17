@@ -221,5 +221,4 @@
 <%--<%@include file="modal/addEmployeeToInputModal.jsp" %>--%>
 
 <script type="text/javascript" src="<c:url value="/resources/js/pageScript/exam/examRecordSearch.js" />"></script>
-<script src="${context}/resources/js/pageScript/exam/selectEmployee.js" ></script>
 <%--end class row--%>

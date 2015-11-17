@@ -12,10 +12,7 @@ import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.logging.Logger;
 import org.hibernate.criterion.*;
 
@@ -245,16 +242,33 @@ public class QuerySubCategoryDomain extends HibernateUtil {
 
 
 //    Add By Mr.Wanchana
-    public Integer getSubCategoryIdByName(String subName) {
+    public List<Integer> getSubCategoryIdsByName(String subName) {
 
-        String queryStatement = "select id from SubCategory where name like :subName";
-        Query query = getSession().createQuery(queryStatement);
-        query.setParameter("subName", "%" + subName + "%");
-        Integer subId = (Integer) query.list().get(0);
-        logger.info(subId.toString());
+        Criteria criteria = getSession().createCriteria(SubCategory.class);
+        criteria.add(Restrictions.eq("name", subName).ignoreCase());
+        List<SubCategory> subCategorys = criteria.list();
+        List<Integer> ids = new ArrayList<Integer>();
 
-        return subId;
+        if(subCategorys != null){
+            for(int i = 0; i < subCategorys.size(); i++){
+                ids.add(subCategorys.get(i).getId());
+            }
+            return ids;
+        }
+        else{
+            return null;
+        }
     }
+
+    public Integer getSubCategoryIdByName(String subName){
+
+        Criteria criteria = getSession().createCriteria(SubCategory.class);
+        criteria.add(Restrictions.eq("name", subName).ignoreCase());
+        SubCategory subCategory = (SubCategory) criteria.list().get(0);
+
+        return subCategory.getId();
+    }
+
     public List<SubCategory> getSubCategoryToDropDown(String categoryIdOrName) {
         Criteria criteria = getSession().createCriteria(SubCategory.class, "SubCategory");
         criteria.createAlias("SubCategory.category", "category");

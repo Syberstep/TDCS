@@ -42,7 +42,7 @@ var updateResultDetail = function(resultId){
             $('#forMaxScore').html('<pre class="col-sm-2 form-control">'+maxScore );
             $('#commentTextArea').html(res[0].comment);
             $('#markedByShow').html(res[0].markedBy);
-            $('.txtScore').html('คะแนน');
+            $('.txtScore').text('คะแนน');
 
         },
         error:function(){

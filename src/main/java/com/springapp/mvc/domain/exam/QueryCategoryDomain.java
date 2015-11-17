@@ -156,8 +156,10 @@ public class QueryCategoryDomain extends HibernateUtil {
         if (categoryId != "") {
 //            criteria.add(Restrictions.like("category.id", "%" + categoryId + "%").ignoreCase());
 
-            Criterion cri = Restrictions.like("category.id", "%" + categoryId + "%").ignoreCase();
-            Criterion cri2 = Restrictions.like("category.name", "%" + categoryId + "%").ignoreCase();
+//            Criterion cri = Restrictions.like("category.id", "%" + categoryId + "%").ignoreCase();
+//            Criterion cri2 = Restrictions.like("category.name", "%" + categoryId + "%").ignoreCase();
+            Criterion cri = Restrictions.eq("category.id", categoryId).ignoreCase();
+            Criterion cri2 = Restrictions.eq("category.name", categoryId).ignoreCase();
             criteria.add(Restrictions.or(cri,cri2));
         }
 //        if (categoryName != "") {
