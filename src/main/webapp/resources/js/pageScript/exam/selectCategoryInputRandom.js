@@ -196,7 +196,7 @@ $("#selectCategoryToSelectionForRandom").on('change', function () {
                     success: function (data) {
                         data.forEach(function (value) {
                             $("#selectSubCategoryToSelectionForRandom").append(
-                                '<option >' + value.SubCategory.name + '</option>'
+                                '<option >' + value.name + '</option>'
                             )
                         });
                     },
@@ -229,7 +229,7 @@ $("#selectCategoryToSelectionForRandom").on('change', function () {
                     success: function (data) {
                         data.forEach(function (value) {
                             $("#selectSubCategoryToSelectionForRandom").append(
-                                '<option >' + value.SubCategory.name + '</option>'
+                                '<option >' + value.name + '</option>'
                             )
                         });
 

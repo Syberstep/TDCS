@@ -30,29 +30,29 @@ var clearCategoryList = function () {
 
 $(document).ready(function () {
     clearCategoryList()
+    listSubCategory();
     //$("#selectSubCategoryToSelection").prepend('<option value="">'+"เลือกหัวข้อเรื่อง"+'</option>');
-    var data = $.ajax({
-        type: "POST",
-        contentType: "application/json",
-        url: context + "/TDCS/exam/getAllSubCategory",
-        async: false,
-        success: function (data) {
-            $("#selectSubCategoryToSelection").append(
-                '<option value="" >' + "" + '</option>'
-            )
-            data.forEach(function (value) {
-                $("#selectSubCategoryToSelection").append(
-                    '<option >' + value.id + " : " + value.subName + '</option>'
-                )
-            });
+    //var data = $.ajax({
+    //    type: "POST",
+    //    contentType: "application/json",
+    //    url: context + "/TDCS/exam/getAllSubCategory",
+    //    async: false,
+    //    success: function (data) {
+    //        $("#selectSubCategoryToSelection").append(
+    //            '<option value="" >' + "" + '</option>'
+    //        )
+    //        data.forEach(function (value) {
+    //            $("#selectSubCategoryToSelection").append(
+    //                '<option >' + value.id + " : " + value.subName + '</option>'
+    //            )
+    //        });
+    //
+    //    },
+    //    error: function (data) {
+    //
+    //    }
+    //});
 
-        },
-        error: function (data) {
-
-        }
-
-
-    });
 })
 
 var catAndSubcatSelectNothing = function () {
@@ -127,7 +127,7 @@ var listSubCategory = function () {
             success: function (data) {
                 data.forEach(function (value) {
                     $("#selectSubCategoryToSelection").append(
-                        '<option >' + value.SubCategory.name + '</option>'
+                        '<option >' + value.name + '</option>'
                     )
                 });
             },
@@ -157,7 +157,7 @@ var listSubCategory = function () {
             success: function (data) {
                 data.forEach(function (value) {
                     $("#selectSubCategoryToSelection").append(
-                        '<option >' + value.SubCategory.name + '</option>'
+                        '<option >' + value.name + '</option>'
                     )
                 });
 

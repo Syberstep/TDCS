@@ -189,11 +189,11 @@ public class DoExamController {
                 examResult.setMarkedDate(DateUtil.getCurrentDateWithRemovedTime());
                 examResult.setStatus(queryStatusDomain.getMarkConfirmedStatus());
                 examResult.setSubjectiveScore(0f);
-                examResult.setComment("SystemAutoMarking");
+                examResult.setComment("ตรวจอัตโนมัติโดยระบบ");
             }else {
                 examResult.setStatus(queryStatusDomain.getPendingStatus());
             }
-
+            examResult.setVersion(0);
             queryExamResultDomain.saveExamResult(examResult);
 
             HibernateUtil.commitTransaction();
