@@ -86,9 +86,13 @@ var clearCategoryList = function () {
 }
 
 $(document).ready(function () {
-    clearCategoryList()
-    updateCategoryList()
+    clearCategoryList();
+    updateCategoryList();
+    init();
     //$("#selectSubCategoryToSelection").prepend('<option value="">'+"เลือกหัวข้อเรื่อง"+'</option>');
+})
+
+function init(){
     var data = $.ajax({
         type: "POST",
         contentType: "application/json",
@@ -97,21 +101,28 @@ $(document).ready(function () {
         success: function (data) {
             $("#selectSubCategoryToSelectionForRandom").append(
                 '<option value="" ></option>'
-            )
+            );
+            var catNameArr = new Array();
             data.forEach(function (value) {
-                $("#selectSubCategoryToSelectionForRandom").append(
-                    '<option >' + value.id + " : " +value.subName + '</option>'
-                )
+                catNameArr.push(value.subName);
+            });
+            var uniqueSubName = [];
+            $.each(catNameArr, function(i, el){
+                if($.inArray(el, uniqueSubName) === -1) uniqueSubName.push(el);
             });
 
+            for(var i = 0; i < uniqueSubName.length; i ++){
+                $("#selectSubCategoryToSelectionForRandom").append(
+                    '<option >' + uniqueSubName[i] + '</option>'
+                )
+            }
         },
         error :function(data){
 
         }
-
-
     });
-})
+}
+
 $('#selectCategoryToSelectionForRandom').on('change', function () {
     console.log("event on category change")
     $('selectSubCategoryToSelectionForRandom').children('.subCategory').remove()

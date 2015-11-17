@@ -416,7 +416,7 @@ public class QuestionController {
         int randNormal = 0;
         int randHard = 0;
         int i = 0;
-        int subCategoryId = 0;
+        List subCategoryId = new ArrayList();
         String json = "";
         String categoryId = "";
         String subCategoryName = "";
@@ -434,8 +434,8 @@ public class QuestionController {
             qIds.add(new Integer(jsonObject.getInt("qid")));
         }
 
-        if (!subCategoryName.equals("")) {
-            subCategoryId = querySubCategoryDomain.getSubCategoryIdByName(subCategoryName);
+        if(!subCategoryName.equals("")){
+            subCategoryId = querySubCategoryDomain.getSubCategoryIdsByName(subCategoryName);
         }
 
         if (randEasy != 0) {
@@ -494,8 +494,10 @@ public class QuestionController {
         }
         if ((randEasy == 0) && (randHard == 0) && (randNormal == 0)) {
             List<Question> questionList = queryQuestionDomain.getQuestionsByLevel(0, qIds, categoryId, subCategoryId);
-            for (Object idx : questionList) {
-                questions.add((Question) idx);
+            if(questionList != null){
+                for(Object idx: questionList){
+                    questions.add((Question) idx);
+                }
             }
         }
 

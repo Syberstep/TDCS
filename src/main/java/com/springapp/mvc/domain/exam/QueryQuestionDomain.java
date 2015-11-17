@@ -433,7 +433,7 @@ public class QueryQuestionDomain extends HibernateUtil {
         }
     }
 
-    public List<Question> getQuestionsByLevel(Integer level, List qIds, String categoryId, int subCategoryId) {
+    public List<Question> getQuestionsByLevel(Integer level, List qIds, String categoryId, List subCategoryIds) {
 
         Criteria criteria = getSession().createCriteria(Question.class, "question");
         criteria.createAlias("question.subCategory", "subCategory");
@@ -453,12 +453,24 @@ public class QueryQuestionDomain extends HibernateUtil {
             Criterion criterion2 = Restrictions.like("category.name", "%" + categoryId + "%").ignoreCase();
             criteria.add(Restrictions.or(criterion1, criterion2));
         }
-        if (subCategoryId != 0) {
-            criteria.add(Restrictions.eq("subCategory.id", subCategoryId));
+        if (subCategoryIds.size() != 0) {
+            if(subCategoryIds.size() == 1){
+                criteria.add(Restrictions.eq("subCategory.id", subCategoryIds.get(0)));
+            }
+            else{
+                criteria.add(Restrictions.in("subCategory.id", subCategoryIds));
+            }
         }
 
-        List<Question> question = criteria.list();
+        logger.info(subCategoryIds+"...................................");
 
-        return question;
+        List<Question> questionList = (List<Question>) criteria.list();
+
+        if (questionList.size() != 0){
+            return questionList;
+        }
+        else{
+            return null;
+        }
     }
 }
