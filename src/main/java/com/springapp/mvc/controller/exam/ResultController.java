@@ -122,7 +122,7 @@ public class ResultController {
                     } else {
                         if (ear.getMarkingRecord() != null) {
                             if (ear.getMarkingRecord().getMarkingScore() != 0 || ear.getMarkingRecord().getMarkingScore() == 0) {
-                                resultScore = ear.getMarkingRecord().getMarkingScore();
+                                resultScore += ear.getMarkingRecord().getMarkingScore();
                             }
                         }
                     }

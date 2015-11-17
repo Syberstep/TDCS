@@ -1,9 +1,9 @@
 /**
  * Created by Jobz on 6/10/2558.
  */
-$(document).ready(function(){
-    searchExampaper();
-});
+//$(document).ready(function(){
+//    searchExampaper();
+//});
 $("#btnExamRecordSearch").on('click',function() {
     searchExampaper();
 });
