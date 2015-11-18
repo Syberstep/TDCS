@@ -131,7 +131,6 @@ function updateSubCategory(subcategoryId) {
 function clearsearch() {
     $("#categoryId").val("");
     $("#sSubCat").empty();
-    $("#categoryId").change();
 }
 
 function search() {
@@ -254,7 +253,7 @@ function selectSubCatUpdate(categoryId){
         success: function (data) {
             data.forEach(function (value) {
                 $("#sSubCat").append(
-                    '<option >' + value.name + '</option>'
+                    '<option >' + value.SubCategory.name + '</option>'
                 )
             });
         },

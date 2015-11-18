@@ -71,7 +71,7 @@ $('#submitCreateBtn').on('click', function () {
     if ($('#createQuestModalTitle').text() == 'สร้างข้อสอบ') {
         if (checkCreateQuestionModalFieldComplete()) {
             saveQuestion();
-            //$('#createQuest').modal('hide')
+            $('#createQuest').modal('hide')
         }
     } else if ($('#createQuestModalTitle').text() == 'แก้ไขข้อสอบ') {
         if (checkCreateQuestionModalFieldComplete()) {
@@ -132,7 +132,6 @@ function saveQuestion() {
         }
         ,
         success: function (q) {
-            $('#createQuest').modal('hide')
             alert('บันทึกข้อมูลสำเร็จ');
             if ($('.h3').text() == "จัดการข้อสอบ") {
                 var createDate = new Date(q.createDate);
@@ -393,7 +392,7 @@ $("#categoryInputForCreateQuestion").on('change', function () {
                     success: function (data) {
                         data.forEach(function (value) {
                             $("#sSubCat").append(
-                                '<option value="' + value.name + '">' + value.name + '</option>'
+                                '<option value="' + value.SubCategory.name + '">' + value.SubCategory.name + '</option>'
                             )
                         });
                     },
@@ -417,7 +416,7 @@ $("#categoryInputForCreateQuestion").on('change', function () {
                     success: function (data) {
                         data.forEach(function (value) {
                             $("#sSubCat").append(
-                                '<option value="' + value.name + '">' + value.name + '</option>'
+                                '<option value="' + value.SubCategory.name + '">' + value.SubCategory.name + '</option>'
                             )
                         });
 

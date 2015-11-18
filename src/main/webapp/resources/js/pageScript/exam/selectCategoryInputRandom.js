@@ -86,13 +86,9 @@ var clearCategoryList = function () {
 }
 
 $(document).ready(function () {
-    clearCategoryList();
-    updateCategoryList();
-    init();
+    clearCategoryList()
+    updateCategoryList()
     //$("#selectSubCategoryToSelection").prepend('<option value="">'+"เลือกหัวข้อเรื่อง"+'</option>');
-})
-
-function init(){
     var data = $.ajax({
         type: "POST",
         contentType: "application/json",
@@ -101,28 +97,21 @@ function init(){
         success: function (data) {
             $("#selectSubCategoryToSelectionForRandom").append(
                 '<option value="" ></option>'
-            );
-            var catNameArr = new Array();
+            )
             data.forEach(function (value) {
-                catNameArr.push(value.subName);
-            });
-            var uniqueSubName = [];
-            $.each(catNameArr, function(i, el){
-                if($.inArray(el, uniqueSubName) === -1) uniqueSubName.push(el);
+                $("#selectSubCategoryToSelectionForRandom").append(
+                    '<option >' + value.id + " : " +value.subName + '</option>'
+                )
             });
 
-            for(var i = 0; i < uniqueSubName.length; i ++){
-                $("#selectSubCategoryToSelectionForRandom").append(
-                    '<option >' + uniqueSubName[i] + '</option>'
-                )
-            }
         },
         error :function(data){
 
         }
-    });
-}
 
+
+    });
+})
 $('#selectCategoryToSelectionForRandom').on('change', function () {
     console.log("event on category change")
     $('selectSubCategoryToSelectionForRandom').children('.subCategory').remove()
@@ -207,7 +196,7 @@ $("#selectCategoryToSelectionForRandom").on('change', function () {
                     success: function (data) {
                         data.forEach(function (value) {
                             $("#selectSubCategoryToSelectionForRandom").append(
-                                '<option >' + value.name + '</option>'
+                                '<option >' + value.SubCategory.name + '</option>'
                             )
                         });
                     },
@@ -240,7 +229,7 @@ $("#selectCategoryToSelectionForRandom").on('change', function () {
                     success: function (data) {
                         data.forEach(function (value) {
                             $("#selectSubCategoryToSelectionForRandom").append(
-                                '<option >' + value.name + '</option>'
+                                '<option >' + value.SubCategory.name + '</option>'
                             )
                         });
 

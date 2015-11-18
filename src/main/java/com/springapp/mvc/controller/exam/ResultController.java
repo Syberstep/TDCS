@@ -153,8 +153,9 @@ public class ResultController {
                 checkScore.setSubjectiveScore(examResult.getSubjectiveScore());
                 checkScore.setComment(examResult.getComment());
                 checkScore.setObjectiveScore(examResult.getObjectiveScore());
+                checkScore.setPaperName(examResult.getExamRecord().getPaper().getName());
                 if(examResult.getMarkedBy()==null){
-                    checkScore.setMarkedBy("HRMS System");
+                    checkScore.setMarkedBy("TDCS System");
                 }else{
                     checkScore.setMarkedBy(examResult.getMarkedBy().getThFname());
                 }
@@ -184,6 +185,15 @@ class CheckScore {
     private Float objectiveScore;
     private Float subjectiveScore;
     private String markedBy;
+    private String paperName;
+
+    public String getPaperName() {
+        return paperName;
+    }
+
+    public void setPaperName(String paperName) {
+        this.paperName = paperName;
+    }
 
     public String getMarkedBy() {
         return markedBy;

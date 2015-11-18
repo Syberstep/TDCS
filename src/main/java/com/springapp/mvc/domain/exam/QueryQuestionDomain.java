@@ -166,7 +166,7 @@ public class QueryQuestionDomain extends HibernateUtil {
 
         }
         if (subCategoryName != null && subCategoryName != "") {
-            criteria.add(Restrictions.eq("subCategory.name", subCategoryName));
+            criteria.add(Restrictions.in("subCategory", querySubCategoryDomain.getSubCategoryByName(subCategoryName)));
         }
 
         if (createByJsonArray != null && createByJsonArray.length() != 0) {
@@ -433,7 +433,7 @@ public class QueryQuestionDomain extends HibernateUtil {
         }
     }
 
-    public List<Question> getQuestionsByLevel(Integer level, List qIds, String categoryId, List subCategoryIds) {
+    public List<Question> getQuestionsByLevel(Integer level, List qIds, String categoryId, int subCategoryId) {
 
         Criteria criteria = getSession().createCriteria(Question.class, "question");
         criteria.createAlias("question.subCategory", "subCategory");
@@ -453,24 +453,12 @@ public class QueryQuestionDomain extends HibernateUtil {
             Criterion criterion2 = Restrictions.like("category.name", "%" + categoryId + "%").ignoreCase();
             criteria.add(Restrictions.or(criterion1, criterion2));
         }
-        if (subCategoryIds.size() != 0) {
-            if(subCategoryIds.size() == 1){
-                criteria.add(Restrictions.eq("subCategory.id", subCategoryIds.get(0)));
-            }
-            else{
-                criteria.add(Restrictions.in("subCategory.id", subCategoryIds));
-            }
+        if (subCategoryId != 0) {
+            criteria.add(Restrictions.eq("subCategory.id", subCategoryId));
         }
 
-        logger.info(subCategoryIds+"...................................");
+        List<Question> question = criteria.list();
 
-        List<Question> questionList = (List<Question>) criteria.list();
-
-        if (questionList.size() != 0){
-            return questionList;
-        }
-        else{
-            return null;
-        }
+        return question;
     }
 }

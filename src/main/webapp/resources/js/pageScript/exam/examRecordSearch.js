@@ -1,12 +1,9 @@
 /**
  * Created by Jobz on 6/10/2558.
  */
-
-$(document).ready(function(){
-    //searchExampaper();
-    $("#paperNotFound").show();
-});
-
+//$(document).ready(function(){
+//    searchExampaper();
+//});
 $("#btnExamRecordSearch").on('click',function() {
     searchExampaper();
 });
@@ -21,7 +18,6 @@ function clearInput(){
 }
 var itemLenght;
 var code;
-var status;
 var position;
 var traineeNameEmpId;
 var arrayItemToQuery = new Array();
@@ -32,7 +28,6 @@ function searchExampaper(){
     code = $("#searchPaperInput").val();
     position = $("#forPosition").val();
     code = code.substr(0, code.indexOf(' '));
-    status = $('#forStatus').val()
     traineeNameEmpId = $('#searchNameTrainee').val();
     traineeNameEmpId = traineeNameEmpId.substr(0, traineeNameEmpId.indexOf(':'));
     if(itemLenght > 0) {
@@ -52,8 +47,7 @@ function searchExampaper(){
     var a = {
         code: code,
         position : position,
-        empId : traineeNameEmpId,
-        status : status
+        empId : traineeNameEmpId
     }
     tempArray.push(a);
     arrayItemToQuery= [];
@@ -76,8 +70,6 @@ function searchExampaper(){
                 $("#paperNotFound").show();
                 $('#tbExamRecordSearch').hide();
             //alert("ไม่พบข้อมูล");
-            }else{
-                $(".table-container").removeClass('hidden')
             }
             //data.forEach(function(value){
             var indexTestResult = 0;
@@ -85,18 +77,21 @@ function searchExampaper(){
                 $("#paperNotFound").hide();
                 $('#tbExamRecordSearch').show();
                 var testResult;
+                var paperName = data[i].examRecord.paper.name;
                 testResult =  Number(data[i].objectiveScore)+ Number (data[i].subjectiveScore);
                     if (data[i].examRecord.user.position.posiName == "Software Developer Trainee") {
                         data[i].examRecord.user.position.posiName = "Dev";
                     }
                     if (data[i].examRecord.user.position.posiName == "Assistant Business Analyst") {
                         data[i].examRecord.user.position.posiName = "BA";
+                    }if (paperName == null) {
+                        paperName = "";
                     }
 
                     $("#tbodyExamRecord").append(
                         '<tr>' +
-                        '<td class="text-center"><label >' + data[i].examRecord.paper.code + '</label></td>' +
-                        '<td><label >' + data[i].examRecord.paper.name + '</label></td>' +
+                        '<td class="text-center"><label ><a>' + data[i].examRecord.paper.code + '</a></label></td>' +
+                        '<td><label >' + paperName + '</label></td>' +
                         '<td><label >' + data[i].examRecord.user.thFname + "    " + data[i].examRecord.user.thLname + '</label></td>' +
                         '<td class="text-center"><label >' + data[i].examRecord.user.position.posiName + '</label></td>' +
                         '<td class="text-center" resultId="' + data[i].id + '"><label ></label></td>' +

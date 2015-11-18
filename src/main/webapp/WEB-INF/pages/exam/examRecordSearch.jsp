@@ -91,18 +91,6 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-sm-6">
-                        <label class="col-sm-3 control-label text-right">สถานะ :</label>
-
-                        <div class="col-sm-6" style="padding: 0">
-                        <select id="forStatus" class="form-control input-sm">
-                            <option value="0"></option>
-                            <option value="1">รอตรวจ</option>
-                            <option value="2">ตรวจแล้ว</option>
-                            <option value="3">ส่งผลตรวจแล้ว</option>
-                        </select>
-                        </div>
-                    </div>
                 </div>
                 <h5></h5>
 
@@ -136,32 +124,29 @@
 <div>
     <div class="row">
         <div class="col-md-12">
-            <div class="table-responsive table-container hidden">
-                <table id="tbExamRecordSearch" class="table table-bordered table-responsive table-hover">
-                    <thead class="bg-primary small">
-                    <tr>
-                        <th class="text-center">รหัสชุดข้อสอบ</th>
-                        <th class="text-center">ชื่อชุดข้อสอบ</th>
-                        <th class="text-center">ชื่อผู้สอบ</th>
-                        <th class="text-center">ตำแหน่ง</th>
-                        <th class="text-center">คะแนนสอบ</th>
-                        <%--<th class="text-center">คะแนนPost-Test</th>--%>
-                        <th class="text-center">คะเเนนเต็ม</th>
-                        <th class="text-center">สร้างโดย</th>
-                        <th class="text-center">สถานะ</th>
-                        <%--<th class="text-center">Review</th>--%>
-                    </tr>
-                    </thead>
+            <table id="tbExamRecordSearch" class="table table-bordered table-responsive table-hover">
+                <thead class="bg-primary small">
+                <tr>
+                    <th class="text-center">รหัสชุดข้อสอบ</th>
+                    <th class="text-center">ชื่อชุดข้อสอบ</th>
+                    <th class="text-center">ชื่อผู้สอบ</th>
+                    <th class="text-center">ตำแหน่ง</th>
+                    <th class="text-center">คะแนนสอบ</th>
+                    <%--<th class="text-center">คะแนนPost-Test</th>--%>
+                    <th class="text-center">คะเเนนเต็ม</th>
+                    <th class="text-center">สร้างโดย</th>
+                    <th class="text-center">สถานะ</th>
+                    <%--<th class="text-center">Review</th>--%>
+                </tr>
+                </thead>
 
-                    <!---------------------------------------------------- Generate Table --------------------------------------------------------------------------------->
-                    <tbody id="tbodyExamRecord">
-                    </tbody>
-
-                </table>
-            </div>
-            <div id="paperNotFound" width="100%">
-                <h3 id="paperNotFoundDesc">ไม่พบชุดข้อสอบ</h3>
-            </div>
+                <!---------------------------------------------------- Generate Table --------------------------------------------------------------------------------->
+                <tbody id="tbodyExamRecord">
+                </tbody>
+                <div id="paperNotFound" width="100%">
+                    <h3 id="paperNotFoundDesc">ไม่พบชุดข้อสอบ</h3>
+                </div>
+            </table>
         </div>
     </div>
 </div>
@@ -221,4 +206,5 @@
 <%--<%@include file="modal/addEmployeeToInputModal.jsp" %>--%>
 
 <script type="text/javascript" src="<c:url value="/resources/js/pageScript/exam/examRecordSearch.js" />"></script>
+<script src="${context}/resources/js/pageScript/exam/selectEmployee.js" ></script>
 <%--end class row--%>
