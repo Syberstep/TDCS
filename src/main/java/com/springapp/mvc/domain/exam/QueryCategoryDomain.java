@@ -153,7 +153,7 @@ public class QueryCategoryDomain extends HibernateUtil {
         criteria.addOrder(Order.asc("category.id"));
 
 
-        if (categoryId != "") {
+        if (!categoryId.equals("")) {
 //            criteria.add(Restrictions.like("category.id", "%" + categoryId + "%").ignoreCase());
 
             Criterion cri = Restrictions.like("category.id", "%" + categoryId + "%").ignoreCase();
