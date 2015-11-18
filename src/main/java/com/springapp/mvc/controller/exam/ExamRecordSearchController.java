@@ -6,11 +6,9 @@ import com.springapp.mvc.domain.QueryPositionDomain;
 
 import com.springapp.mvc.domain.QueryUserDomain;
 import com.springapp.mvc.domain.exam.QueryExamResultDomain;
-import com.springapp.mvc.domain.exam.QueryStatusDomain;
 import com.springapp.mvc.pojo.Position;
 import com.springapp.mvc.pojo.User;
 import com.springapp.mvc.pojo.exam.ExamResult;
-import com.springapp.mvc.pojo.exam.Status;
 import flexjson.JSONSerializer;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,9 +41,6 @@ public class ExamRecordSearchController {
     @Autowired
     QueryUserDomain queryUserDomain ;
 
-    @Autowired
-    QueryStatusDomain queryStatusDomain;
-
     @RequestMapping(value = "/exam/getQueryExamRecordSearch", method = RequestMethod.POST,headers = "Accept=application/json")
     @ResponseBody
     public ResponseEntity<String> getQueryExamRecordSearch(@RequestBody String jsonObj) throws JSONException {
@@ -64,21 +59,12 @@ public class ExamRecordSearchController {
         String codeId = (String) jsonItems.get("code");
         String posiId = (String) jsonItems.get("position");
         String empID = (String) jsonItems.get("empId");
-        Integer statusValue = jsonItems.getInt("status");
-        Status status = null;
-        switch (statusValue){
-            case 0: break;
-            case 1: status = queryStatusDomain.getPendingStatus();break;
-            case 2: status = queryStatusDomain.getMarkedStatus();break;
-            case 3: status = queryStatusDomain.getMarkConfirmedStatus();break;
-            default:break;
-        }
         Position position = null;
         Integer posiIdInt = Integer.parseInt(posiId);
         if(posiIdInt != 0){
             position =  queryPositionDomain.getPositionById(posiIdInt);
         }
-        List<ExamResult> results = queryExamResualt.getAllExamResult(userId,codeId,position,empID,status);
+        List<ExamResult> results = queryExamResualt.getAllExamResult(userId,codeId,position,empID);
 //        System.out.println(results);
 
         String json = new JSONSerializer()

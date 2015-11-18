@@ -45,17 +45,6 @@ public class ExamResult implements Serializable {
     @JoinColumn(name = "RESULT_STATUS")
     private Status status;
 
-    @Column(name = "VERSION")
-    private Integer version;
-
-    public Integer getVersion() {
-        return version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
-    }
-
     public Date getMarkedDate() {
         return markedDate;
     }

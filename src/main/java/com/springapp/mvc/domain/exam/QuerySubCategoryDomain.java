@@ -12,7 +12,10 @@ import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.logging.Logger;
 import org.hibernate.criterion.*;
 
@@ -242,33 +245,16 @@ public class QuerySubCategoryDomain extends HibernateUtil {
 
 
 //    Add By Mr.Wanchana
-    public List<Integer> getSubCategoryIdsByName(String subName) {
+    public Integer getSubCategoryIdByName(String subName) {
 
-        Criteria criteria = getSession().createCriteria(SubCategory.class);
-        criteria.add(Restrictions.eq("name", subName).ignoreCase());
-        List<SubCategory> subCategorys = criteria.list();
-        List<Integer> ids = new ArrayList<Integer>();
+        String queryStatement = "select id from SubCategory where name like :subName";
+        Query query = getSession().createQuery(queryStatement);
+        query.setParameter("subName", "%" + subName + "%");
+        Integer subId = (Integer) query.list().get(0);
+        logger.info(subId.toString());
 
-        if(subCategorys != null){
-            for(int i = 0; i < subCategorys.size(); i++){
-                ids.add(subCategorys.get(i).getId());
-            }
-            return ids;
-        }
-        else{
-            return null;
-        }
+        return subId;
     }
-
-    public Integer getSubCategoryIdByName(String subName){
-
-        Criteria criteria = getSession().createCriteria(SubCategory.class);
-        criteria.add(Restrictions.eq("name", subName).ignoreCase());
-        SubCategory subCategory = (SubCategory) criteria.list().get(0);
-
-        return subCategory.getId();
-    }
-
     public List<SubCategory> getSubCategoryToDropDown(String categoryIdOrName) {
         Criteria criteria = getSession().createCriteria(SubCategory.class, "SubCategory");
         criteria.createAlias("SubCategory.category", "category");
@@ -280,7 +266,7 @@ public class QuerySubCategoryDomain extends HibernateUtil {
 
             criteria.add(Restrictions.or(cri,cri2));
         }
-//        criteria.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
+        criteria.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
         List<SubCategory> subCategoriesToDropDown = criteria.list();
         closeSession();
         return subCategoriesToDropDown;

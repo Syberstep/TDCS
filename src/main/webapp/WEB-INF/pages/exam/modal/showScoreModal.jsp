@@ -58,47 +58,43 @@
                         </table>
                     </div>
                     <div class="row">
-                        <div class="col-md-3 text-right">
-                            <h5 >ปรนัย :</h5>
+                        <div class="col-sm-offset-1 col-sm-2 text-right">
+                            <h4>ปรนัย :</h4>
                         </div>
-                        <div class="col-md-1">
-                            <h5 id="forObjScore"></h5>
+                        <div class="col-sm-1">
+                            <h4 id="forObjScore"></h4>
                         </div>
-                        <div class="col-sm-offset-1 col-sm 1">
-                            <h5 class ="txtScore"></h5>
+                        <div class="col-sm-1">
+                            <h4 class="txtScore"></h4>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-3 text-right">
-                            <h5>อัตนัย :</h5>
+                        <div class="col-sm-offset-1 col-sm-2 text-right">
+                            <h4>อัตนัย :</h4>
                         </div>
-                        <div class="col-md-1">
-                            <h5 id="forsjScore"></h5>
+                        <div class="col-sm-1">
+                            <h4 id="forsjScore"></h4>
                         </div>
-                        <div class="col-sm-offset-1 col-sm 1">
-                            <h5 class ="txtScore"></h5>
+                        <div class="col-sm-1">
+                            <h4 class="txtScore"></h4>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-3 text-right">
+                        <div class="col-sm-offset-1 col-sm-2 text-right">
                             <h4>รวม :</h4>
                         </div>
                         <div class="col-md-1">
-                            <h5 id="forSumScore"></h5>
+                            <h4 id="forSumScore"></h4>
                         </div>
-                        <div class="col-sm-offset-1 col-sm 1">
-                            <h5 class ="txtScore"></h5>
+                        <div class="col-sm-1">
+                            <h4 class ="txtScore"></h4>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-3 text-right">
+                        <div class="col-sm-offset-1 col-sm-2 text-right">
                             <h4>เต็ม :</h4>
                         </div>
                         <div class="col-md-1">
-                            <h5 id="forMaxScore"></h5>
+                            <h4 id="forMaxScore"></h4>
                         </div>
-                        <div class="col-sm-offset-1 col-sm 1">
-                            <h5 class ="txtScore"></h5>
+                        <div class="col-sm-1">
+                            <h4 class ="txtScore"></h4>
                         </div>
                     </div>
                     <br>
