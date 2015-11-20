@@ -48,16 +48,16 @@
 <hr>
 <div class="container">
     <div class="row">
-        <button id="createPaperBtn" class="btn btn-success btn-sm" type="button">บันทึก</button>
-        <button id="updatePaperBtn" class="btn btn-success btn-sm" type="button" style="display: none;">บันทึก</button>
-        <button id="saveCopyPaperBtn" class="btn btn-success btn-sm" type="button" style="display: none;">บันทึก</button>
-        <button id="cancelBtn" class="btn btn-danger btn-sm" type="button" style="display: none;">ยกเลิก</button>
-        <button id="copyPaperBtn" class="btn btn-default btn-sm" type="button" style="display: none;">คัดลอกชุดข้อสอบ</button>
         <a href="${context}/TDCS/exam/managePapers">
             <button id="cancelCreatePaperBtn" class="btn btn-warning btn-sm" type="button">
                 ย้อนกลับ
             </button>
         </a>
+        <button id="createPaperBtn" class="btn btn-success btn-sm" type="button">บันทึก</button>
+        <button id="updatePaperBtn" class="btn btn-success btn-sm" type="button" style="display: none;">บันทึก</button>
+        <button id="saveCopyPaperBtn" class="btn btn-success btn-sm" type="button" style="display: none;">บันทึก</button>
+        <button id="cancelBtn" class="btn btn-danger btn-sm" type="button" style="display: none;">ยกเลิก</button>
+        <button id="copyPaperBtn" class="btn btn-default btn-sm" type="button" style="display: none;">คัดลอกชุดข้อสอบ</button>
     </div><br/><br/>
     <form class="form-horizontal" role="form">
         <div class="row">
@@ -98,7 +98,7 @@
                 </div>
                 <div class="col-sm-7" style="padding: 0;">
                     <select id="newPaperForPosition" class="form-control input-sm">
-                        <option active>เลือกตำแหน่ง</option>
+                        <option active>โปรดเลือก</option>
                         <option value="0">ทั้งหมด</option>
                         <option value="1">Software Developer Trainee</option>
                         <option value="2">Assistant Business Analyst</option>

@@ -36,6 +36,11 @@ var checkCurrent;
 var checkAll2 = 0;
 var checkCurrent2;
 
+var checkQuestionReady = "";
+var sp;
+var subCategoryIds = new Array();
+var catId = "";
+
 $(document).ready(function(){
 
     var value = getValueFromUrl();
@@ -54,8 +59,11 @@ $(document).ready(function(){
         onLoadPageCreatePaper();
     }
 
-    $("#randomQuestionBtn").on('click', function(){
+    initRandomQuestion();
+
+    $("#randomQuestionBtn").unbind('click').click(function(){
         resetRandomQuestion();
+        countQuestionReady();
     });
 
     $("button[modal-number=2]").click(function(){
@@ -114,6 +122,13 @@ $(document).ready(function(){
     });
 
     $("#selectSubCategoryToSelectionForRandom").change(function(){
+
+        //subCategoryIds = [];
+        //var str = $("#selectCategoryToSelectionForRandom").val();
+        //catId = str.substring(0, str.indexOf(":") - 1);
+        //subCategoryIds.push($("#selectSubCategoryToSelectionForRandom").val());
+        //countQuestionReady();
+
         subcategoryId = $("#selectSubCategoryToSelectionForRandom").val();
         categoryId = $("#selectCategoryToSelectionForRandom").val();
     });
@@ -382,9 +397,6 @@ function viewQuestions(){
                 $("#tbodySelectQuestion").empty();
                 dataResponse.forEach(function(value){
 
-                    //new
-                    var createDate = new Date(value.createDate);
-                    var dateFormat = createDate.getDate() +" "+ getMonthFormat(createDate.getMonth()) +" "+ (Number(createDate.getFullYear()));
                     var str = "";
                     if(value.choices != null){
                         var i = 1;
@@ -402,7 +414,6 @@ function viewQuestions(){
                         '<tr>'+
                         '<td style="display: none;"><label id="labelQuestionId'+value.id+'">'+value.id+'</td>'+
 
-                        '<td style="display: none;"><label id="labelCreateDateId'+value.id+'">'+dateFormat+'</td>'+
                         '<td style="display: none;"><label id="labelQuestionTypeId'+value.id+'">'+value.questionType.id+'</td>'+
                         str+
 
@@ -467,9 +478,7 @@ function viewQuestions(){
                     $("#tbodySelectQuestion").empty();
                     data.forEach(function(value){
 
-                        var createDate = new Date(value.createDate);
-                        var dateFormat = createDate.getDate() +" "+ getMonthFormat(Number(createDate.getMonth()) + 1) +" "+ (Number(createDate.getFullYear()));
-                        var str = "";
+                       var str = "";
                         if(value.choices != null){
                             var i = 1;
                             (value.choices).forEach(function(value2){
@@ -484,8 +493,6 @@ function viewQuestions(){
                         $("#tbodySelectQuestion").append(
                             '<tr>'+
                             '<td style="display: none;"><label id="labelQuestionId'+value.id+'">'+value.id+'</td>'+
-
-                            '<td style="display: none;"><label id="labelCreateDateId'+value.id+'">'+dateFormat+'</td>'+
                             '<td style="display: none;"><label id="labelQuestionTypeId'+value.id+'">'+value.questionType.id+'</td>'+
                             str+
 
@@ -947,9 +954,7 @@ function generalSearchQuestion(btnSearchStatus) {
                 dataFound();
                 $("#tbodySelectQuestion").empty();
                 result.forEach(function(value){
-                    //new
-                    var createDate = new Date(value.createDate);
-                    var dateFormat = createDate.getDate() +" "+ getMonthFormat(Number(createDate.getMonth()) + 1) +" "+ (Number(createDate.getFullYear()));
+
                     var str = "";
                     if(value.choices != null){
                         var j = 1;
@@ -966,7 +971,6 @@ function generalSearchQuestion(btnSearchStatus) {
                         '<tr>'+
                         '<td style="display: none;"><label id="labelQuestionId'+value.id+'">'+value.id+'</td>'+
 
-                        '<td style="display: none;"><label id="labelCreateDateId'+value.id+'">'+dateFormat+'</td>'+
                         '<td style="display: none;"><label id="labelQuestionTypeId'+value.id+'">'+value.questionType.id+'</td>'+
                         str+
 
@@ -1175,11 +1179,6 @@ function showPaperInfo(pId){
                 $("#minutes").val(minutes).attr('disabled', 'disabled');
                 $("#divCreateDate").show();
 
-                var createDate = new Date(j.examPaper.createDate);
-                var dateFormat = (createDate.getDate()+22) +" "+ getMonthFormat(Number(createDate.getMonth())) +" "+ (createDate.getFullYear()+543);
-
-                $("#questionCreatedDate").val(dateFormat);
-
                 $("#tbPaperInfo tbody").append(
                     '<tr>'+
                     '<td style="display: none;">'+ j.question.id+'</td>'+
@@ -1216,8 +1215,82 @@ function resetRandomQuestion(){
     $("#randEasy").val('');
     $("#randNormal").val('');
     $("#randHard").val('');
+    $("#selectCategoryToSelectionForRandom").empty();
+    $("#selectSubCategoryToSelectionForRandom").empty();
     $("#selectCategoryToSelectionForRandom").val('');
     $("#selectSubCategoryToSelectionForRandom").val('');
+
+    clearCategoryList();
+    updateCategoryList();
+    init();
+}
+
+function countQuestionReady(){
+
+    var tmp = new Array();
+    var idx;
+    var qIds = {};
+    var subCatIds = {};
+
+    questionsInPaper = [];
+    $("#tbodySelectedQuestionToPaper tr input:checkbox").each(function(){
+        var temp = $(this).parent().siblings().map(function(){
+            return $(this).text();
+        }).get(0);
+        questionsInPaper.push(temp);
+    });
+
+    if(questionsInPaper.length > 0){
+        for(idx = 0; idx < questionsInPaper.length; idx++){
+            var item = {
+                "qId": questionsInPaper[idx]
+            };
+            tmp.push(item);
+        }
+        qIds = JSON.stringify(tmp);
+    }
+
+    if(subCategoryIds.length > 0){
+        tmp = [];
+        for(idx = 0; idx < subCategoryIds.length; idx ++){
+            var item = {
+                "subId": subCategoryIds[idx]
+            };
+            tmp.push(item);
+        }
+        subCatIds = JSON.stringify(tmp);
+    }
+
+    if(catId == ""? catId = "": catId = catId);
+
+    $.ajax({
+        type: "POST",
+        url: context+"/TDCS/exam/countQuestionReady",
+        data: {
+            qIds: qIds,
+            subCatIds: subCatIds,
+            catId: catId
+        },
+        async: false,
+        success: function(response){
+            checkQuestionReady = response;
+
+            sp = checkQuestionReady.split('#');
+
+            $("#randEasy").attr('data-original-title', 'จำนวนข้อที่สามารถสุ่มได้ ' + sp[1] + ' ข้อ');
+            $("#randNormal").attr('data-original-title', 'จำนวนข้อที่สามารถสุ่มได้ ' + sp[2] + ' ข้อ');
+            $("#randHard").attr('data-original-title', 'จำนวนข้อที่สามารถสุ่มได้ ' + sp[3] + ' ข้อ');
+
+            $('[data-toggle="tooltip"]').tooltip();
+            sp="";
+        },
+        error: function(){
+            alert('เกิดข้อผิดพลาด');
+        }
+    });
+    subCategoryIds = [];
+    questionsInPaper = [];
+    catId = "";
 }
 
 function updatePaper(){
@@ -1320,7 +1393,7 @@ function randomQuestion(){
     if(randNormal == ""? randNormal = 0: randNormal = $("#randNormal").val());
     if(randHard == ""? randHard = 0: randHard = $("#randHard").val())
 
-    var obj = {};
+        var obj = {};
     var tempz = new Array();
 
     for(var i = 0; i < index; i++){
@@ -1346,27 +1419,70 @@ function randomQuestion(){
         success: function(data){
             var questionCount = (Number(randEasy) + Number(randNormal) + Number(randHard));
             var checkTrLength = $("#tbodySelectedQuestionToPaper tr").length ;
+            var dataLength = 0;
+            data.forEach(function(i){
+                if(jQuery.type(i) === "object"){
+                    dataLength ++;
+                }
+                else{
+                    return;
+                }
+            });
 
-            if((data.length == 0 || data == null) && (checkTrLength == 0)){
-                alert('ไม่พบชุดข้อสอบ');
+            if((dataLength == 0 || data == null) && (checkTrLength == 0)){
+                alert('ไม่พบข้อสอบ');
                 dataNotFound();
             }
-            if((data.length == 0 || data == null) && (checkTrLength > 0)){
-                alert('ไม่พบชุดข้อสอบ');
+            if((dataLength == 0 || data == null) && (checkTrLength > 0)){
+                alert('ไม่พบข้อสอบ');
                 dataFound();
                 $("#questionNotFound").hide();
                 $("#checkQuestionAll").attr('checked', false);
                 $("#tbSelectedQuestionToPaper").show();
 
             }
-            if((data.length != 0)){
-                if(data.length > 0) {
+            if((dataLength != 0) && (data != null)){
+                if(dataLength > 0) {
                     dataFound();
                     $("#questionNotFound").hide();
                     $("#checkQuestionAll").attr('checked', false);
 
-                    if (data.length < questionCount) {
-                        if (!confirm('ข้อสอบไม่เพียงพอ ต้องการดำเนินการต่อหรือไม่')) {
+                    if ((dataLength < questionCount)) {
+                        var tmpArr = new Array(data[0], data[1], data[2]);
+                        var message1 = "", message2 = "", message3 = "";
+                        var str = "\t\t\tข้อสอบไม่เพียงพอ";
+                        tmpArr.forEach(function(i){
+                            if(jQuery.type(i) === "string"){
+                                var str = i.split('#');
+                                if(str[0] == "easy") {
+                                    message1 = ":จำนวนข้อสอบระดับง่ายที่สามารถสุ่มได้มากที่สุด " + str[1] + " ข้อ";
+                                }
+                                if(str[0] == "normal") {
+                                    message2 = ":จำนวนข้อสอบระดับปานกลางที่สามารถสุ่มได้มากที่สุด " + str[1] + " ข้อ";
+                                }
+                                if(str[0] == "hard") {
+                                    message3 = ":จำนวนข้อสอบระดับยากที่สามารถสุ่มได้มากที่สุด " + str[1] + " ข้อ";
+                                }
+                            }
+                            else{
+                                return;
+                            }
+                        });
+
+                        if(message1 != ""){
+                            str = str + "\n" + message1;
+                        }if(message2 != ""){
+                            str = str + "\n" + message2;
+                        }if(message3 != ""){
+                            str = str + "\n" + message3;
+                        }
+                        str = str + "\n" +'\t\t  ต้องการดำเนินการต่อหรือไม่?';
+
+                        if((message1 != "") && (message2 != "") && (message3 != "")){
+                            str = 'ไม่พบข้อสอบ';
+                        }
+
+                        if (!confirm(str)) {
                             if($("#tbodySelectedQuestionToPaper tr").length > 0){
                                 return false;
                             }
@@ -1378,51 +1494,65 @@ function randomQuestion(){
                             }
                         }
                         else {
+                            $("#checkAllQuestionFromCreatePaperPage").checked = false;
                             data.forEach(function (value) {
-                                $("#tbSelectedQuestionToPaper").show();
-                                $("#removeRowQuestionSelect").show();
-                                var createDate = new Date(value.createDate);
-                                var dateFormat = createDate.getDate() + " " + getMonthFormat(Number(createDate.getMonth()) + 1) + " " + createDate.getFullYear();
-
-                                var str = "";
-                                if (value.choices != null) {
-                                    var i = 1;
-                                    (value.choices).forEach(function (value2) {
-                                        if (Number(value.status.id) == 3) {
-                                            str = str + '<td style="display: none;"><label id="labelChoice' + i + value.id + '">' + value2.description + '</td>' +
-                                                '<td style="display: none;"><label id="labelChoiceCorrection1' + value.id + '">' + value2.correction.value + '</td>';
-                                        }
-                                        i = i + 1;
-                                    });
+                                if(jQuery.type(value) === "string"){
+                                    return;
                                 }
+                                else{
+                                    $("#tbSelectedQuestionToPaper").show();
+                                    $("#removeRowQuestionSelect").show();
+                                    $("#tbodySelectedQuestionToPaper").append(
+                                        '<tr>' +
+                                        '<td style="display: none;"><label id="labelQuestionId' + value.id + '">' + value.id + '</td>' +
+                                        '<td style="display: none;"><label id="labelCreateDateId' + value.id + '">' + value.createDate + '</td>' +
+                                        '<td style="text-align: center;"><input class="selectedQuestion" name="selectQ" type="checkbox"/></td>' +
+                                        '<td style="text-align: center;"><label id="labelQuestionTypeDesc' + value.id + '">' + value.questionType.description + '</td>' +
+                                        '<td style="text-align: left;"><label id="labelCategoryName' + value.id + '">' + value.subCategory.category.name + '<label></td>' +
+                                        '<td style="text-align: left;"><label id="labelSubCategoryName' + value.id + '">' + value.subCategory.name + '</label></td>' +
+                                        '<td style="text-align: left;"><label id="labelQuestionDesc' + value.id + '">' + value.description + '</label></td>' +
+                                        '<td style="text-align: center;"><label id="labelDiffDesc' + value.id + '">' + value.difficultyLevel.description + '</td>' +
+                                        '<td><input id="newScore' + value.id + '" onchange="scoreOnChange()" name="newScore" type="number" class="form-control input-sm"  min="1" max="50" value="' + value.score + '"/></td>' +
 
-                                $("#tbodySelectedQuestionToPaper").append(
-                                    '<tr>' +
-                                    '<td style="display: none;"><label id="labelQuestionId' + value.id + '">' + value.id + '</td>' +
-                                    '<td style="display: none;"><label id="labelCreateDateId' + value.id + '">' + value.createDate + '</td>' +
-                                    '<td style="text-align: center;"><input class="selectedQuestion" name="selectQ" type="checkbox"/></td>' +
-                                    '<td style="text-align: center;"><label id="labelQuestionTypeDesc' + value.id + '">' + value.questionType.description + '</td>' +
-                                    '<td style="text-align: left;"><label id="labelCategoryName' + value.id + '">' + value.subCategory.category.name + '<label></td>' +
-                                    '<td style="text-align: left;"><label id="labelSubCategoryName' + value.id + '">' + value.subCategory.name + '</label></td>' +
-                                    '<td style="text-align: left;"><label id="labelQuestionDesc' + value.id + '">' + value.description + '</label></td>' +
-                                    '<td style="text-align: center;"><label id="labelDiffDesc' + value.id + '">' + value.difficultyLevel.description + '</td>' +
-                                    '<td><input id="newScore' + value.id + '" onchange="scoreOnChange()" name="newScore" type="number" class="form-control input-sm"  min="1" max="50" value="' + value.score + '"/></td>' +
+                                        '<td style="text-align: center;"><label id="labelQuestionCreateBy' + value.id + '">' + value.createBy.thFname + " " + value.createBy.thLname + '</td>' +
+                                        '<td style="display: none;"><label id="labelQuestionCreateDate' + value.id + '">' + value.createDate + '</td>' +
 
-                                    '<td style="text-align: center;"><label id="labelQuestionCreateBy' + value.id + '">' + value.createBy.thFname + " " + value.createBy.thLname + '</td>' +
-                                    '<td style="display: none;"><label id="labelQuestionCreateDate' + value.id + '">' + value.createDate + '</td>' +
-
-                                    '</tr>'
-                                );
+                                        '</tr>'
+                                    );
+                                }
                             });
                         }
                     }
 
-                    if (data.length == questionCount) {
+                    else if (dataLength == questionCount) {
+                        $("#checkAllQuestionFromCreatePaperPage").checked = false;
                         $("#tbSelectedQuestionToPaper").show();
                         $("#removeRowQuestionSelect").show();
                         data.forEach(function (value) {
-                            var createDate = new Date(value.createDate);
-                            var dateFormat = createDate.getDate() + " " + getMonthFormat(Number(createDate.getMonth()) + 1) + " " + createDate.getFullYear();
+                            $("#tbodySelectedQuestionToPaper").append(
+                                '<tr>' +
+                                '<td style="display: none;"><label id="labelQuestionId' + value.id + '">' + value.id + '</td>' +
+                                '<td style="display: none;"><label id="labelCreateDateId' + value.id + '">' + value.createDate + '</td>' +
+                                '<td style="text-align: center;"><input class="selectedQuestion" name="selectQ" type="checkbox"/></td>' +
+                                '<td style="text-align: center;"><label id="labelQuestionTypeDesc' + value.id + '">' + value.questionType.description + '</td>' +
+                                '<td style="text-align: left;"><label id="labelCategoryName' + value.id + '">' + value.subCategory.category.name + '<label></td>' +
+                                '<td style="text-align: left;"><label id="labelSubCategoryName' + value.id + '">' + value.subCategory.name + '</label></td>' +
+                                '<td style="text-align: left;"><label id="labelQuestionDesc' + value.id + '">' + value.description + '</label></td>' +
+                                '<td style="text-align: center;"><label id="labelDiffDesc' + value.id + '">' + value.difficultyLevel.description + '</td>' +
+                                '<td><input id="newScore' + value.id + '" onchange="scoreOnChange()" name="newScore" type="number" class="form-control input-sm"  min="1" max="50" value="' + value.score + '"/></td>' +
+
+                                '<td style="text-align: center;"><label id="labelQuestionCreateBy' + value.id + '">' + value.createBy.thFname + " " + value.createBy.thLname + '</td>' +
+                                '<td style="display: none;"><label id="labelQuestionCreateDate' + value.id + '">' + value.createDate + '</td>' +
+
+                                '</tr>'
+                            );
+                        });
+                    }
+                    else{
+                        $("#checkAllQuestionFromCreatePaperPage").checked = false;
+                        $("#tbSelectedQuestionToPaper").show();
+                        $("#removeRowQuestionSelect").show();
+                        data.forEach(function (value) {
 
                             var str = "";
                             if (value.choices != null) {
@@ -1507,56 +1637,6 @@ function showQuestionInfo(qId){
     }
 }
 
-function getMonthFormat(monthNumber) {
-
-    var sqlDate = "";
-    var month = "";
-
-    switch (monthNumber) {
-        case 01 :
-            month = 'ม.ค.';
-            break;
-        case 02 :
-            month = 'ก.พ.';
-            break;
-        case 03 :
-            month = 'มี.ค.';
-            break;
-        case 04 :
-            month = 'เม.ย.';
-            break;
-        case 05 :
-            month = 'พ.ค.';
-            break;
-        case 06 :
-            month = 'มิ.ย.';
-            break;
-        case 07 :
-            month = 'ก.ค.';
-            break;
-        case 08 :
-            month = 'ส.ค.';
-            break;
-        case 09 :
-            month = 'ก.ย.';
-            break;
-        case 10 :
-            month = 'ต.ค.';
-            break;
-        case 11 :
-            month = 'พ.ย.';
-            break;
-        case 12 :
-            month = 'ธ.ค.';
-            break;
-        default:
-            alert('ไม่มีเดือน');
-    }
-    sqlDate = month;
-
-    return sqlDate;
-}
-
 function validateNumber(id){
     $("#"+id).focus(function () {
         previousNumber.defaultValue = $("#"+id).val();
@@ -1581,5 +1661,16 @@ function countTbSelectedQuestionToPaper(){
             checkCurrent2 = checkCurrent2 + 1;
         }
     });
+}
+
+
+function initRandomQuestion(){
+    $("#randEasy").attr('data-toggle', 'tooltip');
+    $("#randNormal").attr('data-toggle', 'tooltip');
+    $("#randHard").attr('data-toggle', 'tooltip');
+
+    $("#randEasy").attr('title');
+    $("#randNormal").attr('title');
+    $("#randHard").attr('title');
 }
 
