@@ -150,9 +150,9 @@ function saveQuestion() {
                 '<td style="vertical-align: middle;" class="questionEditColumn"><button class="detailEditBtn btn btn-primary" value="' + q.id + '"><span class="glyphicon glyphicon-pencil"></span></button></td>' +
                 "</tr>")
                 $("#searchCatNotFound").hide();
-                if (q.description.length > 100) {
-                    $('td[class="questionDescription"]:last').append("....")
-                }
+                //if (q.description.length > 100) {
+                //    $('td[class="questionDescription"]:last').append("....")
+                //}
                 if(itemCount == 0){
                     itemCount = q.itemCount;
                 }
@@ -231,7 +231,7 @@ var checkCreateQuestionModalFieldComplete = function () {
     }
 
     var qScore = $("#questionScoreForCreateQuestion")
-    if (qScore.val() == "" || isNaN(qScore.val())) {
+    if (qScore.val() == "" || isNaN(qScore.val()) || qScore.val() > 999) {
         qScore.addClass("validate-fail")
         complete = false
     } else {

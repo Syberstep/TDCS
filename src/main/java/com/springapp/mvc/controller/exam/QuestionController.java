@@ -105,7 +105,7 @@ public class QuestionController {
     @ResponseBody
     public ResponseEntity<String> editQuestion(ModelMap model,
                                                @RequestParam(value = "questionId", required = true) Integer questionId,
-                                               @RequestParam(value = "categoryName", required = true) String catName,
+                                               @RequestParam(value = "categoryId", required = true) String catId,
                                                @RequestParam(value = "subCategoryName", required = true) String subCatName,
                                                @RequestParam(value = "questionDesc", required = true) String qDesc,
                                                @RequestParam(value = "choiceDescArray", required = false) List<String> cDescList,
@@ -115,7 +115,11 @@ public class QuestionController {
                                                @RequestParam(value = "score", required = true) Float score
             , HttpServletRequest request, HttpServletResponse response) {
 
-        Category category = queryCategoryDomain.getCategoryByName(catName);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json;charset=UTF-8");
+
+        Category category = queryCategoryDomain.getCategoryById(catId);
+
         SubCategory subCategory = querySubCategoryDomain.getSubCategoryByNameAndCategory(subCatName, category);
         QuestionType questionType = queryQuestionTypeDomain.getQuestionTypeById(questionTypeId);
         Difficulty difficulty = queryDifficultyDomain.getDifficultyByInteger(difficultyLevel);
@@ -126,8 +130,8 @@ public class QuestionController {
         Question newQuestion = null;
 
         if (!(question.getDescription().equals(qDesc) && question.getScore().equals(score) &&
-                question.getQuestionType() == questionType && question.getDifficultyLevel() == difficulty &&
-                question.getSubCategory() == subCategory)) { //if question is edited
+                question.getQuestionType().equals(questionType) && question.getDifficultyLevel().equals(difficulty) &&
+                question.getSubCategory().equals(subCategory))) { //if question is edited
 
             if (question.getPapers().isEmpty()) { //if is not used
 
@@ -149,7 +153,10 @@ public class QuestionController {
             } else {
 
                 question.setStatus(queryStatusDomain.getDeletedStatus());
+                HibernateUtil.beginTransaction();
                 queryQuestionDomain.mergeQuestion(question);
+
+                HibernateUtil.commitTransaction();
 
                 newQuestion = cloneQuestion(question, request);
                 newQuestion.setDescription(qDesc);
@@ -162,11 +169,16 @@ public class QuestionController {
 
                 queryQuestionDomain.insertQuestion(newQuestion, cDescList, correctChoice);
             }
+        } else {
+            return new ResponseEntity<String>("question not edited", headers, HttpStatus.I_AM_A_TEAPOT);
         }
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/json;charset=UTF-8");
-        String json = new JSONSerializer().exclude("*.class").serialize(newQuestion);
+        String json;
+        if (newQuestion == null) {
+            json = new JSONSerializer().exclude("*.class").serialize(question);
+        }else{
+            json = new JSONSerializer().exclude("*.class").serialize(newQuestion);
+        }
 
         return new ResponseEntity<String>(json, headers, HttpStatus.OK);
     }
@@ -517,16 +529,22 @@ public class QuestionController {
             @RequestParam(value = "createDateTo", required = false) String createDateTo,
             @RequestParam(value = "scoreFrom", required = false) String scoreFrom,
             @RequestParam(value = "scoreTo", required = false) String scoreTo,
-            @RequestParam(value = "page",required = false)Integer page,
-            @RequestParam(value = "itemOnPage",required = false)Integer maxRows,
+            @RequestParam(value = "page", required = false) Integer page,
+            @RequestParam(value = "itemOnPage", required = false) Integer maxRows,
+            @RequestParam(value = "orderBy", required = false) String orderBy,
+            @RequestParam(value = "orderType", required = false) String orderType,
             HttpServletRequest request, HttpServletResponse response
     ) {
         List<Question> questions = queryQuestionDomain.searchQuestionQuery(
                 catId, subCatName, createByJsonArray, null,
                 questionDesc, createDateFrom, createDateTo,
-                scoreFrom, scoreTo, null, page, maxRows
+                scoreFrom, scoreTo, null, orderBy, orderType
         );
         Integer rowCounts = questions.size();
+
+        if (orderBy != null && orderBy.equals("date")) {
+            questions = sortByDate(questions, orderType);
+        }
 
         Integer startPoint = 1;
         if(page != 1){
@@ -541,8 +559,9 @@ public class QuestionController {
 
         List<SearchQuestionReturnObject> returnObjects = new ArrayList<SearchQuestionReturnObject>();
 
-        for(Question q : questionsSubList){
-            SearchQuestionReturnObject returnObject = new SearchQuestionReturnObject(q,rowCounts);
+        for (Question q : questionsSubList) {
+            HibernateUtil.getSession().refresh(q);
+            SearchQuestionReturnObject returnObject = new SearchQuestionReturnObject(q, rowCounts);
             returnObjects.add(returnObject);
         }
 
@@ -552,6 +571,45 @@ public class QuestionController {
         headers.add("Content-Type", "application/json;charset=UTF-8");
         return new ResponseEntity<String>(json, headers, HttpStatus.OK);
     }
+
+    public List<Question> sortByDate(List<Question> qList, String orderType) {
+
+        int offset, startValue, endValue, j = 0;
+        boolean swapped = true;
+        Question tmp;
+        Date bestDate;
+
+        if (orderType != null && !orderType.equals("asc")) {
+            offset = 1;
+            startValue = 0;
+            endValue = qList.size();
+        } else {
+            offset = -1;
+            startValue = qList.size();
+            endValue = 0;
+        }
+
+        while (swapped) {
+
+            swapped = false;
+            j += offset;
+
+            for (int i = startValue; i < endValue - j; i += offset) {
+
+                if (qList.get(i).getBestDate().after(qList.get(i + 1).getBestDate())) {
+
+                    tmp = qList.get(i);
+                    qList.set(i, qList.get(i + offset));
+                    qList.set(i + offset, tmp);
+
+                    swapped = true;
+                }
+            }
+        }
+
+        return qList;
+    }
+
 }
 
 class SearchQuestionReturnObject{

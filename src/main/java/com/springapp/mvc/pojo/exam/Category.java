@@ -28,6 +28,27 @@ public class Category implements Serializable{
         return id;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Category)) return false;
+
+        Category category = (Category) o;
+
+        if (getId() != null ? !getId().equals(category.getId()) : category.getId() != null) return false;
+        if (getName() != null ? !getName().equals(category.getName()) : category.getName() != null) return false;
+        return !(getCreateBy() != null ? !getCreateBy().equals(category.getCreateBy()) : category.getCreateBy() != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getId() != null ? getId().hashCode() : 0;
+        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
+        result = 31 * result + (getCreateBy() != null ? getCreateBy().hashCode() : 0);
+        return result;
+    }
+
     public void setId(String id) {
         this.id = id;
     }
