@@ -11,18 +11,20 @@
 			<property name="connection.username">SA</property> <property name="connection.password"></property> -->
 
 
-		<!--<property name="connection.driver_class">oracle.jdbc.OracleDriver</property>-->
-		<!--<property name="connection.url">jdbc:oracle:thin:@172.16.0.32:1521:twcmt1</property>-->
-		<!--<property name="connection.username">scott</property>-->
-		<!--<property name="connection.password">tiger</property>-->
-
 		<property name="connection.driver_class">oracle.jdbc.OracleDriver</property>
-		<property name="connection.url">jdbc:oracle:thin:@localhost:1521:xe</property>
+		<property name="connection.url">jdbc:oracle:thin:@172.16.0.32:1521:twcmt1</property>
+		<property name="connection.username">scott</property>
+		<property name="connection.password">tiger</property>
+
+		<!--<property name="connection.driver_class">oracle.jdbc.OracleDriver</property>-->
+		<!--<property name="connection.url">jdbc:oracle:thin:@localhost:1521:xe</property>-->
+
+
 		<!--<property name="connection.username">tdcs</property>-->
 		<!--<property name="connection.password">tdcs</property>-->
 
-		<property name="connection.username">root</property>
-		<property name="connection.password">root</property>
+		<!--<property name="connection.username">root</property>-->
+		<!--<property name="connection.password">root</property>-->
 
 		<!-- <property name="connection.driver_class">oracle.jdbc.OracleDriver</property> -->
 		<!-- <property name="connection.url">jdbc:oracle:thin:@172.16.0.91:1521:ECONSAVE</property> -->
@@ -66,7 +68,6 @@
         <mapping class="com.springapp.mvc.pojo.Description" />
         <mapping class="com.springapp.mvc.pojo.Evaluate" />
 		<!--Mapping Exam-->
-		<mapping class="com.springapp.mvc.pojo.exam.Boo" />
 		<mapping class="com.springapp.mvc.pojo.exam.Category" />
 		<mapping class="com.springapp.mvc.pojo.exam.Choice" />
 		<mapping class="com.springapp.mvc.pojo.exam.Difficulty" />

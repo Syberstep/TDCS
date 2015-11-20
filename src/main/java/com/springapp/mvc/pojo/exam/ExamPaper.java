@@ -19,8 +19,8 @@ import java.util.Set;
 public class ExamPaper implements Serializable {
 
     @Id
-    @GenericGenerator(name="paper_id" , strategy="increment")
-    @GeneratedValue(generator="paper_id")
+    @GenericGenerator(name = "paper_id", strategy = "increment")
+    @GeneratedValue(generator = "paper_id")
     @Column(name = "PAPER_ID")
     private Integer id;
 
@@ -64,6 +64,52 @@ public class ExamPaper implements Serializable {
             org.hibernate.annotations.CascadeType.DELETE_ORPHAN})
     private Set<PaperQuestion> questions;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ExamPaper)) return false;
+
+        ExamPaper examPaper = (ExamPaper) o;
+
+        if (getId() != null ? !getId().equals(examPaper.getId()) : examPaper.getId() != null) return false;
+        if (getName() != null ? !getName().equals(examPaper.getName()) : examPaper.getName() != null) return false;
+        if (getCreateDate() != null ? !getCreateDate().equals(examPaper.getCreateDate()) : examPaper.getCreateDate() != null)
+            return false;
+        if (getMaxScore() != null ? !getMaxScore().equals(examPaper.getMaxScore()) : examPaper.getMaxScore() != null)
+            return false;
+        if (getCreateBy() != null ? !getCreateBy().equals(examPaper.getCreateBy()) : examPaper.getCreateBy() != null)
+            return false;
+        if (getCode() != null ? !getCode().equals(examPaper.getCode()) : examPaper.getCode() != null) return false;
+        if (getUpdateDate() != null ? !getUpdateDate().equals(examPaper.getUpdateDate()) : examPaper.getUpdateDate() != null)
+            return false;
+        if (getTimeLimit() != null ? !getTimeLimit().equals(examPaper.getTimeLimit()) : examPaper.getTimeLimit() != null)
+            return false;
+        if (getPosition() != null ? !getPosition().equals(examPaper.getPosition()) : examPaper.getPosition() != null)
+            return false;
+        if (getPaperStatus() != null ? !getPaperStatus().equals(examPaper.getPaperStatus()) : examPaper.getPaperStatus() != null)
+            return false;
+        if (getUpdateBy() != null ? !getUpdateBy().equals(examPaper.getUpdateBy()) : examPaper.getUpdateBy() != null)
+            return false;
+        return !(getQuestions() != null ? !getQuestions().equals(examPaper.getQuestions()) : examPaper.getQuestions() != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getId() != null ? getId().hashCode() : 0;
+        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
+        result = 31 * result + (getCreateDate() != null ? getCreateDate().hashCode() : 0);
+        result = 31 * result + (getMaxScore() != null ? getMaxScore().hashCode() : 0);
+        result = 31 * result + (getCreateBy() != null ? getCreateBy().hashCode() : 0);
+        result = 31 * result + (getCode() != null ? getCode().hashCode() : 0);
+        result = 31 * result + (getUpdateDate() != null ? getUpdateDate().hashCode() : 0);
+        result = 31 * result + (getTimeLimit() != null ? getTimeLimit().hashCode() : 0);
+        result = 31 * result + (getPosition() != null ? getPosition().hashCode() : 0);
+        result = 31 * result + (getPaperStatus() != null ? getPaperStatus().hashCode() : 0);
+        result = 31 * result + (getUpdateBy() != null ? getUpdateBy().hashCode() : 0);
+        result = 31 * result + (getQuestions() != null ? getQuestions().hashCode() : 0);
+        return result;
+    }
 
     public Integer getTimeLimit() {
         return timeLimit;

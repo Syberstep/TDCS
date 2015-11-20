@@ -5,8 +5,8 @@ var categoryIdArray = new Array();
 
 
 $(document).ready(function () {
-    //viewCategory();
-    searchResultNotFound();
+    viewCategory();
+    //searchResultNotFound();
     $("#deleteCategory").on('click', function () {
         deleteCategory();
     });

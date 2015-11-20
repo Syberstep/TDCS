@@ -134,20 +134,34 @@ function saveQuestion() {
         success: function (q) {
             alert('บันทึกข้อมูลสำเร็จ');
             if ($('.h3').text() == "จัดการข้อสอบ") {
+                $(".table-container").removeClass("hidden")
                 var createDate = new Date(q.createDate);
                 var formattedDate = createDate.getDate() + "/" + (parseInt(createDate.getMonth()) + 1) + "/" + createDate.getFullYear();
-                $("#tableBody").prepend('<tr questionId=' + q.id + '>' +
-                '<td class="questionSelect"><input type="checkbox" class="questionSelectBox"/></td>' +
-                '<td class="questionType">' + q.questionType.description + '</td>' +
-                '<td class="questionCategory">' + q.subCategory.category.name + '</td>' +
-                '<td class="questionSubCategory">' + q.subCategory.name + '</td>' +
-                '<td class="questionDescription" align="left">' + q.description.substring(0, 100) + '</td>' +
-                '<td class="questionScore">' + q.score + '</td>' +
-                '<td class="questionCreateBy">' + q.createBy.thFname + ' ' + q.createBy.thLname + '</td>' +
-                '<td class="questionCreateDate">' + formattedDate + '</td>' +
-                '<td class="questionEditColumn"><button class="detailEditBtn btn btn-gray btn-block" value="' + q.id + '"><span class="glyphicon glyphicon-pencil"></span></button></td>' +
+                $("#tableBody").append('<tr questionId=' + q.id + '>' +
+                '<td style="vertical-align: middle;" class="questionSelect"><input type="checkbox" class="questionSelectBox"/></td>' +
+                '<td style="vertical-align: middle;" class="questionType">' + q.questionType.description + '</td>' +
+                '<td style="vertical-align: middle;" class="questionCategory">' + q.subCategory.category.name + '</td>' +
+                '<td style="vertical-align: middle;" class="questionSubCategory">' + q.subCategory.name + '</td>' +
+                '<td style="vertical-align: middle;" class="questionDescription" align="left">' + q.description.substring(0, 100) + '</td>' +
+                    //'<td class="questionDifficulty">' + q.difficultyLevel.description + '</td>' +
+                '<td style="vertical-align: middle;" class="questionScore">' + q.score + '</td>' +
+                '<td style="vertical-align: middle;" class="questionCreateBy">' + q.createBy.thFname + ' ' + q.createBy.thLname + '</td>' +
+                '<td style="vertical-align: middle;" class="questionCreateDate">' + formattedDate + '</td>' +
+                '<td style="vertical-align: middle;" class="questionEditColumn"><button class="detailEditBtn btn btn-primary" value="' + q.id + '"><span class="glyphicon glyphicon-pencil"></span></button></td>' +
                 "</tr>")
+                $("#searchCatNotFound").hide();
+                //if (q.description.length > 100) {
+                //    $('td[class="questionDescription"]:last').append("....")
+                //}
+                if(itemCount == 0){
+                    itemCount = q.itemCount;
+                }
+                $('tbody tr td:not(.questionSelect)').css('cursor', 'pointer');
+                $('.questionSelectBox').css('cursor', 'pointer');
+                pagination.pagination('redraw');
+                pagination.pagination("updateItems",itemCount);
             }
+
         },
         error: function () {
 
@@ -217,7 +231,7 @@ var checkCreateQuestionModalFieldComplete = function () {
     }
 
     var qScore = $("#questionScoreForCreateQuestion")
-    if (qScore.val() == "" || isNaN(qScore.val())) {
+    if (qScore.val() == "" || isNaN(qScore.val()) || qScore.val() > 999) {
         qScore.addClass("validate-fail")
         complete = false
     } else {
@@ -540,8 +554,12 @@ var saveSubCategory = function () {
                 $("#categoryInputForCreateQuestion").change();
                 $('#sSubCat').find('option[value="' + subCat.name + '"]').prop("selected", true)
             },
-            error: function () {
-                alert('บันทึกข้อมูลไม่สำเร็จ');
+            error: function (xhr) {
+                if (xhr.status == 418) {
+                    alert('บันทึกข้อมูลไม่สำเร็จ : มีหัวข้อเรื่องดังกล่าวอยู่แล้ว')
+                } else {
+                    alert('บันทึกข้อมูลไม่สำเร็จ');
+                }
             }
         });
 
