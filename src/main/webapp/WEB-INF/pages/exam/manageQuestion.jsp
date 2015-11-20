@@ -118,12 +118,12 @@
 <script type="text/javascript" src="${context}/resources/js/jquery.simplePagination.js"></script>
 <link type="text/css" rel="stylesheet" href="${context}/resources/css/simplePagination.css"/>
 
-
 <style>
     th {
         border: solid 1px white;
         text-align: center;
         padding: 0px 0px 0px 50px;
+        vertical-align: middle;
     }
 
     td {
@@ -137,7 +137,7 @@
     #searchCatNotFound {
         background-color: #b2e0ff;
         height: 100px;
-        display: none;
+        /*display: none;*/
         top: 40px;
         vertical-align: middle;
         border-radius: 5px;

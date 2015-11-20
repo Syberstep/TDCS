@@ -2,6 +2,9 @@
  * Created by Phuthikorn_T on 1/10/2558.
  */
 
+var markingBody = $("#marking-body");
+var isCurrent = true;
+
 $(document).ready(function () {
     $(".choiceDescRadio").prop('disabled', true)
     //$(".choiceCorrectness:not(.hidden)").parent().parent().find('.choiceDescRadio:checked').closest('.containerObjective').find('.scoreInputObjective')
@@ -64,10 +67,20 @@ $('#confirmSubmitMarkingCONFIRM').on('click', function () {
 })
 
 $('#confirmSubmitMarking').on('click', function () {
-    var confirmation = confirm('ทำการบันทึกผลตรวจลงในฐานข้อมูล แต่นักศึกษาจะยังไม่สามารถเห็นผลสอบได้')
-    if (confirmation) {
-        submitMarking(false);
+
+    checkCurrentVersion()
+    if(isCurrent){
+        var confirmation = confirm('ทำการบันทึกผลตรวจลงในฐานข้อมูล แต่นักศึกษาจะยังไม่สามารถเห็นผลตรวจได้')
+        if (confirmation) {
+            submitMarking(false);
+        }
+    }else{
+        var confirmation = confirm('\t\t มีการส่งผลตรวจเข้ามาในระบบในขณะคุณกำลังตรวจอยู่ \n\nทำการบันทึกผลตรวจลงในฐานข้อมูล แต่นักศึกษาจะยังไม่สามารถเห็นผลตรวจได้')
+        if (confirmation) {
+            submitMarking(false);
+        }
     }
+
 })
 
 $(".backBtn").on('click', function () {
@@ -100,6 +113,23 @@ $('#toBottom').on('click', function () {
 function markingRecord(answerRecordId, score) {
     this.answerRecord = answerRecordId;
     this.score = score;
+}
+
+var checkCurrentVersion = function(){
+    $.ajax({
+        type:"POST",
+        url: context+"/TDCS/exam/marking/checkCurrentVersion",
+        async:false,
+        data:{
+            version:markingBody.attr('resultVersion'),
+            resultId:markingBody.attr('resultId')
+        },
+        success:function(data){
+            isCurrent = data;
+        },error:function(){
+            alert('error in checking version')
+        }
+    })
 }
 
 var submitMarking = function (confirmation) {
