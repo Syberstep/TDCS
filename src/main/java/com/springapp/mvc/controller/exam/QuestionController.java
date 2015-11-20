@@ -1,11 +1,13 @@
 package com.springapp.mvc.controller.exam;
 
+import com.google.gson.Gson;
 import com.springapp.mvc.domain.QueryUserDomain;
 import com.springapp.mvc.domain.exam.*;
 import com.springapp.mvc.pojo.User;
 import com.springapp.mvc.pojo.exam.*;
 import com.springapp.mvc.util.DateUtil;
 import com.springapp.mvc.util.HibernateUtil;
+import flexjson.JSON;
 import flexjson.JSONSerializer;
 import org.hibernate.Hibernate;
 import org.json.JSONArray;
@@ -342,11 +344,11 @@ public class QuestionController {
             List<Question> questionsAdvanceResult = new ArrayList<Question>();
             if((searchQEasy == 0) && (searchQNormal == 0) && (searchQHard == 0)){
                 questionsAdvanceResult = queryQuestionDomain.advanceSearchQuestion(empNameSearch, categorySearch, subCategoryId, qIdsNotSearch, qDesc,
-                                                                                   qCreateDateFrom, qCreateDateTo, qScoreFrom, qScoreTo, searchQEasy, searchQNormal, searchQHard);
+                        qCreateDateFrom, qCreateDateTo, qScoreFrom, qScoreTo, searchQEasy, searchQNormal, searchQHard);
             }
             if(searchQEasy != 0){
                 List<Question> tmp1 = queryQuestionDomain.advanceSearchQuestion(empNameSearch, categorySearch, subCategoryId, qIdsNotSearch, qDesc,
-                                                                                qCreateDateFrom, qCreateDateTo, qScoreFrom, qScoreTo, searchQEasy, 0, 0);
+                        qCreateDateFrom, qCreateDateTo, qScoreFrom, qScoreTo, searchQEasy, 0, 0);
                 if(searchQEasy <= tmp1.size()){
                     for(idx = 0; idx < searchQEasy; idx ++){
                         questionsAdvanceResult.add(tmp1.get(idx));
@@ -358,7 +360,7 @@ public class QuestionController {
             }
             if(searchQNormal != 0){
                 List<Question> tmp2 = queryQuestionDomain.advanceSearchQuestion(empNameSearch, categorySearch, subCategoryId, qIdsNotSearch, qDesc,
-                                                                                qCreateDateFrom, qCreateDateTo, qScoreFrom, qScoreTo, 0, searchQNormal, 0);
+                        qCreateDateFrom, qCreateDateTo, qScoreFrom, qScoreTo, 0, searchQNormal, 0);
                 if(searchQNormal <= tmp2.size()){
                     for(idx = 0; idx < searchQNormal; idx ++){
                         questionsAdvanceResult.add(tmp2.get(idx));
@@ -370,7 +372,7 @@ public class QuestionController {
             }
             if(searchQHard != 0){
                 List<Question> tmp3 = queryQuestionDomain.advanceSearchQuestion(empNameSearch, categorySearch, subCategoryId, qIdsNotSearch, qDesc,
-                                                                                qCreateDateFrom, qCreateDateTo, qScoreFrom, qScoreTo, 0, 0, searchQHard);
+                        qCreateDateFrom, qCreateDateTo, qScoreFrom, qScoreTo, 0, 0, searchQHard);
                 if(searchQHard <= tmp3.size()){
                     for(idx = 0; idx < searchQHard; idx ++){
                         questionsAdvanceResult.add(tmp3.get(idx));
@@ -423,7 +425,7 @@ public class QuestionController {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json;charset=UTF-8");
 
-        List<Question> questions = new ArrayList<Question>();
+        List questions = new ArrayList();
         List qIds = new ArrayList();
         int randEasy = 0;
         int randNormal = 0;
@@ -454,10 +456,6 @@ public class QuestionController {
         if(randEasy != 0){
             List index = new ArrayList();
             List<Question> questionsEasy = queryQuestionDomain.getQuestionsByLevel(1, qIds, categoryId, subCategoryId);
-//            if(questionsEasy.size() < randEasy){
-//                json = null;
-//                return new ResponseEntity<String>(json, headers, HttpStatus.OK);
-//            }
             if(questionsEasy.size() >= randEasy){
                 for(i = 0; i < questionsEasy.size(); i ++){
                     index.add(i);
@@ -468,14 +466,16 @@ public class QuestionController {
                     index.remove(0);
                 }
             }
+            else{
+                String str = "easy#";
+                int count = questionsEasy.size();
+                str = str + count;
+                questions.add(str);
+            }
         }
         if(randNormal != 0){
             List index2 = new ArrayList();
             List<Question> questionsNormal = queryQuestionDomain.getQuestionsByLevel(2, qIds, categoryId, subCategoryId);
-//            if(questionsNormal.size() < randNormal){
-//                json = null;
-//                return new ResponseEntity<String>(json, headers, HttpStatus.OK);
-//            }
             if(questionsNormal.size() >= randNormal){
                 for(i = 0; i < questionsNormal.size(); i ++){
                     index2.add(i);
@@ -486,14 +486,16 @@ public class QuestionController {
                     index2.remove(0);
                 }
             }
+            else{
+                String str = "normal#";
+                int count = questionsNormal.size();
+                str = str + count;
+                questions.add(str);
+            }
         }
         if(randHard != 0){
             List index3 = new ArrayList();
             List<Question> questionsHard = queryQuestionDomain.getQuestionsByLevel(3, qIds, categoryId, subCategoryId);
-//            if(questionsHard.size() < randNormal){
-//                json = null;
-//                return new ResponseEntity<String>(json, headers, HttpStatus.OK);
-//            }
             if(questionsHard.size() >= randHard){
                 for(i = 0; i < questionsHard.size(); i ++){
                     index3.add(i);
@@ -504,17 +506,64 @@ public class QuestionController {
                     index3.remove(0);
                 }
             }
+            else{
+                String str = "hard#";
+                int count = questionsHard.size();
+                str = str + count;
+                questions.add(str);
+            }
         }
         if((randEasy == 0) && (randHard == 0) && (randNormal == 0)){
             List<Question> questionList = queryQuestionDomain.getQuestionsByLevel(0, qIds, categoryId, subCategoryId);
             for(Object idx: questionList){
-                questions.add((Question) idx);
+                questions.add(idx);
             }
         }
 
         json = new JSONSerializer().include("choices").exclude("*.class").serialize(questions);
 
         return new ResponseEntity<String>(json, headers, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/exam/countQuestionReady", method= RequestMethod.POST)
+    @ResponseBody
+    public String countQuestionReady(@RequestParam(value = "qIds", required = false) String qIds,
+                                     @RequestParam(value = "subCatIds", required = false) String subCatIds,
+                                     @RequestParam(value = "catId", required = false) String catId){
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json;charset=UTF-8");
+
+        String str = "";
+        int i;
+        List qIdList = null;
+        List subCatList = null;
+
+        if(qIds != null){
+            qIdList = new ArrayList();
+            JSONArray jsonArray = new JSONArray(qIds);
+            for(i = 0; i < jsonArray.length(); i ++){
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                qIdList.add(jsonObject.getInt("qId"));
+            }
+        }
+
+        if(subCatIds != null){
+            subCatList = new ArrayList();
+            JSONArray jsonArray = new JSONArray(subCatIds);
+            for(i = 0; i < jsonArray.length(); i ++){
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                subCatList.add(jsonObject.getString("subId"));
+            }
+        }
+
+        for(i = 1; i < 4; i ++){
+            Difficulty difficulty = queryDifficultyDomain.getDifficultyByInteger(i);
+            Integer numb = queryQuestionDomain.countQuestionReady(difficulty, qIdList, subCatList, catId);
+            str = str + "#" + numb;
+        }
+
+        return str;
     }
 
     // ---------------------------------------------------------------------------------------------------------

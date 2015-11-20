@@ -58,7 +58,7 @@
             <thead class="bg-primary small">
                 <tr>
                     <th style="text-align: center"><input id="checkPaperAll" type="checkbox"/></th>
-                    <th style="text-align: center">รหัสชุดข้อสอบ</th>
+                    <th onclick="sortTable(paper, 0, asc1); asc1 *= -1; asc2 = 1; asc3 = 1;" style="text-align: center">รหัสชุดข้อสอบ</th>
                     <th style="text-align: center">ชื่อชุดข้อสอบ</th>
                     <th style="text-align: center">สร้างโดย</th>
                     <th style="text-align: center">คะแนน</th>
@@ -79,7 +79,7 @@
 <script type="text/javascript" src="<c:url value="/resources/js/pageScript/exam/paper.js" />"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/pageScript/exam/managePaper.js" />"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/pageScript/exam/categoryDropdown.js" />"></script>
-<%--<script type="text/javascript" src="<c:url value="/resources/js/pageScript/searchStudent.js" />"></script>--%>
+<script type="text/javascript" src="<c:url value="/resources/js/pageScript/exam/sortingPaper.js" />"></script>
 <style>
     th {
         border:solid 1px white;

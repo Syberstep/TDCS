@@ -13,10 +13,7 @@ import org.springframework.stereotype.Service;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 import java.util.logging.Logger;
 
 /**
@@ -350,7 +347,7 @@ public class QueryQuestionDomain extends HibernateUtil {
 
         Criteria criteria = getSession().createCriteria(PaperQuestion.class);
         criteria.add(Restrictions.eq("pk.examPaper", ep));
-//        criteria.add(Restrictions.ne("status.id", 4));
+        criteria.add(Restrictions.ne("status.id", 4));
 
         List<PaperQuestion> paperQuestions = criteria.list();
         List<Question> questions = new ArrayList<Question>();
@@ -520,5 +517,34 @@ public class QueryQuestionDomain extends HibernateUtil {
         List<Question> question = criteria.list();
 
         return question;
+    }
+
+    public Integer countQuestionReady(Difficulty difficulty, List qIds, List subNames, String catId){
+
+        Criteria criteria = getSession().createCriteria(Question.class, "question");
+        criteria.createAlias("question.difficultyLevel", "difficultyLevel");
+        criteria.createAlias("question.status", "status");
+        criteria.createAlias("question.subCategory", "subCategory");
+        criteria.createAlias("subCategory.category", "category");
+
+        criteria.add(Restrictions.eq("difficultyLevel", difficulty));
+        criteria.add(Restrictions.ne("status.id", 4));
+
+        if(qIds != null){
+            criteria.add(Restrictions.not(Restrictions.in("id", qIds)));
+        }
+
+        if((subNames != null) && (catId != null)){
+            criteria.add(Restrictions.in("subCategory.name", subNames));
+            criteria.add(Restrictions.eq("category.id", catId));
+        }
+
+        if((subNames != null) && (catId == null)){
+            criteria.add(Restrictions.in("subCategory.id", subNames));
+        }
+
+        List<Question> questions = criteria.list();
+
+        return questions.size();
     }
 }
