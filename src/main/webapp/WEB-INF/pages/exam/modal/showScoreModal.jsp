@@ -33,7 +33,7 @@
                 <button class="close" aria-label="Close" data-dismiss="modal" type="button">
                     <span aria-hidden="true">×</span>
                 </button>
-                <h4 id="myLargeModalLabel" class="modal-title">คะแนนสอบ</h4>
+                <h4 id="myLargeModalLabel" class="modal-title"></h4>
             </div>
             <div class="modal-body">
                 <div class="container">
@@ -59,47 +59,51 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-offset-1 col-sm-2 text-right">
-                            <h4>ปรนัย :</h4>
+                            <h5>คะแนนปรนัย :</h5>
+                        </div>
+                        <div class="col-sm-1" style="padding-right: 0%">
+                            <h5 id="forObjScore"></h5>
                         </div>
                         <div class="col-sm-1">
-                            <h4 id="forObjScore"></h4>
+                            <h5 class="txtScore"></h5>
+                        </div>
+                    <%--</div>--%>
+                    <%--<div class="row">--%>
+                        <div class="col-sm-offset-1  col-sm-2 text-right">
+                            <h5>คะแนนอัตนัย :</h5>
+                        </div>
+                        <div class="col-sm-1" style="padding-right: 0%">
+                            <h5 id="forsjScore"></h5>
                         </div>
                         <div class="col-sm-1">
-                            <h4 class="txtScore"></h4>
-                        </div>
-                        <div class="col-sm-offset-1 col-sm-2 text-right">
-                            <h4>อัตนัย :</h4>
-                        </div>
-                        <div class="col-sm-1">
-                            <h4 id="forsjScore"></h4>
-                        </div>
-                        <div class="col-sm-1">
-                            <h4 class="txtScore"></h4>
+                            <h5 class="txtScore"></h5>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-offset-1 col-sm-2 text-right">
-                            <h4>รวม :</h4>
+                            <h5>คะแนนรวม :</h5>
                         </div>
-                        <div class="col-md-1">
-                            <h4 id="forSumScore"></h4>
+                        <div class="col-sm-1" style="padding-right: 0%">
+                            <h5 id="forSumScore"></h5>
                         </div>
                         <div class="col-sm-1">
-                            <h4 class ="txtScore"></h4>
+                            <h5 class ="txtScore"></h5>
                         </div>
+                    <%--</div>--%>
+                    <%--<div class="row">--%>
                         <div class="col-sm-offset-1 col-sm-2 text-right">
-                            <h4>เต็ม :</h4>
+                            <h5>คะแนนเต็ม :</h5>
                         </div>
-                        <div class="col-md-1">
-                            <h4 id="forMaxScore"></h4>
+                        <div class="col-sm-1" style="padding-right: 0%">
+                            <h5 id="forMaxScore"></h5>
                         </div>
                         <div class="col-sm-1">
-                            <h4 class ="txtScore"></h4>
+                            <h5 class ="txtScore"></h5>
                         </div>
                     </div>
                     <br>
                     <div class="row">
-                        <div class="col-md-3 text-right">
+                        <div class="col-sm-3 text-right">
                             <h5>ความคิดเห็น :</h5>
                         </div>
                         <div class=" col-md-7">
