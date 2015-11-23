@@ -53,23 +53,4 @@ public class PaperQuestion implements Serializable {
     public void setScore(Float score) {
         this.score = score;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof PaperQuestion)) return false;
-
-        PaperQuestion that = (PaperQuestion) o;
-
-        if (getPk() != null ? !getPk().equals(that.getPk()) : that.getPk() != null) return false;
-        return !(getScore() != null ? !getScore().equals(that.getScore()) : that.getScore() != null);
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = getPk() != null ? getPk().hashCode() : 0;
-        result = 31 * result + (getScore() != null ? getScore().hashCode() : 0);
-        return result;
-    }
 }

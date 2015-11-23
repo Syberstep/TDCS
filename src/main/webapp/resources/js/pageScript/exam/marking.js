@@ -116,12 +116,14 @@ function markingRecord(answerRecordId, score) {
 }
 
 var checkCurrentVersion = function(){
+    console.log(markingBody.attr('resultId'))
+    console.log(markingBody.attr('resultVersion'))
     $.ajax({
         type:"POST",
         url: context+"/TDCS/exam/marking/checkCurrentVersion",
         async:false,
         data:{
-            version:markingBody.attr('resultVersion'),
+            resultVersion:markingBody.attr('resultVersion'),
             resultId:markingBody.attr('resultId')
         },
         success:function(data){

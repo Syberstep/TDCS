@@ -1,33 +1,7 @@
 function saveCategory(){
-    //alert("hi");
-
-    //$('#addCategoryForm').bootstrapValidator({
-    //    container: '#messages',
-    //    feedbackIcons: {
-    //        valid: 'glyphicon glyphicon-ok',
-    //        invalid: 'glyphicon glyphicon-remove',
-    //        validating: 'glyphicon glyphicon-refresh'
-    //    },
-    //    fields:{
-    //        catId:{
-    //            validators: {
-    //                notEmpty: {
-    //                    message: 'ssssssssssssss'
-    //                }
-    //            }
-    //        },
-    //        catName:{
-    //            validators: {
-    //                notEmpty: {
-    //                    message: 'aaaaaaaaaa'
-    //                }
-    //            }
-    //        }
-    //    }
-    //});
-
     var categoryName = $("#categoryNameText").val();
     var categoryId = $("#categoryIdText").val();
+    var failed = false;
 
     var data = $.ajax({
         type: "POST",
@@ -48,11 +22,6 @@ function saveCategory(){
                 }
             });
 
-            if($("#categoryIdText").val() == "" || $("#categoryNameText").val() == ""){
-
-                alert("hi there..");
-            }
-
             var dat = $.ajax({
                 type: "POST",
                 url: context+"/TDCS/exam/addCategory",
@@ -60,19 +29,22 @@ function saveCategory(){
                 success: function () {
                     //alert('เพิ่มวิชา ' + categoryName + ' สำเร็จ ');
                     alert("บันทึกข้อมูลสำเร็จ")
-                    window.location.reload();
+                    viewCategory()
+                    $("#createCat").modal('hide')
                 },
                 error: function () {
-                    alert('บันทึกข้อมูลไม่สำเร็จ');
+                    failed = true;
                 }
                 //}).responseText;
             });
         },
         error: function (data) {
-            alert('error while request...');
+            failed = true;
         }
     });
-
+    if(failed){
+        alert('บันทึกข้อมูลไม่สำเร็จ');
+    }
     $("#categoryNameText").val("");
     $("#categoryIdText").val("");
 }

@@ -18,10 +18,10 @@ $(function () {
 });
 
 $(document).ready(function () {
-    $("#searchCatNotFound").show();
     clearAllSearchQuestionField()
     $('#selectAllItem').prop('checked', false)
     //listSearchQuestion();
+    $("#searchCatNotFound").show();
     pagination.pagination("destroy")
 
 //    ---------------------------------------------------------------------
@@ -30,10 +30,12 @@ $(document).ready(function () {
 
 $("#selectOrderType").on('change', function () {
     orderType = $(this).val()
+    listSearchQuestion("pageChange", pagination.pagination("getCurrentPage"))
 })
 
 $("#selectOrderBy").on('change', function () {
     orderBy = $(this).val()
+    listSearchQuestion("pageChange", pagination.pagination("getCurrentPage"))
 })
 
 
@@ -251,7 +253,13 @@ var deleteQuestions = function (questionIds) {
         },
         success: function () {
             alert("ลบข้อมูลสำเร็จ");
-            listSearchQuestion($('#advSearchBtn'));
+            if($("#tableBody tr").size() <= 1 ){
+                $("#searchCatNotFound").show();
+                pagination.pagination("destroy")
+                $(".table-container").addClass("hidden")
+            }else{
+                listSearchQuestion("pageChange",pagination.pagination('getCurrentPage'));
+            }
         }, error: function () {
             alert("ลบข้อมูลไม่สำเร็จ");
         }

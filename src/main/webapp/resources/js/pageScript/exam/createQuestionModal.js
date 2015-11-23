@@ -150,12 +150,6 @@ function saveQuestion() {
                 '<td style="vertical-align: middle;" class="questionEditColumn"><button class="detailEditBtn btn btn-primary" value="' + q.id + '"><span class="glyphicon glyphicon-pencil"></span></button></td>' +
                 "</tr>")
                 $("#searchCatNotFound").hide();
-                //if (q.description.length > 100) {
-                //    $('td[class="questionDescription"]:last').append("....")
-                //}
-                if(itemCount == 0){
-                    itemCount = q.itemCount;
-                }
                 $('tbody tr td:not(.questionSelect)').css('cursor', 'pointer');
                 $('.questionSelectBox').css('cursor', 'pointer');
                 pagination.pagination('redraw');
