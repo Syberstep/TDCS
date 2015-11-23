@@ -80,7 +80,7 @@
             <thead class="bg-primary small">
                 <tr>
                     <th style="text-align: center"><input id="checkPaperAll" type="checkbox"/></th>
-                    <th onclick="sortTable(paper, 0, asc1); asc1 *= -1; asc2 = 1; asc3 = 1;" style="text-align: center">รหัสชุดข้อสอบ</th>
+                    <th style="text-align: center">รหัสชุดข้อสอบ</th>
                     <th style="text-align: center">ชื่อชุดข้อสอบ</th>
                     <th style="text-align: center">สร้างโดย</th>
                     <th style="text-align: center">คะแนน</th>

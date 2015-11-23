@@ -6,30 +6,34 @@ $("#orderPaperByColumn").on('change', function(){
     getPaperIds();
     orderPaperByColumn = $("#orderPaperByColumn").val();
     orderPaperType = $("#orderPaperType").val();
-    var temp = new Array();
+    if(paperCodes.length > 0){
+        var temp = new Array();
 
-    for(var i = 0; i < paperCodes.length; i ++){
-        var item = {
-            "paperCodes" : paperCodes[i]
-        };
-        temp.push(item);
+        for(var i = 0; i < paperCodes.length; i ++){
+            var item = {
+                "paperCodes" : paperCodes[i]
+            };
+            temp.push(item);
+        }
+        orderPaper(temp, orderPaperByColumn, orderPaperType);
     }
-    orderPaper(temp, orderPaperByColumn, orderPaperType);
 });
 
 $("#orderPaperType").on('change', function(){
     getPaperIds();
     orderPaperByColumn = $("#orderPaperByColumn").val();
     orderPaperType = $("#orderPaperType").val();
-    var temp = new Array();
+    if(paperCodes.length > 0){
+        var temp = new Array();
 
-    for(var i = 0; i < paperCodes.length; i ++){
-        var item = {
-            "paperCodes" : paperCodes[i]
-        };
-        temp.push(item);
+        for(var i = 0; i < paperCodes.length; i ++){
+            var item = {
+                "paperCodes" : paperCodes[i]
+            };
+            temp.push(item);
+        }
+        orderPaper(temp, orderPaperByColumn, orderPaperType);
     }
-    orderPaper(temp, orderPaperByColumn, orderPaperType);
 });
 
 function getPaperIds(){
@@ -51,75 +55,72 @@ function orderPaper(paperCodes, orderPaperByColumn, orderPaperType){
             "orderPaperType": orderPaperType
         },
         async: false,
-        success: function(data){
-            paperFound();
-            $("#tbodyManagePaper").empty();
-            data.forEach(function (value) {
-                var paperName = value.name;
-                if(paperName == undefined? paperName = "-": paperName = value.name);
+        success: function (data) {
+            checkAll = 0;
+            $("#checkPaperAll").prop('checked', false);
 
-                var posiId;
-                var posiName;
+            if(data.length == 0){
+                paperNotFound();
+            }
+            else{
+                paperFound();
+                $("#tbodyManagePaper").empty();
+                data.forEach(function (value) {
+                    var paperName = value.examPaper.name;
+                    if(paperName == undefined? paperName = "-": paperName = value.examPaper.name);
 
-                if(value.position != null){
-                    posiId = value.position.posiId;
-                    posiName = value.position.posiName;
-                }
-                else{
-                    posiId = 0;
-                    posiName = "ทั้งหมด";
-                }
+                    var posiId;
+                    var posiName;
 
-                var check = $.ajax({
-                    //url: context+"/TDCS/exam/checkExamPaperInUse",
-                    url: context+"/TDCS/exam/checkExamPaperIfMarkConfirmed",
-                    type: "POST",
-                    data: {
-                        paperId: value.id
-                    },
-                    async: false,
-                    success: function(check){
-
+                    if(value.examPaper.position != null){
+                        posiId = value.examPaper.position.posiId;
+                        posiName = value.examPaper.position.posiName;
                     }
-                }).responseText;
+                    else{
+                        posiId = 0;
+                        posiName = "ทั้งหมด";
+                    }
 
-                var str1 = "";
-                var str2 = "";
-                if(check == 'true') {
-                    str1 = "disabled";
-                    str2 = "disabled";
-                }
+                    var str1 = "";
+                    var str2 = "";
+                    var check = false;
 
-                if((check == 'false') && (value.paperStatus.id != 1)){
-                    checkAll = checkAll + 1;
-                }
+                    if(value.check == 'true') {
+                        str1 = "disabled";
+                        str2 = "disabled";
+                    }
 
-                if(value.paperStatus.id == 1){
-                    str1 = "disabled";
-                    str2 = "";
-                }
+                    if((value.check == 'false') && (value.examPaper.paperStatus.id != 1)){
+                        checkAll = checkAll + 1;
+                    }
 
-                $("#tbodyManagePaper").append(
-                    '<tr>'+
-                    '<td style="display: none;"><label id="'+value.id+'">'+value.id+'</label></td>'+
-                    '<td class="pCheck"><input class="checkPaper" '+str1+' type="checkbox" check="'+check+'"/></td>'+
-                    '<td><label id="lpaperCode'+value.code+'">'+value.code+'</label></td>'+
-                    '<td style="text-align: left;"><label id="lpaperName'+paperName+'">'+paperName+'</label></td>'+
-                    '<td><label id="lpaperCreateBy'+value.createBy.empId+'">'+value.createBy.thFname+' '+value.createBy.thLname+'</label></td>'+
-                    '<td><label id="lpaperScore'+value.maxScore+'" class="label-control">'+value.maxScore+'</label></td>'+
-                    '<td><label id="lpaperForPosition'+posiId+'" class="label-control">'+posiName+'</label></td>'+
-                    '<td class="pSelect">'+
-                    '<select id="dropdownId'+value.id+'" name="paperStatus" '+str2+' class="btn btn-success btn-sm" style="text-align: left;">'+
-                        //'<option value="3">ยังไม่เผยแพร่</option>'+
-                    '<option value="1">เปิดใช้งาน</option>'+
-                    '<option value="2">ปิดใช้งาน</option>'+
-                    '</select>'+
-                    '</td>'+
-                    '<td class="pButton"><button id="'+value.id+'" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></td>'+
-                    '</tr>'
-                );
-                presentStatus(value.id, value.paperStatus.id);
-            });
+                    if(value.examPaper.paperStatus.id == 1){
+                        str1 = "disabled";
+                        str2 = "";
+                    }
+
+                    $("#tbodyManagePaper").append(
+                        '<tr>'+
+                        '<td style="display: none;"><label id="'+value.examPaper.id+'">'+value.examPaper.id+'</label></td>'+
+                        '<td class="pCheck"><input class="checkPaper" '+str1+' type="checkbox" check="'+check+'"/></td>'+
+                        '<td><label id="lpaperCode'+value.examPaper.code+'">'+value.examPaper.code+'</label></td>'+
+                        '<td style="text-align: left;"><label id="lpaperName'+paperName+'">'+paperName+'</label></td>'+
+                        '<td><label id="lpaperCreateBy'+value.examPaper.createBy.empId+'">'+value.examPaper.createBy.thFname+' '+value.examPaper.createBy.thLname+'</label></td>'+
+                        '<td><label id="lpaperScore'+value.examPaper.maxScore+'" class="label-control">'+value.examPaper.maxScore+'</label></td>'+
+                        '<td><label id="lpaperForPosition'+posiId+'" class="label-control">'+posiName+'</label></td>'+
+                        '<td class="pSelect">'+
+                        '<select id="dropdownId'+value.examPaper.id+'" name="paperStatus" '+str2+' class="btn btn-success btn-sm" style="text-align: left;">'+
+                            //'<option value="3">ยังไม่เผยแพร่</option>'+
+                        '<option value="1">เปิดใช้งาน</option>'+
+                        '<option value="2">ปิดใช้งาน</option>'+
+                        '</select>'+
+                        '</td>'+
+                        '<td class="pButton"><button id="'+value.examPaper.id+'" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></td>'+
+                        '</tr>'
+                    );
+                    presentStatus(value.examPaper.id, value.examPaper.paperStatus.id);
+                });
+            }
         }
     });
 }

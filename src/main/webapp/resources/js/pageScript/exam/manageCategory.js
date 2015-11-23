@@ -5,8 +5,8 @@ var categoryIdArray = new Array();
 
 
 $(document).ready(function () {
-    viewCategory();
-    //searchResultNotFound();
+    //viewCategory();
+    searchResultNotFound();
     $("#deleteCategory").on('click', function () {
         deleteCategory();
     });
@@ -123,7 +123,7 @@ function viewCategory() {
                 )
             });
         },
-        error: function (data) {
+        error: function () {
             alert('error while request...');
         }
     });
@@ -163,7 +163,6 @@ function deleteCategory() {
     });
 }
 function editCategory(categoryId) {
-
     $("#editBtn" + categoryId).hide();
     $("#data" + categoryId).hide();
     $("#thEdit").text("บันทึก");
@@ -189,7 +188,7 @@ function updateCategory(categoryId) {
                 if (xhr.readyState == 4) {
                     if (xhr.status == 200) {
                         alert("แก้ไขข้อมูลสำเร็จ");
-                        listcat();
+                        //listcat();
                         cancel(id);
                         $("#data" + categoryId).show();
                         $("#data" + categoryId).text(name);
@@ -333,12 +332,12 @@ function search(){
                 $("#selectAllCheckbox").prop('checked', false);
 
                 data.forEach(function (value) {
-                    var check = checkCategoryNameInUse(value.category.id);
+                    var check = value.check;
                     var str = "";
-                    if(check == 'true'){
+                    if(check == true){
                         str = 'disabled';
                     }
-                    if(check == 'false'){
+                    if(check == false){
                         checkAll = checkAll + 1;
                     }
 
@@ -350,7 +349,7 @@ function search(){
                         '<td><label id="data' + value.category.id + '">' + value.category.name + '</label>' +
                         '<input id="editData' + value.category.id + '" class="form-control input-sm" type="text" value="' + value.category.name + '" style="display: none;">' +
                         '</td>' +
-                        '<td class="col-sm-1" style="text-align: center; padding-right: 0; padding-left: 0;"><button id="editBtn' + value.category.id + '" class="btn btn-primary btn-sm" onclick="editCategory(' + "'" + value.category.id + "'" + ')"><span class="glyphicon glyphicon-pencil"></span></button>' +
+                        '<td check="'+value.check+'" class="col-sm-1" style="text-align: center; padding-right: 0; padding-left: 0;"><button id="editBtn' + value.category.id + '" class="btn btn-primary btn-sm" onclick="editCategory(' + "'" + value.category.id + "'" + ')"><span class="glyphicon glyphicon-pencil"></span></button>' +
                         '<button class="btn btn-success btn-sm" id="save' + value.category.id + '" style="display: none; margin: 5px;" type="button" onclick="updateCategory(' + "'" + value.category.id + "'" + ')"><span class="glyphicon glyphicon-ok"></span></button>' +
                         '<button class="btn btn-danger btn-sm" id="cancel' + value.category.id + '" style="display: none;" type="button" onclick="cancel(' + "'" + value.category.id + "'" + ')"><span class="glyphicon glyphicon-remove"></span></button>' +
 

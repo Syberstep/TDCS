@@ -181,9 +181,9 @@
 </div>
 <script type="text/javascript" src="<c:url value="/resources/js/pageScript/exam/managePaper.js" />"></script>
 <script>
-    $("#addQuestionBtn").on('click', function () {
-        $("#selectQuest").modal('hide');
-    });
+//    $("#addQuestionBtn").on('click', function () {
+//        $("#selectQuest").modal('hide');
+//    });
     $(".btn-default").on('click', function () {
         $("#questionPaperDetail").modal('hide');
     });

@@ -64,8 +64,6 @@ var submitSearchQuestion = function (mode, page) {
             scoreTo: null
             //status: null
             ,page: 1
-            ,orderBy:orderBy
-            ,orderType:orderType
         }
     }else{
         SI.page = parseInt(page)
@@ -96,8 +94,6 @@ var submitSearchQuestion = function (mode, page) {
             //status: SI.status
             page: SI.page,
             itemOnPage: itemOnPage
-            ,orderBy:orderBy
-            ,orderType:orderType
         },
         success: function (dat) {
             searchQuestionResultList = dat

@@ -164,7 +164,7 @@ public class QueryCategoryDomain extends HibernateUtil {
 //            criteria.add(Restrictions.like("category.name", "%" + categoryName + "%").ignoreCase());
 //        }
 
-        criteria.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
+//        criteria.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
         List<Category> categories = criteria.list();
         closeSession();
         return categories;

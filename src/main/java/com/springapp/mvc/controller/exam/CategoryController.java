@@ -5,6 +5,7 @@ import com.springapp.mvc.domain.QueryUserDomain;
 import com.springapp.mvc.domain.exam.QueryCategoryDomain;
 import com.springapp.mvc.pojo.User;
 import com.springapp.mvc.pojo.exam.Category;
+import com.springapp.mvc.pojo.exam.CheckCategoryInUse;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -17,7 +18,10 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 /**
@@ -104,8 +108,21 @@ public class CategoryController {
         headers.add("Content-Type", "application/json;charset=UTF-8");
 
         List<Category> categories = queryCategoryDomain.searchCategory(categoryId);
-        logger.info(String.valueOf(categories + "++++++++++++++++++++++++++++++++++"));
-        String json = new Gson().toJson(categories);
+        List tmp = null;
+
+        if(categories.size() > 0){
+            tmp = new ArrayList();
+            for(int i = 0 ; i < categories.size(); i ++){
+                Boolean check = queryCategoryDomain.checkCategoryInUse(categories.get(i));
+                CheckCategoryInUse checkCategoryInUse = new CheckCategoryInUse();
+                checkCategoryInUse.setCategory(categories.get(i));
+                checkCategoryInUse.setCheck(check);
+
+                tmp.add(checkCategoryInUse);
+            }
+        }
+
+        String json = new Gson().toJson(tmp);
 
         return new ResponseEntity<String>(json, headers, HttpStatus.OK);
     }

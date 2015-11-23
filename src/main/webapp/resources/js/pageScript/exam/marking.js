@@ -2,16 +2,13 @@
  * Created by Phuthikorn_T on 1/10/2558.
  */
 
-var markingBody = $("#marking-body");
-var isCurrent = true;
-
 $(document).ready(function () {
     $(".choiceDescRadio").prop('disabled', true)
     //$(".choiceCorrectness:not(.hidden)").parent().parent().find('.choiceDescRadio:checked').closest('.containerObjective').find('.scoreInputObjective')
     $.each($(".choiceCorrectness:not(.hidden)").parent().parent().find('.choiceDescRadio:checked').closest('.containerObjective').find('.scoreInputObjective'), function () {
         $(this).val(parseFloat($(this).attr('maxScore')))
+        //alert(parseFloat($(this).attr('maxScore')))
     })
-    $('.scoreInput').focusout()
 })
 
 var showObjective = false
@@ -28,6 +25,9 @@ $("#showObjective").on('click', function () {
     }
 })
 
+$(".cancleMarkingBtn").on('click', function () {
+    location.href = context + "/TDCS/exam/examRecordSearch"
+})
 
 $('#marking-body').on('focusout', '.scoreInput', function () {
     var maxScore = parseFloat($(this).parent().parent().parent().find(".maxScore").text());
@@ -51,40 +51,21 @@ $('#marking-body').on('focusout', '.scoreInput', function () {
 })
 
 $('#confirmSubmitMarkingCONFIRM').on('click', function () {
-
-    checkCurrentVersion()
-    if(isCurrent){
-        var confirmation = confirm('หากยืนยันผลตรวจนักศึกษาจะสามารถดูผลตรวจได้ และจะไม่สามารถแก้ไขผลตรวจได้อีก ต้องการยืนยันผลตรวจหรือไม่')
-        if (confirmation) {
-            submitMarking(true)
-        }
-    }else{
-        var confirmation = confirm('\t\t\t\t\t มีการส่งผลตรวจเข้ามาในระบบในขณะคุณกำลังตรวจอยู่  \n\nหากยืนยันผลตรวจนักศึกษาจะสามารถดูผลตรวจได้ และจะไม่สามารถแก้ไขผลตรวจได้อีก ต้องการยืนยันผลตรวจหรือไม่')
-        if (confirmation) {
-            submitMarking(true)
-        }
+    var confirmation = confirm('หากยืนยันผลตรวจนักศึกษาจะสามารถดูผลตรวจได้ และจะไม่สามารถแก้ไขผลตรวจได้อีก ต้องการยืนยันผลตรวจหรือไม่')
+    if (confirmation) {
+        submitMarking(true)
     }
 })
 
 $('#confirmSubmitMarking').on('click', function () {
-
-    checkCurrentVersion()
-    if(isCurrent){
-        var confirmation = confirm('ทำการบันทึกผลตรวจลงในฐานข้อมูล แต่นักศึกษาจะยังไม่สามารถเห็นผลตรวจได้')
-        if (confirmation) {
-            submitMarking(false);
-        }
-    }else{
-        var confirmation = confirm('\t\t มีการส่งผลตรวจเข้ามาในระบบในขณะคุณกำลังตรวจอยู่ \n\nทำการบันทึกผลตรวจลงในฐานข้อมูล แต่นักศึกษาจะยังไม่สามารถเห็นผลตรวจได้')
-        if (confirmation) {
-            submitMarking(false);
-        }
+    var confirmation = confirm('ทำการบันทึกผลตรวจลงในฐานข้อมูล แต่นักศึกษาจะยังไม่สามารถเห็นผลสอบได้')
+    if (confirmation) {
+        submitMarking(false);
     }
-
 })
 
-$(".backBtn").on('click', function () {
-    var confirmation = confirm('ต้องการกลับไปหน้าก่อนหน้านี้หรือไม่\n หากคุณย้อนกลับข้อมูลจะไม่ถูกบันทึก')
+$("#cancleMarkingBtn").on('click', function () {
+    var confirmation = confirm('ต้องการกลับไปยังหน้าหลักหรือไม่')
     if (confirmation) {
         location.href = context + "/TDCS/exam/examRecordSearch"
     }
@@ -113,23 +94,6 @@ $('#toBottom').on('click', function () {
 function markingRecord(answerRecordId, score) {
     this.answerRecord = answerRecordId;
     this.score = score;
-}
-
-var checkCurrentVersion = function(){
-    $.ajax({
-        type:"POST",
-        url: context+"/TDCS/exam/marking/checkCurrentVersion",
-        async:false,
-        data:{
-            version:markingBody.attr('resultVersion'),
-            resultId:markingBody.attr('resultId')
-        },
-        success:function(data){
-            isCurrent = data;
-        },error:function(){
-            alert('error in checking version')
-        }
-    })
 }
 
 var submitMarking = function (confirmation) {
