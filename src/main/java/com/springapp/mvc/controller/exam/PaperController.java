@@ -411,4 +411,25 @@ public class PaperController {
 
         return new ResponseEntity<String>(json, headers, HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/exam/orderPaper", method= RequestMethod.POST)
+    public ResponseEntity<String> orderPaper(@RequestParam(value = "paperCodes") String jsonString,
+                                             @RequestParam(value = "orderPaperByColumn") String orderPaperByColumn,
+                                             @RequestParam(value = "orderPaperType") String orderPaperType){
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json;charset=UTF-8");
+
+        List paperCodesList = new ArrayList();
+        JSONArray jsonArray = new JSONArray(jsonString);
+        for(int i = 0; i < jsonArray.length(); i ++){
+            JSONObject jsonObject = jsonArray.getJSONObject(i);
+            paperCodesList.add(jsonObject.getString("paperCodes"));
+        }
+
+        List<ExamPaper> examPapers = queryPaperDomain.orderPaper(paperCodesList, orderPaperByColumn, orderPaperType);
+        String json = new JSONSerializer().exclude("*.class").serialize(examPapers);
+
+        return new ResponseEntity<String>(json, headers, HttpStatus.OK);
+    }
 }

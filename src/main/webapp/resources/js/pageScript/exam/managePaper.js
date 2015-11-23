@@ -547,6 +547,7 @@ function addQuestionToPaper(qId){
 function createPaperValidation(){
 
     var paperTime = ((parseInt(hours) * 60) + parseInt(minutes));
+    var valid = true;
 
     if($("#newPaperId").val() != ""){
         $("#newPaperId").css('border-color', 'green');
@@ -555,7 +556,7 @@ function createPaperValidation(){
     if($("#newPaperScore").val() != "" && $.isNumeric($("#newPaperScore").val()) == true){
         $("#newPaperScore").css('border-color', 'green');
     }
-    if($("#newPaperForPosition").val() != "เลือกตำแหน่ง"){
+    if($("#newPaperForPosition").val() != "โปรดเลือก"){
         $("#newPaperForPosition").css('border-color', 'green');
     }
     if(paperTime > 0){
@@ -566,36 +567,35 @@ function createPaperValidation(){
     if($("#newPaperId").val() == ""){
         $("#newPaperId").focus();
         $("#newPaperId").css('border-color', 'red');
-        alert('กรุณากรอกรหัสชุดข้อสอบ');
 
-        return false;
+        valid = false;
     }
 
     if($("#newPaperScore").val() == "" || $.isNumeric($("#newPaperScore").val()) == false){
         $("#newPaperScore").focus();
         $("#newPaperScore").css('border-color', 'red');
-        alert('กรุณากรอกคะแนนชุดข้อสอบ');
 
-        return false;
+        valid = false;
     }
-    if($("#newPaperForPosition").val() == "เลือกตำแหน่ง"){
+    if($("#newPaperForPosition").val() == "โปรดเลือก"){
         $("#newPaperForPosition").css('border-color', 'red');
-        alert('กรุณาเลือกตำแหน่ง');
 
-        return false;
+        valid = false;
     }
 
     if(paperTime == 0){
         $("#hours").css('border-color', 'red');
         $("#minutes").css('border-color', 'red');
-        alert('กรุณาระบุเวลาการทำชุดข้อสอบ');
 
-        return false;
+        valid = false;
     }
     if($("#questionNotFoundDesc").is(":visible")){
         alert('โปรดเลือกข้อสอบ');
-        return false;
+
+        valid = false;
     }
+
+    return valid;
 }
 
 function validateScore(){
