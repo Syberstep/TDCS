@@ -29,7 +29,6 @@ var updateDetailModal = function (tr) {
             var formattedCreateDate = createDate.getDate() + '/' + (parseInt(createDate.getMonth())+1) + '/' + createDate.getFullYear();
             var updateDate;
             var formattedUpdateDate;
-            $('#updateDetail').text("")
             if (question.updateDate != null) {
                 updateDate = new Date(question.updateDate);
                 formattedUpdateDate = updateDate.getDate() + '/' + (parseInt(updateDate.getMonth())+1) + '/' + createDate.getFullYear();

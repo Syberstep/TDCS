@@ -19,8 +19,8 @@ import java.util.List;
 public class Question implements Serializable, Cloneable {
 
     @Id
-    @GenericGenerator(name = "question_id", strategy = "increment")
-    @GeneratedValue(generator = "question_id")
+    @GenericGenerator(name="question_id" , strategy="increment")
+    @GeneratedValue(generator="question_id")
     @Column(name = "QUESTION_ID")
     private Integer id;
 
@@ -99,11 +99,7 @@ public class Question implements Serializable, Cloneable {
             return false;
         if (getUpdateDate() != null ? !getUpdateDate().equals(question.getUpdateDate()) : question.getUpdateDate() != null)
             return false;
-        if (getUpdateBy() != null ? !getUpdateBy().equals(question.getUpdateBy()) : question.getUpdateBy() != null)
-            return false;
-        if (getChoices() != null ? !getChoices().equals(question.getChoices()) : question.getChoices() != null)
-            return false;
-        return !(getPapers() != null ? !getPapers().equals(question.getPapers()) : question.getPapers() != null);
+        return !(getUpdateBy() != null ? !getUpdateBy().equals(question.getUpdateBy()) : question.getUpdateBy() != null);
 
     }
 
@@ -120,17 +116,7 @@ public class Question implements Serializable, Cloneable {
         result = 31 * result + (getStatus() != null ? getStatus().hashCode() : 0);
         result = 31 * result + (getUpdateDate() != null ? getUpdateDate().hashCode() : 0);
         result = 31 * result + (getUpdateBy() != null ? getUpdateBy().hashCode() : 0);
-        result = 31 * result + (getChoices() != null ? getChoices().hashCode() : 0);
-        result = 31 * result + (getPapers() != null ? getPapers().hashCode() : 0);
         return result;
-    }
-
-    public Date getBestDate() {
-        if (updateDate == null) {
-            return createDate;
-        } else {
-            return updateDate;
-        }
     }
 
     public List<PaperQuestion> getPapers() {

@@ -10,6 +10,7 @@ import org.hibernate.transform.Transformers;
 import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -39,6 +40,7 @@ public class QueryQuestionDomain extends HibernateUtil {
     private static final Logger logger = Logger.getLogger(QueryQuestionDomain.class.getName());
 
     public void insertQuestion(Question question, List<String> cDesc, Integer correctChoice) {
+
         beginTransaction();
         getSession().save(question);
 
@@ -113,7 +115,7 @@ public class QueryQuestionDomain extends HibernateUtil {
 //        projectionList.add(Projections.property(""),"");
         criteria.addOrder(Order.asc("q.id"));
         criteria.setProjection(projectionList);
-        System.out.println();
+
 
         criteria.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
         List<Question> questions = criteria.list();
@@ -147,16 +149,14 @@ public class QueryQuestionDomain extends HibernateUtil {
                                               JSONArray createByJsonArray, String questionId,
                                               String questionDesc, String createDateFrom,
                                               String createDateTo, String scoreFrom,
-                                              String scoreTo, Integer statusId, String orderBy,String orderType) {
+                                              String scoreTo, Integer statusId, Integer page, Integer maxRows) {
 
         Criteria criteria = getSession().createCriteria(Question.class, "q");
         criteria.createAlias("q.subCategory", "subCategory");
-        criteria.createAlias("subCategory.category", "category");
         criteria.createAlias("q.createBy", "createBy");
         criteria.createAlias("q.status", "status");
         criteria.createAlias("q.difficultyLevel", "difficulty");
-        criteria.createAlias("q.questionType", "questionType");
-//        criteria.addOrder(Order.asc("subCategory.category")).addOrder(Order.asc("subCategory")).addOrder(Order.asc("id")).addOrder(Order.asc("difficulty.level"));
+        criteria.addOrder(Order.asc("subCategory.category")).addOrder(Order.asc("subCategory")).addOrder(Order.asc("id")).addOrder(Order.asc("difficulty.level"));
         if (categoryId != null && categoryId != "") {
             Category category = queryCategoryDomain.getCategoryById(categoryId);
             criteria.add(Restrictions.eq("subCategory.category", category));
@@ -190,7 +190,7 @@ public class QueryQuestionDomain extends HibernateUtil {
 
         }
         if (questionDesc != null && questionDesc.trim().length() != 0) {
-            criteria.add(Restrictions.ilike("q.description", "%" + questionDesc + "%"));
+            criteria.add(Restrictions.like("q.description", "%" + questionDesc + "%"));
         }
         DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -245,79 +245,19 @@ public class QueryQuestionDomain extends HibernateUtil {
 //                criteria.setMaxResults(maxRows);
 //            }
 //        }
-        Order order = null;
-        Boolean isAsc = false;
-        if(orderType != null){
-            if(orderType.equals("asc")){
-                isAsc = true;
-            }
-        }
 
-        if(orderBy != null ){
-            if(!orderBy.equals("id")){
-                if(orderBy.equals("category")){
-                    if(!isAsc){
-                        order = Order.desc("category.name");
-                    }else{
-                        order = Order.asc("category.name");
-                    }
-                }else if(orderBy.equals("subCategory")){
-                    if(!isAsc){
-                        order = Order.desc("subCategory.name");
-                    }else{
-                        order = Order.asc("subCategory.name");
-                    }
-                }else if(orderBy.equals("qType")){
-                    if(!isAsc){
-                        order = Order.desc("questionType");
-                    }else{
-                        order = Order.asc("questionType");
-                    }
-                }else if(orderBy.equals("date")){
-                    if(!isAsc){
-                        //sort in QuestionController
-                    }else{
-                        //sort in QuestionController
-                    }
-                }else if(orderBy.equals("createBy")){
-                    if(!isAsc){
-                        order = Order.desc("createBy.thFname");
-                    }else{
-                        order = Order.asc("createBy.thFname");
-                    }
-                }else if(orderBy.equals("score")){
-                    if(!isAsc){
-                        order = Order.desc("q.score");
-                    }else{
-                        order = Order.asc("q.score");
-                    }
-                }else if(orderBy.equals("qDesc")){
-                    if(!isAsc){
-                        order = Order.desc("q.description");
-                    }else{
-                        order = Order.asc("q.description");
-                    }
-                }
-            }
-        }
-        if(order != null){
-            criteria.addOrder(order);
-        }
-
-        criteria.addOrder(Order.desc("q.id"));
+        criteria.addOrder(Order.asc("q.createDate")).addOrder(Order.desc("q.id"));
 
         List<Question> resultList = criteria.list();
-//        for (Question q : resultList) {
-//            getSession().refresh(q);
-//        }
+        for (Question q : resultList) {
+            getSession().refresh(q);
+        }
 
         return resultList;
     }
 
     public void mergeQuestion(Question question) {
         getSession().merge(question);
-//        getSession().saveOrUpdate(question);
-//        getSession().refresh(question);
     }
 
 

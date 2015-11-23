@@ -367,18 +367,28 @@ $(document).ready(function(){
 
 $("#addQuestionBtn").unbind('click').click(function(){
 
-    $("#tbSelectQuestion tbody input:checkbox:checked").each(function(){
-        var qId = $(this).parent().siblings().map(function(){
-            return $(this).text();
-        }).get(0);
-        addQuestionToPaper(qId);
-        scoreOnChange();
+    if($("#tbodySelectQuestion tr:checkbox:checked").length > 0){
+        $("#tbSelectQuestion tbody input:checkbox:checked").each(function(){
+            var qId = $(this).parent().siblings().map(function(){
+                return $(this).text();
+            }).get(0);
+            addQuestionToPaper(qId);
+            scoreOnChange();
 
-        checkAll2 = checkAll2 + 1;
-    });
-
-    if(checkAll2 > 0){
-        $("#removeRowQuestionSelect").show();
+            checkAll2 = checkAll2 + 1;
+        });
+        if(checkAll2 > 0){
+            $("#removeRowQuestionSelect").show();
+        }
+        return true;
+    }
+    else{
+        if(!confirm('คุณยังไม่ได้เลือกข้อสอบ คุณต้องการออกจากหน้าต่างนี้หรือไม่?')){
+            return false;
+        }
+        else{
+            $("#selectQuest").modal('hide');
+        }
     }
 });
 

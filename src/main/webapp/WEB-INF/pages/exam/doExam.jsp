@@ -6,17 +6,16 @@
 </script>
 <script>
     if ('${status}' == '') {
-        window.location.href = context + "/TDCS/index.html";
+        window.location.href = context+"/TDCS/index.html";
     }
 
-    if ('${status}' == 'staff' || '${status}' == '') {
-        window.location.href = context + "/TDCS/index.html";
+    if('${status}' == 'staff' || '${status}' == ''){
+        window.location.href =context+ "/TDCS/index.html";
     }
 </script>
 
 <c:if test="${user != null && examRecord != null}">
-    <div class="examHead" id="examHead" recordId="${examRecord.id}" paperId="${paper.id}"
-         timeLimit-minute="${paper.timeLimit}">
+    <div class="examHead" id="examHead" recordId="${examRecord.id}" paperId="${paper.id}" timeLimit-minute="${paper.timeLimit}">
         <div class="container row">
             <div class="row text-center">
                 <h3>ข้อสอบออนไลน์</h3>
@@ -26,24 +25,12 @@
         <div class="container">
             <div class="row text-left">
                 <div class="col-md-6">
-                    <h4 style="display: inline;">ชุดข้อสอบ&nbsp;:&nbsp;</h4>${paper.code}&nbsp;-&nbsp;${paper.name}
+                    <h4 style="display: inline;">ชุดข้อสอบ&nbsp;:&nbsp;</h4>${paper.name}
                 </div>
                 <div class="col-md-6 text-right">
                     เวลาในการทำข้อสอบ ${paper.timeLimit} นาที
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <h4>ออกโดย&nbsp;:&nbsp;</h4>${paper.createBy.thFname}&nbsp;&nbsp;${paper.createBy.thLname}
-                </div>
-                <div class="col-md-4">
-                    <h4 class="text-center">คะแนนเต็ม&nbsp;:&nbsp;</h4>${paper.maxScore}
-                </div>
-                <div class="col-md-4 text-right">
-
-                </div>
-            </div>
-
                 <%--<br/>--%>
             <br/><br/>
         </div>
@@ -68,7 +55,7 @@
     <div id="countdownContainer" class="btn btn-success" style="position: fixed; right:5px;top: 60px;">
         <div>
             <div class=""><h3>&nbsp;เวลาที่เหลือ</h3></div>
-            <span><h3 id="countdown">00:00:00</h3></span>
+            <span ><h3 id="countdown">00:00:00</h3></span>
         </div>
     </div>
 

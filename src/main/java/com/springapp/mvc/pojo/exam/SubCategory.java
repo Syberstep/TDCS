@@ -12,25 +12,26 @@ import java.util.List;
  */
 
 @Entity
-@Table(name = "TDCS_SUB_CATEGORIES")
+@Table(name="TDCS_SUB_CATEGORIES")
 public class SubCategory implements Serializable {
 
     @Id
-    @GenericGenerator(name = "SubCategory_id", strategy = "increment")
-    @GeneratedValue(generator = "SubCategory_id")
-    @Column(name = "SUB_CATEGORY_ID")
+    @GenericGenerator(name="SubCategory_id" , strategy="increment")
+    @GeneratedValue(generator="SubCategory_id")
+    @Column(name="SUB_CATEGORY_ID")
     private Integer id;
 
-    @Column(name = "SUB_CATEGORY_NAME")
+    @Column(name="SUB_CATEGORY_NAME")
     private String name;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "CATEGORY_ID")
+    @JoinColumn(name="CATEGORY_ID")
     private Category category;
 
     @ManyToOne
-    @JoinColumn(name = "SUB_CATEGORY_CREATE_BY", referencedColumnName = "USER_ID")
+    @JoinColumn(name="SUB_CATEGORY_CREATE_BY",referencedColumnName = "USER_ID")
     private User createBy;
+
 
 
     public Integer getId() {
@@ -72,19 +73,18 @@ public class SubCategory implements Serializable {
 
         SubCategory that = (SubCategory) o;
 
-        if (getId() != null ? !getId().equals(that.getId()) : that.getId() != null) return false;
-        if (getName() != null ? !getName().equals(that.getName()) : that.getName() != null) return false;
-        if (getCategory() != null ? !getCategory().equals(that.getCategory()) : that.getCategory() != null)
-            return false;
+        if (!getId().equals(that.getId())) return false;
+        if (!getName().equals(that.getName())) return false;
+        if (!getCategory().equals(that.getCategory())) return false;
         return !(getCreateBy() != null ? !getCreateBy().equals(that.getCreateBy()) : that.getCreateBy() != null);
 
     }
 
     @Override
     public int hashCode() {
-        int result = getId() != null ? getId().hashCode() : 0;
-        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
-        result = 31 * result + (getCategory() != null ? getCategory().hashCode() : 0);
+        int result = getId().hashCode();
+        result = 31 * result + getName().hashCode();
+        result = 31 * result + getCategory().hashCode();
         result = 31 * result + (getCreateBy() != null ? getCreateBy().hashCode() : 0);
         return result;
     }

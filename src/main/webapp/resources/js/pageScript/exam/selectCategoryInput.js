@@ -53,6 +53,7 @@ $(document).ready(function () {
     //
     //    }
     //});
+
 })
 
 function initCategoryDropdown(){
@@ -188,7 +189,7 @@ var listSubCategory = function () {
             success: function (data) {
                 data.forEach(function (value) {
                     $("#selectSubCategoryToSelection").append(
-                        '<option >' + value.name + '</option>'
+                        '<option >' + value.SubCategory.name + '</option>'
                     )
                 });
 

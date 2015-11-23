@@ -1,14 +1,21 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="f" uri="http://springapp.com/mvc/util" %>
+<%--
+  Created by IntelliJ IDEA.
+  User: JOKIZZ
+  Date: 29/7/2558
+  Time: 11:15
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <c:set var="context" value="${pageContext.request.contextPath}"/>
 <script>
     var context = '${context}';
 
-    if ('${status}' == '' || '${status}' == 'staff') {
-        window.location.href = context + "/TDCS/index.html";
+    if('${status}' == ''||'${status}' == 'staff'){
+        window.location.href = context+"/TDCS/index.html";
     }
 </script>
+
 
 
 <div class="container row">
@@ -18,69 +25,62 @@
 
 <div class="container">
     <div class="row">
-        <div class="table-responsive">
-            <table class="table table-bordered table-hover">
-                <thead class="label-primary small bg-primary">
+        <table class="table table-bordered table-hover">
+            <thead class="label-primary small bg-primary">
+            <tr>
+                <th style="text-align: center">ชื่อชุดข้อสอบ</th>
+                <th style="text-align: center">ชื่อผู้สร้าง</th>
+                <th style="text-align: center">ตำแหน่ง</th>
+                <th style="text-align: center">คะแนนเต็ม</th>
+                <th style="text-align: center">เวลา</th>
+                <th style="text-align: center">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <!-- Available Paper -->
+            <c:forEach var="paper" items="${openPaperList}">
                 <tr>
-                    <th style="text-align: center">รหัสชุดข้อสอบ</th>
-                    <th style="text-align: center">ชื่อชุดข้อสอบ</th>
-                    <th style="text-align: center">ชื่อผู้สร้าง</th>
-                    <th style="text-align: center">ประเภทผู้สอบ</th>
-                    <th style="text-align: center">คะแนนเต็ม</th>
-                    <th style="text-align: center">เวลาในการทำข้อสอบ</th>
-                    <th style="text-align: center">Action</th>
+                    <td>${paper.name}</td>
+                    <td>${paper.createBy.thFname}&nbsp;${paper.createBy.thLname}</td>
+                    <c:if test="${paper.position.posiName != null}">
+                        <td>${paper.position.posiName}</td>
+                    </c:if>
+                    <c:if test="${paper.position.posiName == null}">
+                        <td>ทั้งหมด</td>
+                    </c:if>
+                    <td align="center">${paper.maxScore}</td>
+                    <td align="center">${paper.timeLimit} นาที</td>
+                    <td style="text-align: center;">
+                            <%--<a class="doExamBtn" location="${context}/TDCS/exam/doExam?paperId=${paper.id}">--%>
+                        <button class="btn btn-block btn-primary doExamBtn" paperId="${paper.id}" type="button">
+                            เริ่มทำข้อสอบ
+                        </button>
+                            <%--</a>--%>
+                    </td>
                 </tr>
-                </thead>
-                <tbody>
+            </c:forEach>
 
-                <!-- Available Paper -->
-                <c:forEach var="paper" items="${openPaperList}">
-                    <tr>
-                        <td align="center">${paper.code}</td>
-                        <td>${paper.name}</td>
-                        <td>${paper.createBy.thFname}&nbsp;${paper.createBy.thLname}</td>
-                        <c:if test="${paper.position.posiName != null}">
-                            <td>${paper.position.posiName}</td>
-                        </c:if>
-                        <c:if test="${paper.position.posiName == null}">
-                            <td>ทั้งหมด</td>
-                        </c:if>
-                        <td align="center">${paper.maxScore}</td>
-                        <c:set var="hour" value="${f:parseInt(paper.timeLimit / 60)}"/>
-                        <td align="center">${hour}.${paper.timeLimit % 60} ชั่วโมง</td>
-                        <td style="text-align: center;">
-                                <%--<a class="doExamBtn" location="${context}/TDCS/exam/doExam?paperId=${paper.id}">--%>
-                                <button class="btn btn-primary doExamBtn" paperId="${paper.id}" type="button">
-                                    เริ่มทำข้อสอบ
-                                </button>
-                                <%--</a>--%>
-                        </td>
-                    </tr>
-                </c:forEach>
-
-                <!-- Paper That has been done -->
-                <c:forEach var="paper" items="${donePaperList}">
-                    <tr>
-                        <td align="center">${paper.code}</td>
-                        <td>${paper.name}</td>
-                        <td>${paper.createBy.thFname}&nbsp;${paper.createBy.thLname}</td>
-                        <c:if test="${paper.position.posiName != null}">
-                            <td>${paper.position.posiName}</td>
-                        </c:if>
-                        <c:if test="${paper.position.posiName == null}">
-                            <td>ทั้งหมด</td>
-                        </c:if>
-                        <td align="center">${paper.maxScore}</td>
-                        <c:set var="hour" value="${f:parseInt(paper.timeLimit / 60)}"/>
-                        <td align="center">${hour}.${paper.timeLimit % 60} ชั่วโมง</td>
-                        <td style="text-align: center;">
-                                <button class="btn" type="button" disabled >เคยทำข้อสอบชุดนี้ไปแล้ว</button>
-                        </td>
-                    </tr>
-                </c:forEach>
-                </tbody>
-            </table>
-        </div>
+            <!-- Paper That has been done -->
+            <c:forEach var="paper" items="${donePaperList}">
+                <tr>
+                    <td>${paper.name}</td>
+                    <td>${paper.createBy.thFname}&nbsp;${paper.createBy.thLname}</td>
+                    <c:if test="${paper.position.posiName != null}">
+                        <td>${paper.position.posiName}</td>
+                    </c:if>
+                    <c:if test="${paper.position.posiName == null}">
+                        <td>ทั้งหมด</td>
+                    </c:if>
+                    <td align="center">${paper.maxScore}</td>
+                    <td align="center">${paper.timeLimit} นาที</td>
+                    <td style="text-align: center;">
+                        <button class="btn btn-block" type="button" disabled>เคยทำข้อสอบชุดนี้ไปแล้ว</button>
+                    </td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
     </div>
 </div>
 

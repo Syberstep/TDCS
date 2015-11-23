@@ -24,14 +24,7 @@
     <c:set var="questionNumber" value="${1}"/>
     <c:set var="questionNumberObjective" value="${1}"/>
 
-    <div class="row">
-        <div class="col-md-2">
-            <h3 style="display: inline">ตรวจข้อสอบ</h3>
-        </div>
-        <div class="col-md-2" style="display: inline;">
-            <button class="btn btn-danger backBtn" style="width: 100%;">ย้อนกลับ</button>
-        </div>
-    </div>
+    <h3>ตรวจข้อสอบ</h3>
     <hr>
     <h4>ข้อมูลนักศึกษา</h4>
 
@@ -64,13 +57,13 @@
     <h4>ข้อมูลชุดข้อสอบ</h4>
 
     <div class="row">
-        <div class="col-md-2 text-right">รหัสชุดข้อสอบ :</div>
-        <div class="col-md-4">
-            <span id="paperId">${examResult.examRecord.paper.code}</span>
-        </div>
         <div class="col-md-2 text-right">ชื่อชุดข้อสอบ :</div>
         <div class="col-md-4">
             <span id="paperName">${examResult.examRecord.paper.name}</span>
+        </div>
+        <div class="col-md-2 text-right">รหัสชุดข้อสอบ :</div>
+        <div class="col-md-4">
+            <span id="paperId">${examResult.examRecord.paper.code}</span>
         </div>
     </div>
     <br>
@@ -85,12 +78,6 @@
         </div>
         <div class="col-md-1">
             <button class="btn btn-primary" id="showObjective">แสดงข้อปรนัย</button>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-2 col-md-offset-6 text-right">คะแนนอัตนัยที่ได้ :</div>
-        <div class="col-md-1 SubjectiveScore">
-                ${examResult.subjectiveScore}
         </div>
     </div>
 
@@ -135,7 +122,7 @@
                             </div>
                             <div class=" col-md-7">
                                 <input class="form-control scoreInput" min=0 oninput="validity.valid||(value='');"
-                                       type="number" step="0.01" max="999"
+                                       type="number" step="0.1"
                                        value="${answerRecord.markingRecord.markingScore}">
                             </div>
                         </div>
@@ -211,9 +198,9 @@
                                         <h5>คะแนน :</h5>
                                     </div>
                                     <div class=" col-md-7">
-                                        <input class="form-control scoreInputObjective" min=0 max="999"
+                                        <input class="form-control scoreInputObjective" min=0
                                                oninput="validity.valid||(value='');"
-                                               type="number" step="0.01"
+                                               type="number" step="0.1"
                                                value="0"
                                                maxScore="${paperQuestion.score}"
                                                disabled>
@@ -248,7 +235,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md-2 text-right"><h5>คะแนนรวมทั้งหมด :</h5></div>
+        <div class="col-md-2 text-right"><h5>คะแนนรวม :</h5></div>
         <div class="col-md-1"><input id="sumScore" class="form-control" disabled
                                      objectiveScore="${examResult.objectiveScore}"
                                      value="${examResult.objectiveScore}"></div>
@@ -275,7 +262,7 @@
         </c:if>
 
         <div class="col-md-2 <c:if test="${examResult.status.id  == 7}">col-md-offset-6</c:if>">
-            <button class="btn btn-danger backBtn" style="width: 100%;">ย้อนกลับ</button>
+            <button class="btn btn-danger" id="cancleMarkingBtn" style="width: 100%;">ยกเลิก</button>
         </div>
     </div>
 

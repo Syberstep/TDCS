@@ -45,24 +45,4 @@ public class Status implements Serializable {
         this.description = description;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Status)) return false;
-
-        Status status = (Status) o;
-
-        if (getId() != null ? !getId().equals(status.getId()) : status.getId() != null) return false;
-        if (getName() != null ? !getName().equals(status.getName()) : status.getName() != null) return false;
-        return !(getDescription() != null ? !getDescription().equals(status.getDescription()) : status.getDescription() != null);
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = getId() != null ? getId().hashCode() : 0;
-        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
-        result = 31 * result + (getDescription() != null ? getDescription().hashCode() : 0);
-        return result;
-    }
 }

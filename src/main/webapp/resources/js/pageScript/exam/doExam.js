@@ -170,12 +170,11 @@ function pad(number, length) {
     return str;
 }
 function formatTime(time) {
-    var hour = parseInt(time / 360000);
-    var min = parseInt(time / 6000) - (hour * 60);
-    var sec = parseInt(time / 100) - (parseInt(time / 6000) * 60 );
+    var min = parseInt(time / 6000);
+    var sec = parseInt(time / 100) - (min * 60);
     //var hundredths = pad(time - (sec * 100) - (min * 6000), 2);
     //return (min > 0 ? pad(min, 2) : "00") + ":" + pad(sec, 2) + ":" + hundredths;
-    return (hour > 0 ? pad(hour, 2) : "00")+ ":" +(min > 0 ? pad(min, 2) : "00") + ":" + pad(sec, 2);
+    return (min > 0 ? pad(min, 2) : "00") + ":" + pad(sec, 2);
 }
 
 var getExamPaperBody = function () {

@@ -14,8 +14,8 @@ import java.io.Serializable;
 public class ExamMarkingRecord implements Serializable {
 
     @Id
-    @GenericGenerator(name = "marking_record_id", strategy = "increment")
-    @GeneratedValue(generator = "marking_record_id")
+    @GenericGenerator(name="marking_record_id" , strategy="increment")
+    @GeneratedValue(generator="marking_record_id")
     @Column(name = "MARKING_RECORD_ID")
     private Integer id;
 
@@ -33,34 +33,6 @@ public class ExamMarkingRecord implements Serializable {
     @ManyToOne
     @JoinColumn(name = "EXAM_RESULT_ID")
     private ExamResult examResult;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof ExamMarkingRecord)) return false;
-
-        ExamMarkingRecord that = (ExamMarkingRecord) o;
-
-        if (getId() != null ? !getId().equals(that.getId()) : that.getId() != null) return false;
-        if (getMarkingScore() != null ? !getMarkingScore().equals(that.getMarkingScore()) : that.getMarkingScore() != null)
-            return false;
-        if (getAnswerRecord() != null ? !getAnswerRecord().equals(that.getAnswerRecord()) : that.getAnswerRecord() != null)
-            return false;
-        if (getMarkedBy() != null ? !getMarkedBy().equals(that.getMarkedBy()) : that.getMarkedBy() != null)
-            return false;
-        return !(getExamResult() != null ? !getExamResult().equals(that.getExamResult()) : that.getExamResult() != null);
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = getId() != null ? getId().hashCode() : 0;
-        result = 31 * result + (getMarkingScore() != null ? getMarkingScore().hashCode() : 0);
-        result = 31 * result + (getAnswerRecord() != null ? getAnswerRecord().hashCode() : 0);
-        result = 31 * result + (getMarkedBy() != null ? getMarkedBy().hashCode() : 0);
-        result = 31 * result + (getExamResult() != null ? getExamResult().hashCode() : 0);
-        return result;
-    }
 
     public Integer getId() {
         return id;
