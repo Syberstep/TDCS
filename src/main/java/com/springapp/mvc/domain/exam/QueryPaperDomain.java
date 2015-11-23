@@ -371,4 +371,22 @@ public class QueryPaperDomain extends HibernateUtil {
             HibernateUtil.closeSession();
         }
     }
+
+    public List<ExamPaper> orderPaper(List paperCodes, String orderBy, String orderType){
+
+        Criteria criteria = getSession().createCriteria(ExamPaper.class);
+        criteria.add(Restrictions.in("code", paperCodes));
+
+        if(orderType.equals("asc")){
+            criteria.addOrder(Order.asc(orderBy));
+        }
+
+        if(orderType.equals("desc")){
+            criteria.addOrder(Order.desc(orderBy));
+        }
+
+        List<ExamPaper> examPapers = criteria.list();
+
+        return examPapers;
+    }
 }

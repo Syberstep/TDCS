@@ -29,8 +29,9 @@ var clearCategoryList = function () {
 }
 
 $(document).ready(function () {
-    clearCategoryList()
-    listSubCategory();
+    clearCategoryList();
+    //listSubCategory();
+    initCategoryDropdown();
     //$("#selectSubCategoryToSelection").prepend('<option value="">'+"เลือกหัวข้อเรื่อง"+'</option>');
     //var data = $.ajax({
     //    type: "POST",
@@ -52,8 +53,38 @@ $(document).ready(function () {
     //
     //    }
     //});
-
 })
+
+function initCategoryDropdown(){
+    var data = $.ajax({
+        type: "POST",
+        contentType: "application/json",
+        url: context+"/TDCS/exam/getAllSubCategory",
+        async :false,
+        success: function (data) {
+            $("#selectSubCategoryToSelection").append(
+                '<option value="" ></option>'
+            );
+            var catNameArr = new Array();
+            data.forEach(function (value) {
+                catNameArr.push(value.subName);
+            });
+            var uniqueSubName = [];
+            $.each(catNameArr, function(i, el){
+                if($.inArray(el, uniqueSubName) === -1) uniqueSubName.push(el);
+            });
+
+            for(var i = 0; i < uniqueSubName.length; i ++){
+                $("#selectSubCategoryToSelection").append(
+                    '<option>' + uniqueSubName[i] + '</option>'
+                )
+            }
+        },
+        error :function(data){
+
+        }
+    });
+}
 
 var catAndSubcatSelectNothing = function () {
     $('#selectCategoryToSelection option:selected').removeAttr("selected");

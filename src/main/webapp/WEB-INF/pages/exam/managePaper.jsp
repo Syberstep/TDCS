@@ -46,12 +46,34 @@
         <%@include file="template/searchPaperTemplateNew.jsp" %>
     </div>
     <div class="row">
-        <a href="${context}/TDCS/exam/createPaper">
-            <button class="btn btn-success btn-sm" align="center">
-                <span class="glyphicon glyphicon-plus"></span>
-            </button>
-        </a>
-        <button id="deletePapers" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-minus"></span></button>
+        <div class="col-sm-2" style="padding: 0; top: 7px;">
+            <a href="${context}/TDCS/exam/createPaper" style="bottom: 0;">
+                <button class="btn btn-success btn-sm" align="center">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </button>
+            </a>
+            <button id="deletePapers" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-minus"></span></button>
+        </div>
+        <div class="col-sm-6 col-sm-offset-4 text-right" style="padding: 0;">
+            <div class="form-inline">
+                <div class="form-group">
+                    <label for="orderPaperByColumn" class="control-label">จัดเรียงตาม :</label>
+                    <select id="orderPaperByColumn" class="form-control input-sm" width="100%">
+                        <option value="code">รหัสชุดข้อสอบ</option>
+                        <option value="name">ชื่อชุดข้อสอบ</option>
+                        <option value="createBy">สร้างโดย</option>
+                        <option value="maxScore">คะแนน</option>
+                        <option value="position">ประเภทผู้สอบ</option>
+                        <option value="paperStatus">สถานะ</option>
+                    </select>
+                    <label for="orderPaperType" lass="control-label">รูปแบบ :</label>
+                    <select id="orderPaperType" class="form-control input-sm" width="100%">
+                        <option value="desc">จากมากไปน้อย</option>
+                        <option value="asc">จากน้อยไปมาก</option>
+                    </select>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="row">
         <table id="tbManagePaper" class="table table-responsive table-hover table-bordered">
@@ -62,7 +84,7 @@
                     <th style="text-align: center">ชื่อชุดข้อสอบ</th>
                     <th style="text-align: center">สร้างโดย</th>
                     <th style="text-align: center">คะแนน</th>
-                    <th style="text-align: center">ตำแหน่ง</th>
+                    <th style="text-align: center">ประเภทผู้สอบ</th>
                     <th style="text-align: center">สถานะ</th>
                     <th style="text-align: center">แก้ไข</th>
                 </tr>
@@ -79,7 +101,7 @@
 <script type="text/javascript" src="<c:url value="/resources/js/pageScript/exam/paper.js" />"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/pageScript/exam/managePaper.js" />"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/pageScript/exam/categoryDropdown.js" />"></script>
-<script type="text/javascript" src="<c:url value="/resources/js/pageScript/exam/sortingPaper.js" />"></script>
+<script type="text/javascript" src="<c:url value="/resources/js/pageScript/exam/orderPaper.js" />"></script>
 <style>
     th {
         border:solid 1px white;

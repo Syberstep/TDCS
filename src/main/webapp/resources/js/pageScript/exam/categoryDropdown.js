@@ -25,7 +25,7 @@ $(document).ready(function(){
             success: function(data){
                 data.forEach(function(val){
                     $("#selectSubCategoryToSelection").append(
-                        '<option value="'+val.id+'">'+value.id + " : " +val.name+'</option>'
+                        '<option value="'+val.id+'">'+val.id + " : " +val.name+'</option>'
                     )
                 });
             }
