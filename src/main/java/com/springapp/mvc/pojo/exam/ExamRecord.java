@@ -45,38 +45,6 @@ public class ExamRecord implements Serializable {
     @Cascade(CascadeType.ALL)
     private ExamResult examResult;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof ExamRecord)) return false;
-
-        ExamRecord that = (ExamRecord) o;
-
-        if (getId() != null ? !getId().equals(that.getId()) : that.getId() != null) return false;
-        if (getUser() != null ? !getUser().equals(that.getUser()) : that.getUser() != null) return false;
-        if (getPaper() != null ? !getPaper().equals(that.getPaper()) : that.getPaper() != null) return false;
-        if (getExamDate() != null ? !getExamDate().equals(that.getExamDate()) : that.getExamDate() != null)
-            return false;
-        if (getTimeTaken() != null ? !getTimeTaken().equals(that.getTimeTaken()) : that.getTimeTaken() != null)
-            return false;
-        if (getExamAnswerRecords() != null ? !getExamAnswerRecords().equals(that.getExamAnswerRecords()) : that.getExamAnswerRecords() != null)
-            return false;
-        return !(getExamResult() != null ? !getExamResult().equals(that.getExamResult()) : that.getExamResult() != null);
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = getId() != null ? getId().hashCode() : 0;
-        result = 31 * result + (getUser() != null ? getUser().hashCode() : 0);
-        result = 31 * result + (getPaper() != null ? getPaper().hashCode() : 0);
-        result = 31 * result + (getExamDate() != null ? getExamDate().hashCode() : 0);
-        result = 31 * result + (getTimeTaken() != null ? getTimeTaken().hashCode() : 0);
-        result = 31 * result + (getExamAnswerRecords() != null ? getExamAnswerRecords().hashCode() : 0);
-        result = 31 * result + (getExamResult() != null ? getExamResult().hashCode() : 0);
-        return result;
-    }
-
     public ExamResult getExamResult() {
         return examResult;
     }

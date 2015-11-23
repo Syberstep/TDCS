@@ -98,7 +98,7 @@
 
     <h4>คำตอบ</h4>
 
-    <div id="marking-body" resultId="${examResult.id}">
+    <div id="marking-body" resultVersion="${examResult.version}" resultId="${examResult.id}">
 
         <!---------------------------------------------->
         <c:forEach var="answerRecord" items="${examResult.examRecord.examAnswerRecords}">
@@ -121,10 +121,15 @@
 
                     <div class="row answer-row">
                         <div class="col-md-10">
-                                <span class="col-md-2 text-right col-md-offset-1"
-                                      style="font-weight:bold ">คำตอบ : </span>
-                    <textarea class="col-md-8" rows="5" disabled
-                              style="resize: none;">${answerRecord.answerSubjective}</textarea>
+                            <div class="col-md-offset-1 col-md-2 text-right">
+                                <span class="text-right col-md-offset-1"
+                                      style="font-weight:bold ">คำตอบ :
+                                </span>
+                            </div>
+                            <div class="col-md-8">
+                                <textarea class="form-control" rows="8" disabled
+                                          style="resize: none;">${answerRecord.answerSubjective}</textarea>
+                            </div>
                         </div>
                     </div>
                     <div class="row ">
@@ -243,6 +248,7 @@
               placeholder="แสดงความคิดเห็น...">${examResult.comment}</textarea>
     </div>
     <br>
+
     <div class="row">
         <div class="col-md-2"></div>
     </div>
@@ -260,10 +266,10 @@
 
         <c:if test="${examResult.status.id  != 7}">
             <div class="col-md-offset-2 col-md-2">
-                <%--<button class="btn btn-primary submitMarkingBtn "--%>
-                        <%--style="width: 100%;" data-toggle="modal"--%>
-                        <%--data-target="#submitMarkingModal">บันทึกผลตรวจ--%>
-                <%--</button>--%>
+                    <%--<button class="btn btn-primary submitMarkingBtn "--%>
+                    <%--style="width: 100%;" data-toggle="modal"--%>
+                    <%--data-target="#submitMarkingModal">บันทึกผลตรวจ--%>
+                    <%--</button>--%>
                 <button id="confirmSubmitMarkingCONFIRM" class="btn btn-success btn-block" data-dismiss="modal">
                     ส่งผลตรวจ
                 </button>
@@ -302,13 +308,13 @@
                         </button>
                         &nbsp;
                     </span>
-                        <%--<button id="confirmSubmitMarking" class="btn btn-primary" data-dismiss="modal">บันทึกผลตรวจ--%>
-                        <%--</button>--%>
-                        <%--&nbsp;--%>
-                        <%--<button id="confirmSubmitMarkingCONFIRM" class="btn btn-success" data-dismiss="modal">--%>
+                            <%--<button id="confirmSubmitMarking" class="btn btn-primary" data-dismiss="modal">บันทึกผลตรวจ--%>
+                            <%--</button>--%>
+                            <%--&nbsp;--%>
+                            <%--<button id="confirmSubmitMarkingCONFIRM" class="btn btn-success" data-dismiss="modal">--%>
                             <%--ยืนยันผลตรวจ--%>
-                        <%--</button>--%>
-                        <%--&nbsp;--%>
+                            <%--</button>--%>
+                            <%--&nbsp;--%>
                         <button id="cancleSubmitMarking" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
                     </div>
                 </div>

@@ -31,6 +31,7 @@ function saveSubCategory() {
         success: function (xhr) {
             alert("บันทึกข้อมูลสำเร็จ");
             search()
+            $("#createSub").modal('hide')
         },
         error: function (xhr) {
             if(xhr.status == 418){

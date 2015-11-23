@@ -135,13 +135,15 @@ public class QuestionController {
                 question.getQuestionType().equals(questionType) && question.getDifficultyLevel().equals(difficulty) &&
                 question.getSubCategory().equals(subCategory))) { //if question is edited
 
-            if (question.getPapers().isEmpty()) { //if is not used
+            if (question.getPapers().isEmpty()) { //if not used
 
                 question.setSubCategory(subCategory);
                 question.setDescription(qDesc);
                 question.setQuestionType(questionType);
                 question.setDifficultyLevel(difficulty);
                 question.setScore(score);
+                question.setUpdateDate(DateUtil.getCurrentDateWithRemovedTime());
+                question.setUpdateBy(queryUserDomain.getCurrentUser(request));
 
                 HibernateUtil.beginTransaction();
 
@@ -166,6 +168,7 @@ public class QuestionController {
                 newQuestion.setQuestionType(questionType);
                 newQuestion.setDifficultyLevel(difficulty);
                 newQuestion.setSubCategory(subCategory);
+                newQuestion.setStatus(queryStatusDomain.getReadyStatus());
                 newQuestion.setUpdateBy(queryUserDomain.getCurrentUser(request));
                 newQuestion.setUpdateDate(DateUtil.getCurrentDateWithRemovedTime());
 
@@ -243,13 +246,13 @@ public class QuestionController {
 
         Question questionNew = new Question();
         questionNew.setDifficultyLevel(question.getDifficultyLevel());
-        questionNew.setStatus(queryStatusDomain.getReadyStatus());
-        questionNew.setCreateDate(new Date());
+        questionNew.setStatus(question.getStatus());
+        questionNew.setCreateDate(question.getCreateDate());
         questionNew.setDescription(question.getDescription());
         questionNew.setScore(question.getScore());
         questionNew.setSubCategory(question.getSubCategory());
         questionNew.setQuestionType(question.getQuestionType());
-        questionNew.setCreateBy(queryUserDomain.getCurrentUser(request));
+        questionNew.setCreateBy(question.getCreateBy());
 
         return questionNew;
     }
@@ -628,7 +631,7 @@ public class QuestionController {
         Question tmp;
         Date bestDate;
 
-        if (orderType != null && !orderType.equals("asc")) {
+        if (orderType != null && orderType.equals("asc")) {
             offset = 1;
             startValue = 0;
             endValue = qList.size();

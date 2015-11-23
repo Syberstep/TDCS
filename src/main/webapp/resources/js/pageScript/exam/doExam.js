@@ -246,7 +246,7 @@ var getExamPaperBody = function () {
                     appendString +=
                         '<div class="row">' +
                         '<div class="col-md-10 col-md-offset-1">' +
-                        '<textarea class="answer form-control subjectiveAnswer" cols="100%" rows="5" placeholder=""' +
+                        '<textarea class="answer form-control subjectiveAnswer" cols="100%" rows="6" placeholder=""' +
                         'style="resize: none" name="' + question.id + '"></textarea>' +
                         '</div>' +
                         '</div>'

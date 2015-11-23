@@ -303,8 +303,12 @@ public class QueryQuestionDomain extends HibernateUtil {
         if(order != null){
             criteria.addOrder(order);
         }
+        if(orderBy.equals("id") && orderType.equals("asc")){
+            criteria.addOrder(Order.asc("q.id"));
+        }else{
+            criteria.addOrder(Order.desc("q.id"));
+        }
 
-        criteria.addOrder(Order.desc("q.id"));
 
         List<Question> resultList = criteria.list();
 //        for (Question q : resultList) {

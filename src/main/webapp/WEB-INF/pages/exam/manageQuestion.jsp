@@ -58,7 +58,7 @@
                     <option value="id" selected>ลำดับการสร้าง</option>
                     <option value="category">หมวดหมู่</option>
                     <option value="subCategory">หัวข้อเรื่อง</option>
-                    <option value="createBy">ผู้สร้าง</option>
+                    <option value="createBy">ชื่อผู้สร้าง</option>
                     <option value="date">วันที่</option>
                     <option value="qType">ประเภทข้อสอบ</option>
                     <option value="qDesc">คำถาม</option>
