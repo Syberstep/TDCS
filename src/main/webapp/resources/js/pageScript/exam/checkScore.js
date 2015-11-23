@@ -36,13 +36,15 @@ var updateResultDetail = function(resultId){
                 alert('ไม่มีบันทึกการตรวจข้อสอบ')
             }
             var resultScore = res[0].subjectiveScore + res[0].objectiveScore;
-            $('#forObjScore').html('<pre class="col-sm-2 form-control">'+res[0].objectiveScore );
-            $('#forsjScore').html('<pre class="col-sm-2 form-control">'+res[0].subjectiveScore );
-            $('#forSumScore').html('<pre class="col-sm-2 form-control">'+resultScore);
-            $('#forMaxScore').html('<pre class="col-sm-2 form-control">'+maxScore );
+            $('#forObjScore').html('<input class="col-sm-2 form-control input-sm text-center" value="'+res[0].objectiveScore+'"  disabled>' );
+            $('#forsjScore').html('<input class="col-sm-2 form-control input-sm text-center" value="'+res[0].subjectiveScore+'"  disabled>' );
+            $('#forSumScore').html('<input class="col-sm-2 form-control input-sm text-center" value="'+resultScore+'"  disabled>' );
+            $('#forMaxScore').html('<input class="col-sm-2 form-control input-sm text-center" value="'+maxScore+'"  disabled>' );
             $('#commentTextArea').html(res[0].comment);
             $('#markedByShow').html(res[0].markedBy);
             $('.txtScore').html('คะแนน');
+            //$('#myLargeModalLabel').html('ชุดข้อสอบ '+res[0].paperCode +' : '+res[0].paperName);
+            $('#myLargeModalLabel').html('คะแนนสอบ '+'<h5>'+ '<b>'+'ชุดข้อสอบ:'+'</b>'+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+res[0].paperCode +' : '+res[0].paperName+'</h5>');
 
         },
         error:function(){

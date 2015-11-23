@@ -154,6 +154,7 @@ public class ResultController {
                 checkScore.setComment(examResult.getComment());
                 checkScore.setObjectiveScore(examResult.getObjectiveScore());
                 checkScore.setPaperName(examResult.getExamRecord().getPaper().getName());
+                checkScore.setPaperCode(examResult.getExamRecord().getPaper().getCode());
                 if(examResult.getMarkedBy()==null){
                     checkScore.setMarkedBy("TDCS System");
                 }else{
@@ -186,6 +187,15 @@ class CheckScore {
     private Float subjectiveScore;
     private String markedBy;
     private String paperName;
+    private String paperCode;
+
+    public String getPaperCode() {
+        return paperCode;
+    }
+
+    public void setPaperCode(String paperCode) {
+        this.paperCode = paperCode;
+    }
 
     public String getPaperName() {
         return paperName;

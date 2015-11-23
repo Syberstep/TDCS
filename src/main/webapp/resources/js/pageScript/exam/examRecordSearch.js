@@ -3,10 +3,18 @@
  */
 //$(document).ready(function(){
 //    searchExampaper();
-//});
+//})
+$('#tbExamRecordSearch').hide();
+$('#sortBy').hide();
 $("#btnExamRecordSearch").on('click',function() {
     searchExampaper();
 });
+$('#orderPaperBy').on('change',function(){
+    sortBy();
+    });
+$('#orderPaperType').on('change',function(){
+    sortBy();
+    });
 $("#btnExamRecordSearchClearInput").on('click',function(){
     clearInput();
 });
@@ -15,6 +23,9 @@ function clearInput(){
     $("#forPosition").val(0);
     $("#showEmployeeSelected").empty();
     $('#searchNameTrainee').val("");
+    $('#orderPaperBy').val("paperCode");
+    $('#orderPaperType').val("desc");
+
 }
 var itemLenght;
 var code;
@@ -23,14 +34,18 @@ var traineeNameEmpId;
 var arrayItemToQuery = new Array();
 var tempArray = new Array();
 var jsonObj = {};
-function searchExampaper(){
+var orderPaperBy ;
+var orderPaperType;
+function searchExampaper() {
     itemLenght = ($("#showEmployeeSelected").children("button")).length;
     code = $("#searchPaperInput").val();
     position = $("#forPosition").val();
+    orderPaperBy = $('#orderPaperBy').val();
+    orderPaperType = $('#orderPaperType').val();
     code = code.substr(0, code.indexOf(' '));
     traineeNameEmpId = $('#searchNameTrainee').val();
     traineeNameEmpId = traineeNameEmpId.substr(0, traineeNameEmpId.indexOf(':'));
-    if(itemLenght > 0) {
+    if (itemLenght > 0) {
         for (i = 0; i < itemLenght; i++) {
             var temp = $("#showEmployeeSelected").children("button")[i].innerHTML;
             temp = temp.substring(temp.indexOf('_') + 1, temp.indexOf('z'));
@@ -44,14 +59,19 @@ function searchExampaper(){
         }
         tempArray.push(items);
     }
+
+    ajax();
+}
+function ajax(){
     var a = {
         code: code,
-        position : position,
-        empId : traineeNameEmpId
+        position: position,
+        empId: traineeNameEmpId,
+        orderPaperBy: orderPaperBy,
+        orderPaperType: orderPaperType
     }
     tempArray.push(a);
-    arrayItemToQuery= [];
-
+    arrayItemToQuery = [];
     jsonObj = JSON.stringify(tempArray);
     //alert(jsonObj);
     var dataResponse = $.ajax({
@@ -69,13 +89,13 @@ function searchExampaper(){
             if(data.length == 0){
                 $("#paperNotFound").show();
                 $('#tbExamRecordSearch').hide();
-            //alert("ไม่พบข้อมูล");
+                $('#sortBy').hide();
             }
-            //data.forEach(function(value){
-            var indexTestResult = 0;
+
             for(var i = 0; i < data.length; i ++){
                 $("#paperNotFound").hide();
                 $('#tbExamRecordSearch').show();
+                $('#sortBy').show();
                 var testResult;
                 var paperName = data[i].examRecord.paper.name;
                 testResult =  Number(data[i].objectiveScore)+ Number (data[i].subjectiveScore);
@@ -98,17 +118,8 @@ function searchExampaper(){
                         '<td class="text-center">' + data[i].examRecord.paper.maxScore + '</td>' +
                         '<td><label >' + data[i].examRecord.paper.createBy.thFname + '</label></td>' +
                         '<td class="text-center"><label >' + data[i].status.description + '</label></td>' +
-                        //'<td class="text-center"></td>' +
-                        '</tr>'
+                       '</tr>'
                     );
-                    if (data[i].status.id != 6 && data[i].status.id != 7) {
-                        //$("#tbodyExamRecord").children('tr:eq(' + (indexTestResult) + ')').children('td:eq(7)').html('<button onclick="markBtn(this)" class="btn btn-warning btn btn-sm" type="button">รอตรวจ</button>');
-                        indexTestResult++;
-                    } else {
-                        $("#tbodyExamRecord").children('tr:eq('+(indexTestResult)+')').children('td:eq(4)').html(testResult);
-                        //$("#tbodyExamRecord").children('tr:eq('+(indexTestResult)+')').children('td:eq(8)').html('<button onclick="remarkBtn(this)" class="btn btn-success btn btn-sm" type="button">click</button>');
-                        indexTestResult++;
-                    }
             }
         },
         error: function(){
@@ -126,40 +137,24 @@ function searchExampaper(){
     });
 }
 
+function sortBy(){
+    orderPaperBy = $('#orderPaperBy').val();
+    orderPaperType = $('#orderPaperType').val();
+    ajax();
+}
+
 var tbodytrResuiltId;
-//function markBtn(element) {
-//    $("#alertModalChangPage").modal("show");
-//    tbodytrResuiltId=element.parentNode.parentNode.children[4].getAttribute('resultId');
-//}
-//$("#okBtnChangPage").on("click",function(){
-//    location.href = "/TDCS/exam/marking?resultId="+ tbodytrResuiltId;
-//});
-
-var testResultId;
-//function remarkBtn(element) {
-//
-//    $('#testResultBtn').prop( "disabled", true );
-//    $("#alertModalRemark").modal("show");
-//    testResultId=element.parentNode.parentNode.children[4].getAttribute('resultId');
-//    if(testResultId!="" ){
-//        $('#testResultBtn').prop( "disabled", false );
-//    }
-//}
-//$("#testResultBtn").on("click",function(){
-//    location.href = "/TDCS/exam/marking?resultId="+ testResultId;
-//});
-
 $('#tbodyExamRecord').on('click','tr',function(){
     $('#alertModalChangPage').modal('show');
     tbodytrResuiltId = $(this).children('td:eq(4)').attr('resultId') ;
 });
+
 $("#okBtnChangPage").on("click",function(){
     location.href =context+ "/TDCS/exam/marking?resultId="+ tbodytrResuiltId;
 });
 
 function listSearchPaper() {
     var availableall = [];
-
     var data = $.ajax({
         type: "POST",
         contentType: "application/json",
@@ -186,7 +181,6 @@ function listSearchPaper() {
 
 function listNameTrainee(){
     var listAllNameTrainee = [];
-
     var data = $.ajax({
         type: "POST",
         contentType: "application/json",
@@ -201,7 +195,6 @@ function listNameTrainee(){
         error: function (data) {
             alert('error while request...');
         }
-
     });
 
     var search = $("#searchNameTrainee").val();
