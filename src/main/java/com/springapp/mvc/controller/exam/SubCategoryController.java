@@ -8,7 +8,6 @@ import com.springapp.mvc.domain.exam.QueryStatusDomain;
 import com.springapp.mvc.domain.exam.QuerySubCategoryDomain;
 import com.springapp.mvc.pojo.User;
 import com.springapp.mvc.pojo.exam.*;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import flexjson.JSONSerializer;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
