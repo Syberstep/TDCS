@@ -64,6 +64,35 @@ public class ExamPaper implements Serializable {
             org.hibernate.annotations.CascadeType.DELETE_ORPHAN})
     private Set<PaperQuestion> questions;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ExamPaper)) return false;
+
+        ExamPaper examPaper = (ExamPaper) o;
+
+        if (getId() != null ? !getId().equals(examPaper.getId()) : examPaper.getId() != null) return false;
+        if (getName() != null ? !getName().equals(examPaper.getName()) : examPaper.getName() != null) return false;
+        if (getCreateDate() != null ? !getCreateDate().equals(examPaper.getCreateDate()) : examPaper.getCreateDate() != null)
+            return false;
+        if (getMaxScore() != null ? !getMaxScore().equals(examPaper.getMaxScore()) : examPaper.getMaxScore() != null)
+            return false;
+        if (getCreateBy() != null ? !getCreateBy().equals(examPaper.getCreateBy()) : examPaper.getCreateBy() != null)
+            return false;
+        if (getCode() != null ? !getCode().equals(examPaper.getCode()) : examPaper.getCode() != null) return false;
+        if (getUpdateDate() != null ? !getUpdateDate().equals(examPaper.getUpdateDate()) : examPaper.getUpdateDate() != null)
+            return false;
+        if (getTimeLimit() != null ? !getTimeLimit().equals(examPaper.getTimeLimit()) : examPaper.getTimeLimit() != null)
+            return false;
+        if (getPosition() != null ? !getPosition().equals(examPaper.getPosition()) : examPaper.getPosition() != null)
+            return false;
+        if (getPaperStatus() != null ? !getPaperStatus().equals(examPaper.getPaperStatus()) : examPaper.getPaperStatus() != null)
+            return false;
+        if (getUpdateBy() != null ? !getUpdateBy().equals(examPaper.getUpdateBy()) : examPaper.getUpdateBy() != null)
+            return false;
+        return !(getQuestions() != null ? !getQuestions().equals(examPaper.getQuestions()) : examPaper.getQuestions() != null);
+
+    }
 
     public Integer getTimeLimit() {
         return timeLimit;
