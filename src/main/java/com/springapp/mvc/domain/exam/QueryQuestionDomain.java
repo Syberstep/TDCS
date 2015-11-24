@@ -113,7 +113,6 @@ public class QueryQuestionDomain extends HibernateUtil {
 //        projectionList.add(Projections.property(""),"");
         criteria.addOrder(Order.asc("q.id"));
         criteria.setProjection(projectionList);
-        System.out.println();
 
         criteria.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
         List<Question> questions = criteria.list();

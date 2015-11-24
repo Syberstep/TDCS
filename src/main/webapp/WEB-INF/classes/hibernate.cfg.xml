@@ -74,7 +74,6 @@
         <mapping class="com.springapp.mvc.pojo.Description" />
         <mapping class="com.springapp.mvc.pojo.Evaluate" />
 		<!--Mapping Exam-->
-		<mapping class="com.springapp.mvc.pojo.exam.Boo" />
 		<mapping class="com.springapp.mvc.pojo.exam.Category" />
 		<mapping class="com.springapp.mvc.pojo.exam.Choice" />
 		<mapping class="com.springapp.mvc.pojo.exam.Difficulty" />

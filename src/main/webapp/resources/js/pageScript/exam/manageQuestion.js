@@ -177,7 +177,7 @@ editQuestion = function () { // THIS FUNCTION IS CALLED FROM webapp/WEB-INF/page
 
                     $(".table-container").removeClass("hidden")
 
-                    $("#tableBody").append('<tr questionId=' + q.id + '>' +
+                    $("#tableBody").prepend('<tr questionId=' + q.id + '>' +
                     '<td style="vertical-align: middle;" class="questionSelect"><input type="checkbox" class="questionSelectBox"/></td>' +
                     '<td style="vertical-align: middle;" class="questionType">' + q.questionType.description + '</td>' +
                     '<td style="vertical-align: middle;" class="questionCategory">' + q.subCategory.category.name + '</td>' +
