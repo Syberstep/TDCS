@@ -31,7 +31,7 @@ public class QueryExamResultDomain extends HibernateUtil {
 
     public ExamResult getExamResultById(Integer id){
         Criteria criteria = getSession().createCriteria(ExamResult.class,"er");
-        criteria.createAlias("er.status", "status");
+        criteria.createAlias("er.status","status");
         criteria.add(Restrictions.eq("er.id", id));
         return (ExamResult) criteria.uniqueResult();
     }
@@ -54,7 +54,7 @@ public class QueryExamResultDomain extends HibernateUtil {
     /**
      * Created by JobzPC on 7/10/2558.
      */
-    public List<ExamResult> getAllExamResult(List<Integer> userId,String code,Position posiId,String empId,String orderPaperBy,String orderPaperType) {
+    public List<ExamResult> getAllExamResult(List<Integer> userId,String code,Position posiId,String empId) {
         Criteria criteria = getSession().createCriteria(ExamResult.class, "er");
         criteria.createAlias("er.examRecord", "examRecord");
         criteria.createAlias("examRecord.paper", "paper");
@@ -74,37 +74,20 @@ public class QueryExamResultDomain extends HibernateUtil {
         if (!(empId.equals(""))) {
             criteria.add(Restrictions.like("user.empId", "%" + empId + "%"));
         }
-
-        if (orderPaperBy.equals("paperCode")){
-            if (orderPaperType.equals("asc")){
-                criteria.addOrder(Order.asc("paper.code"));
-            }else {criteria.addOrder(Order.desc("paper.code"));}
-        }
-        if (orderPaperBy.equals("paperName")){
-            if (orderPaperType.equals("asc")) {
-                criteria.addOrder(Order.asc("paper.name"));
-            }else{criteria.addOrder(Order.desc("paper.name"));}
-        }
-        if (orderPaperBy.equals("traineeName")){
-            if (orderPaperType.equals("asc")) {
-                criteria.addOrder(Order.asc("user.userName"));
-            }else{criteria.addOrder(Order.desc("user.userName"));}
-        }
-        if (orderPaperBy.equals("paperScore")){
-            if (orderPaperType.equals("asc")) {
-                criteria.addOrder(Order.asc("examRecord.examDate"));
-            }else{criteria.addOrder(Order.desc("examRecord.examDate"));}
-        }
-        if (orderPaperBy.equals("paperForPosition")){
-            if (orderPaperType.equals("asc")) {
-                criteria.addOrder(Order.asc("examRecord.examDate"));
-            }else {criteria.addOrder(Order.desc("examRecord.examDate"));}
-        }
-        if (orderPaperBy.equals("paperStatus")){
-            if (orderPaperType.equals("asc")) {
-                criteria.addOrder(Order.asc("examRecord.examDate"));
-            }else{criteria.addOrder(Order.desc("examRecord.examDate"));}
-        }
+//        ProjectionList projList = Projections.projectionList()
+//                .add(Projections.property("er.id"), "id")
+//                .add(Projections.property("er.examRecord"),"examRecord")
+//                .add(Projections.property("er.objectiveScore"),"objectiveScore")
+//                .add(Projections.property("er.subjectiveScore"), "subjectiveScore")
+//                .add(Projections.property("er.status"), "status")
+//                .add(Projections.property("paper.id"),"peperid")
+//                .add(Projections.property("user.userId"),"userId")
+//            .add(Projections.property("examRecord.postTestRecord"), "postTestRecord");
+//
+//        criteria.setProjection(Projections.distinct(projList));
+        criteria.addOrder(Order.asc("status.id"));
+        criteria.addOrder(Order.desc("paper.id"));
+        criteria.addOrder(Order.desc("user.userId"));
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
         List<ExamResult> empList = criteria.list();
         return empList;
