@@ -6,10 +6,12 @@ import com.springapp.mvc.domain.QueryUserDomain;
 import com.springapp.mvc.domain.exam.*;
 import com.springapp.mvc.pojo.Position;
 import com.springapp.mvc.pojo.User;
-import com.springapp.mvc.pojo.exam.*;
+import com.springapp.mvc.pojo.exam.ExamPaper;
+import com.springapp.mvc.pojo.exam.ExamRecord;
+import com.springapp.mvc.pojo.exam.PaperQuestion;
+import com.springapp.mvc.pojo.exam.Status;
 import com.springapp.mvc.util.DateUtil;
 import flexjson.JSONSerializer;
-import org.hibernate.annotations.Check;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,7 +28,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Logger;
 
 /**
@@ -377,62 +378,12 @@ public class PaperController {
 
         if(btnStatus == 0){
             List<ExamPaper> papers = queryPaperDomain.generalSearchPaper(empIds, code, name);
-            List checkPaperInUses = null;
-
-            if(papers.size() > 0){
-                checkPaperInUses = new ArrayList();
-
-                for(int i = 0; i < papers.size(); i ++){
-                    Boolean bool = false;
-                    List<ExamRecord> examRecord = queryExamRecordDomain.getExamRecordByExamPaper(papers.get(i));
-                    CheckPaperInUse checkPaperInUse = new CheckPaperInUse();
-
-                    if(examRecord != null){
-                        bool = queryExamResultDomain.checkResultIsDone(examRecord);
-                        checkPaperInUse.setExamPaper(papers.get(i));
-                        checkPaperInUse.setCheck(bool);
-                    }
-                    else{
-                        checkPaperInUse.setExamPaper(papers.get(i));
-                        checkPaperInUse.setCheck(bool);
-                    }
-
-                    checkPaperInUses.add(checkPaperInUse);
-                }
-
-            }
-
-            String toJson = new JSONSerializer().include("choices").exclude("*.class").serialize(checkPaperInUses);
+            String toJson = new JSONSerializer().include("choices").exclude("*.class").serialize(papers);
             return new ResponseEntity<String>(toJson, headers, HttpStatus.OK);
         }
         else{
             List<ExamPaper> papers = queryPaperDomain.advanceSearchPaper(empIds, code, name, createDateFrom, createDateTo, scoreFrom, scoreTo, paperStatus);
-            List checkPaperInUses = null;
-
-            if(papers.size() > 0){
-                checkPaperInUses = new ArrayList();
-
-                for(int i = 0; i < papers.size(); i ++){
-                    Boolean bool = false;
-                    List<ExamRecord> examRecord = queryExamRecordDomain.getExamRecordByExamPaper(papers.get(i));
-                    CheckPaperInUse checkPaperInUse = new CheckPaperInUse();
-
-                    if(examRecord != null){
-                        bool = queryExamResultDomain.checkResultIsDone(examRecord);
-                        checkPaperInUse.setExamPaper(papers.get(i));
-                        checkPaperInUse.setCheck(bool);
-                    }
-                    else{
-                        checkPaperInUse.setExamPaper(papers.get(i));
-                        checkPaperInUse.setCheck(bool);
-                    }
-
-                    checkPaperInUses.add(checkPaperInUse);
-                }
-
-            }
-
-            String toJson = new JSONSerializer().include("choices").exclude("*.class").serialize(checkPaperInUses);
+            String toJson = new JSONSerializer().include("choices").exclude("*.class").serialize(papers);
             return new ResponseEntity<String>(toJson, headers, HttpStatus.OK);
         }
     }
@@ -477,32 +428,7 @@ public class PaperController {
         }
 
         List<ExamPaper> examPapers = queryPaperDomain.orderPaper(paperCodesList, orderPaperByColumn, orderPaperType);
-        List checkPaperInUses = null;
-
-        if(examPapers.size() > 0){
-            checkPaperInUses = new ArrayList();
-
-            for(int i = 0; i < examPapers.size(); i ++){
-                Boolean bool = false;
-                List<ExamRecord> examRecord = queryExamRecordDomain.getExamRecordByExamPaper(examPapers.get(i));
-                CheckPaperInUse checkPaperInUse = new CheckPaperInUse();
-
-                if(examRecord != null){
-                    bool = queryExamResultDomain.checkResultIsDone(examRecord);
-                    checkPaperInUse.setExamPaper(examPapers.get(i));
-                    checkPaperInUse.setCheck(bool);
-                }
-                else{
-                    checkPaperInUse.setExamPaper(examPapers.get(i));
-                    checkPaperInUse.setCheck(bool);
-                }
-
-                checkPaperInUses.add(checkPaperInUse);
-            }
-
-        }
-
-        String json = new JSONSerializer().exclude("*.class").serialize(checkPaperInUses);
+        String json = new JSONSerializer().exclude("*.class").serialize(examPapers);
 
         return new ResponseEntity<String>(json, headers, HttpStatus.OK);
     }

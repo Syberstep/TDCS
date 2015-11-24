@@ -1,6 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <c:set var="context" value="${pageContext.request.contextPath}"/>
@@ -21,6 +20,7 @@
         <table class="table table-bordered table-hover">
             <thead class="bg-primary label-primary small">
             <tr>
+                <th style="text-align: center">รหัสชุดข้อสอบ</th>
                 <th style="text-align: center">ชื่อชุดข้อสอบ</th>
                 <th style="text-align: center" width="20%">คะแนนเต็ม</th>
                 <th style="text-align: center" width="20%">คะแนนที่ได้</th>
@@ -35,6 +35,7 @@
                     </c:if>
 
                     <tr resultId="${result.id}">
+                        <td align="center">${result.examRecord.paper.code}</td>
                         <td>${result.examRecord.paper.name}</td>
                         <td align="center" class="col-max-score">
                                 ${result.examRecord.paper.maxScore}

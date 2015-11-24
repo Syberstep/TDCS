@@ -6,16 +6,17 @@
 </script>
 <script>
     if ('${status}' == '') {
-        window.location.href = context+"/TDCS/index.html";
+        window.location.href = context + "/TDCS/index.html";
     }
 
-    if('${status}' == 'staff' || '${status}' == ''){
-        window.location.href =context+ "/TDCS/index.html";
+    if ('${status}' == 'staff' || '${status}' == '') {
+        window.location.href = context + "/TDCS/index.html";
     }
 </script>
 
 <c:if test="${user != null && examRecord != null}">
-    <div class="examHead" id="examHead" recordId="${examRecord.id}" paperId="${paper.id}" timeLimit-minute="${paper.timeLimit}">
+    <div class="examHead" id="examHead" recordId="${examRecord.id}" paperId="${paper.id}"
+         timeLimit-minute="${paper.timeLimit}">
         <div class="container row">
             <div class="row text-center">
                 <h3>ข้อสอบออนไลน์</h3>
@@ -25,14 +26,12 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <h4 style="display: inline;">ชุดข้อสอบ&nbsp;:&nbsp;</h4>${paper.name}
+                    <h4 style="display: inline;">ชุดข้อสอบ&nbsp;:&nbsp;</h4>${paper.code}&nbsp;-&nbsp;${paper.name}
                 </div>
                 <div class="col-md-6 text-right">
                     เวลาในการทำข้อสอบ ${paper.timeLimit} นาที
                 </div>
             </div>
-<<<<<<< HEAD
-=======
             <br>
             <div class="row">
                 <div class="col-md-7">
@@ -46,7 +45,6 @@
                 </div>
             </div>
 
->>>>>>> 35caa5f5705a9b527f8f49263a2f05232f204cdf
                 <%--<br/>--%>
             <br/><br/>
         </div>
@@ -71,7 +69,7 @@
     <div id="countdownContainer" class="btn btn-success" style="position: fixed; right:5px;top: 60px;">
         <div>
             <div class=""><h3>&nbsp;เวลาที่เหลือ</h3></div>
-            <span ><h3 id="countdown">00:00:00</h3></span>
+            <span><h3 id="countdown">00:00:00</h3></span>
         </div>
     </div>
 

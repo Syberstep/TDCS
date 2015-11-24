@@ -41,7 +41,8 @@
                         <h5><label style=" font-weight: 100"><span class="mandatory">*</span>หมวดหมู่ :</label></h5>
                     </div>
                     <div class="col-md-2">
-                        <input type="text" class="form-control" maxlength="10" placeholder="รหัสหมวดหมู่" id="createCategoryIdInput">
+                        <input type="text" class="form-control" maxlength="10" placeholder="รหัสหมวดหมู่"
+                               id="createCategoryIdInput">
                     </div>
                     <div class=" col-md-3">
                         <input type="text" class="form-control" placeholder="ชื่อหมวดหมู่" id="createCategoryNameInput">
@@ -111,7 +112,8 @@
                             <h5><label style="font-weight: 100"><span class="mandatory">*</span>คำถาม :</label></h5>
                         </div>
                         <div class="col-md-5" style="padding: 0px">
-                            <textarea id="questionDescription" class="form-control" style="resize: none"></textarea>
+                            <textarea id="questionDescription" class="form-control" style="resize: vertical"
+                                      maxlength="1200"></textarea>
                         </div>
                     </div>
                     <div class="row form-group form-inline text-left" id="difficultyContainer" style="padding: 0;">
@@ -140,7 +142,7 @@
                             <h5><label style="font-weight: 100"><span class="mandatory">*</span>คะแนน :</label></h5>
                         </div>
                         <div class="col-md-2" style="padding: 0;">
-                            <input class="form-control" type="number" min="0" step="0.1"
+                            <input class="form-control" type="number" min="0" step="0.01" max="999"
                                    oninput="validity.valid||(value='');" id="questionScoreForCreateQuestion"
                                    style="width: 100%">
                         </div>
@@ -153,19 +155,20 @@
                         <div class="row">
 
                             <div class="col-md-8 col-md-offset-2" style="padding: 0px" align="left">
-                                    <span class="input-group">
-                                        <input class="form-control choiceDesc" type="text" id="choice1"/>
+                                <div class="input-group">
+                                    <input class="form-control choiceDesc" maxlength="300" type="text"
+                                           id="choice1"/>
                                         <span class="input-group-addon choiceRadioAddon">
                                             <input class="correctRadio" type="radio" name="choiceRadio"
                                                    value="1"/>
                                             <div class=" glyphicon glyphicon-ok"></div>
                                     </span>
-                                    </span>
+                                </div>
 
                                 <br>
 
                                 <div class="input-group">
-                                    <input class="form-control choiceDesc" type="text" id="choice2"/>
+                                    <input class="form-control choiceDesc" maxlength="300" type="text" id="choice2"/>
                                     <span class="input-group-addon choiceRadioAddon">
                                             <input class="correctRadio" type="radio" name="choiceRadio" value="2"/>
                                         <div class=" glyphicon glyphicon-ok"></div>
@@ -174,7 +177,7 @@
                                 <br>
 
                                 <div class="input-group">
-                                    <input class="form-control choiceDesc" type="text" id="choice3"/>
+                                    <input class="form-control choiceDesc" maxlength="300" type="text" id="choice3"/>
                                         <span class="input-group-addon choiceRadioAddon">
                                             <input class="correctRadio" type="radio" name="choiceRadio" value="3"/>
                                             <div class=" glyphicon glyphicon-ok"></div>
@@ -184,7 +187,7 @@
                                 <br>
 
                                 <div class="input-group">
-                                    <input class="form-control choiceDesc" type="text" id="choice4"/>
+                                    <input class="form-control choiceDesc" maxlength="300" type="text" id="choice4"/>
                                         <span class="input-group-addon choiceRadioAddon">
                                             <input class="correctRadio" type="radio" name="choiceRadio" value="4"/>
                                             <div class=" glyphicon glyphicon-ok "></div>

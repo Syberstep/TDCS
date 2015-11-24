@@ -10,7 +10,6 @@ import org.hibernate.transform.Transformers;
 import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -40,7 +39,6 @@ public class QueryQuestionDomain extends HibernateUtil {
     private static final Logger logger = Logger.getLogger(QueryQuestionDomain.class.getName());
 
     public void insertQuestion(Question question, List<String> cDesc, Integer correctChoice) {
-
         beginTransaction();
         getSession().save(question);
 
@@ -115,7 +113,7 @@ public class QueryQuestionDomain extends HibernateUtil {
 //        projectionList.add(Projections.property(""),"");
         criteria.addOrder(Order.asc("q.id"));
         criteria.setProjection(projectionList);
-
+        System.out.println();
 
         criteria.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
         List<Question> questions = criteria.list();
@@ -149,14 +147,16 @@ public class QueryQuestionDomain extends HibernateUtil {
                                               JSONArray createByJsonArray, String questionId,
                                               String questionDesc, String createDateFrom,
                                               String createDateTo, String scoreFrom,
-                                              String scoreTo, Integer statusId, Integer page, Integer maxRows, String orderBy) {
+                                              String scoreTo, Integer statusId, String orderBy,String orderType) {
 
         Criteria criteria = getSession().createCriteria(Question.class, "q");
         criteria.createAlias("q.subCategory", "subCategory");
+        criteria.createAlias("subCategory.category", "category");
         criteria.createAlias("q.createBy", "createBy");
         criteria.createAlias("q.status", "status");
         criteria.createAlias("q.difficultyLevel", "difficulty");
-        criteria.addOrder(Order.asc("subCategory.category")).addOrder(Order.asc("subCategory")).addOrder(Order.asc("id")).addOrder(Order.asc("difficulty.level"));
+        criteria.createAlias("q.questionType", "questionType");
+//        criteria.addOrder(Order.asc("subCategory.category")).addOrder(Order.asc("subCategory")).addOrder(Order.asc("id")).addOrder(Order.asc("difficulty.level"));
         if (categoryId != null && categoryId != "") {
             Category category = queryCategoryDomain.getCategoryById(categoryId);
             criteria.add(Restrictions.eq("subCategory.category", category));
@@ -190,7 +190,7 @@ public class QueryQuestionDomain extends HibernateUtil {
 
         }
         if (questionDesc != null && questionDesc.trim().length() != 0) {
-            criteria.add(Restrictions.like("q.description", "%" + questionDesc + "%"));
+            criteria.add(Restrictions.ilike("q.description", "%" + questionDesc + "%"));
         }
         DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -245,8 +245,13 @@ public class QueryQuestionDomain extends HibernateUtil {
 //                criteria.setMaxResults(maxRows);
 //            }
 //        }
-
-        criteria.addOrder(Order.asc("q.createDate")).addOrder(Order.desc("q.id"));
+        Order order = null;
+        Boolean isAsc = false;
+        if(orderType != null){
+            if(orderType.equals("asc")){
+                isAsc = true;
+            }
+        }
 
         if(orderBy != null ){
             if(!orderBy.equals("id")){
@@ -304,16 +309,19 @@ public class QueryQuestionDomain extends HibernateUtil {
             criteria.addOrder(Order.desc("q.id"));
         }
 
+
         List<Question> resultList = criteria.list();
-        for (Question q : resultList) {
-            getSession().refresh(q);
-        }
+//        for (Question q : resultList) {
+//            getSession().refresh(q);
+//        }
 
         return resultList;
     }
 
     public void mergeQuestion(Question question) {
         getSession().merge(question);
+//        getSession().saveOrUpdate(question);
+//        getSession().refresh(question);
     }
 
 

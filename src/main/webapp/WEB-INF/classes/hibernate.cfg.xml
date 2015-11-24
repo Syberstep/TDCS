@@ -16,12 +16,10 @@
 		<property name="connection.username">scott</property>
 		<property name="connection.password">tiger</property>
 
-<<<<<<< HEAD
-		<property name="connection.driver_class">oracle.jdbc.OracleDriver</property>
-		<property name="connection.url">jdbc:oracle:thin:@localhost:1521:xe</property>
-		<property name="connection.username">tdcs</property>
-		<property name="connection.password">tdcs</property>
-=======
+		<!--<property name="connection.driver_class">oracle.jdbc.OracleDriver</property>-->
+		<!--<property name="connection.url">jdbc:oracle:thin:@localhost:1521:xe</property>-->
+		<!--<property name="connection.username">tdcs</property>-->
+		<!--<property name="connection.password">tdcs</property>-->
 		<!--<property name="connection.driver_class">oracle.jdbc.OracleDriver</property>-->
 		<!--<property name="connection.url">jdbc:oracle:thin:@localhost:1521:xe</property>-->
 
@@ -30,7 +28,6 @@
 		<!--<property name="connection.url">jdbc:oracle:thin:@localhost:1521:xe</property>-->
 		<!--<property name="connection.username">tdcs</property>-->
 		<!--<property name="connection.password">tdcs</property>-->
->>>>>>> 35caa5f5705a9b527f8f49263a2f05232f204cdf
 
 		<!--<property name="connection.username">root</property>-->
 		<!--<property name="connection.password">root</property>-->

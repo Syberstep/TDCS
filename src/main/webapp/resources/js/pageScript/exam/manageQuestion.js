@@ -2,7 +2,9 @@
  * Created by Phuthikorn_T on 14/8/2558.
  */
 var pagination = $('#pagination')
-var itemOnPage =5;
+var itemOnPage = 20;
+var orderBy = "id"
+var orderType = "desc"
 
 $(function () {
     pagination.pagination({
@@ -10,16 +12,12 @@ $(function () {
         itemsOnPage: itemOnPage,
         cssStyle: 'light-theme',
         onPageClick: function () {
-            listSearchQuestion("pageChange",pagination.pagination("getCurrentPage"))
+            listSearchQuestion("pageChange", pagination.pagination("getCurrentPage"))
         }
     });
 });
 
 $(document).ready(function () {
-<<<<<<< HEAD
-    $("#searchCatNotFound").hide();
-=======
->>>>>>> 35caa5f5705a9b527f8f49263a2f05232f204cdf
     clearAllSearchQuestionField()
     $('#selectAllItem').prop('checked', false)
     //listSearchQuestion();
@@ -30,8 +28,6 @@ $(document).ready(function () {
 
 })
 
-<<<<<<< HEAD
-=======
 $("#selectOrderType").on('change', function () {
     orderType = $(this).val()
     listSearchQuestion("pageChange", pagination.pagination("getCurrentPage"))
@@ -43,7 +39,6 @@ $("#selectOrderBy").on('change', function () {
 })
 
 
->>>>>>> 35caa5f5705a9b527f8f49263a2f05232f204cdf
 $('tbody').on('change', '.questionSelectBox', function () {
 
     if ($('.questionSelectBox').size() == $('.questionSelectBox:checked').size()) {
@@ -63,6 +58,11 @@ $('body').on('click', '.detailEditBtn', function () {
     }
     setEditModalParameter(qId);
     $('#createQuest').modal('show')
+})
+
+
+$('body').on('click', 'td .detailEditBtn', function () {
+    setQuestionObj($(this).closest('tr'))
 })
 
 $('#tableBody').on('click', 'td:not(.questionSelect)td:not(.questionEditColumn)', function () {
@@ -119,7 +119,12 @@ var setQuestionObj = function (tr) {
 
 editQuestion = function () { // THIS FUNCTION IS CALLED FROM webapp/WEB-INF/pages/exam/modal/createQuestionModal.jsp
     var questionId = questionObj.attr('questionId');
-    var categoryName = $("#categoryInputForCreateQuestion").val();
+    var cat = $("#categoryInputForCreateQuestion")
+    var catText = cat.parent().find('ul li.active').text()
+    var categoryId = catText.substr(0, catText.indexOf(":")).trim();
+    if (categoryId == "") {
+        categoryId = cat.val().substr(0, cat.val().indexOf(':')).trim()
+    }
     var subCategoryName = $("#sSubCat").val();
     var questionTypeString = $("#select-QuestionType").val();
     var score = $("#questionScoreForCreateQuestion").val();
@@ -147,7 +152,7 @@ editQuestion = function () { // THIS FUNCTION IS CALLED FROM webapp/WEB-INF/page
             url: context + '/TDCS/exam/editQuestion',
             data: {
                 questionId: questionId,
-                categoryName: categoryName,
+                categoryId: categoryId,
                 subCategoryName: subCategoryName,
                 questionDesc: questionDesc,
                 choiceDescArray: choiceDesc.toString(),
@@ -163,28 +168,40 @@ editQuestion = function () { // THIS FUNCTION IS CALLED FROM webapp/WEB-INF/page
                     var createDate = new Date(q.createDate);
                     var updateDate = new Date(q.updateDate);
                     var formattedDate
-                    if(updateDate == null){
+                    if (updateDate == null) {
                         formattedDate = createDate.getDate() + "/" + (parseInt(createDate.getMonth()) + 1) + "/" + createDate.getFullYear();
-                    }else{
+                    } else {
                         formattedDate = updateDate.getDate() + "/" + (parseInt(updateDate.getMonth()) + 1) + "/" + updateDate.getFullYear();
                     }
-                    $("#tableBody").prepend('<tr questionId=' + q.id + '>' +
-                    '<td class="questionSelect"><input type="checkbox" class="questionSelectBox"/></td>' +
-                    '<td class="questionType">' + q.questionType.description + '</td>' +
-                    '<td class="questionCategory">' + q.subCategory.category.name + '</td>' +
-                    '<td class="questionSubCategory">' + q.subCategory.name + '</td>' +
-                    '<td class="questionDescription" align="left">' + q.description.substring(0, 100) + '</td>' +
-                    '<td class="questionScore">' + q.score + '</td>' +
-                    '<td class="questionCreateBy">' + q.createBy.thFname + ' ' + q.createBy.thLname + '</td>' +
-                    '<td class="questionCreateDate">' + formattedDate + '</td>' +
-                    "</tr>")
-
                     $('tr[questionId="' + questionId + '"]').remove();
+
+                    $(".table-container").removeClass("hidden")
+
+                    $("#tableBody").append('<tr questionId=' + q.id + '>' +
+                    '<td style="vertical-align: middle;" class="questionSelect"><input type="checkbox" class="questionSelectBox"/></td>' +
+                    '<td style="vertical-align: middle;" class="questionType">' + q.questionType.description + '</td>' +
+                    '<td style="vertical-align: middle;" class="questionCategory">' + q.subCategory.category.name + '</td>' +
+                    '<td style="vertical-align: middle;" class="questionSubCategory">' + q.subCategory.name + '</td>' +
+                    '<td style="vertical-align: middle;" class="questionDescription" align="left">' + q.description.substring(0, 100) + '</td>' +
+                        //'<td class="questionDifficulty">' + q.difficultyLevel.description + '</td>' +
+                    '<td style="vertical-align: middle;" class="questionScore">' + q.score + '</td>' +
+                    '<td style="vertical-align: middle;" class="questionCreateBy">' + q.createBy.thFname + ' ' + q.createBy.thLname + '</td>' +
+                    '<td style="vertical-align: middle;" class="questionCreateDate">' + formattedDate + '</td>' +
+                    '<td style="vertical-align: middle;" class="questionEditColumn"><button class="detailEditBtn btn btn-primary" value="' + q.id + '"><span class="glyphicon glyphicon-pencil"></span></button></td>' +
+                    "</tr>")
+                    $("#searchCatNotFound").hide();
+                    if (q.description.length > 100) {
+                        $('td[class="questionDescription"]:last').append("....")
+                    }
                 }
             },
-            error: function () {
-                alert('แก้ไขข้อมูลไม่สำเร็จ');
-                $('#createQuest').modal('show')
+            error: function (xhr) {
+                if (xhr.status == 418) {
+                    // do nothing
+                } else {
+                    alert('แก้ไขข้อมูลไม่สำเร็จ');
+                    $('#createQuest').modal('show')
+                }
             }
         }
     )
@@ -260,7 +277,7 @@ var listSearchQuestion = function (btn, page) {
         else {
             data = getSearchQuestionResultListAdv();
         }
-    }else{
+    } else {
         data = getSearchQuestionResultListPageChange(page)
     }
 
@@ -272,36 +289,38 @@ var listSearchQuestion = function (btn, page) {
     if (!(data.length > 0)) {
         $("#searchCatNotFound").show()
         $('#pagination').pagination('destroy');
+        $(".table-container").addClass("hidden")
     } else {
+        $(".table-container").removeClass("hidden")
         data.forEach(function (q) {
             var createDate = new Date(q.createDate);
             var formattedDate = createDate.getDate() + "/" + (parseInt(createDate.getMonth()) + 1) + "/" + createDate.getFullYear();
             $("#tableBody").append('<tr questionId=' + q.id + '>' +
-            '<td class="questionSelect"><input type="checkbox" class="questionSelectBox"/></td>' +
-            '<td class="questionType">' + q.questionType.description + '</td>' +
-            '<td class="questionCategory">' + q.subCategory.category.name + '</td>' +
-            '<td class="questionSubCategory">' + q.subCategory.name + '</td>' +
-            '<td class="questionDescription" align="left">' + q.description.substring(0, 100) + '</td>' +
+            '<td style="vertical-align: middle;" class="questionSelect"><input type="checkbox" class="questionSelectBox"/></td>' +
+            '<td style="vertical-align: middle;" class="questionType">' + q.questionType.description + '</td>' +
+            '<td style="vertical-align: middle;" class="questionCategory">' + q.subCategory.category.name + '</td>' +
+            '<td style="vertical-align: middle;" class="questionSubCategory">' + q.subCategory.name + '</td>' +
+            '<td style="vertical-align: middle;" class="questionDescription" align="left">' + q.description.substring(0, 100) + '</td>' +
                 //'<td class="questionDifficulty">' + q.difficultyLevel.description + '</td>' +
-            '<td class="questionScore">' + q.score + '</td>' +
-            '<td class="questionCreateBy">' + q.createBy.thFname + ' ' + q.createBy.thLname + '</td>' +
-            '<td class="questionCreateDate">' + formattedDate + '</td>' +
-            '<td class="questionEditColumn"><button class="detailEditBtn btn btn-primary btn-block" value="' + q.id + '"><span class="glyphicon glyphicon-pencil"></span></button></td>' +
+            '<td style="vertical-align: middle;" class="questionScore">' + q.score + '</td>' +
+            '<td style="vertical-align: middle;" class="questionCreateBy">' + q.createBy.thFname + ' ' + q.createBy.thLname + '</td>' +
+            '<td style="vertical-align: middle;" class="questionCreateDate">' + formattedDate + '</td>' +
+            '<td style="vertical-align: middle;" class="questionEditColumn"><button class="detailEditBtn btn btn-primary" value="' + q.id + '"><span class="glyphicon glyphicon-pencil"></span></button></td>' +
             "</tr>")
             $("#searchCatNotFound").hide();
             if (q.description.length > 100) {
                 $('td[class="questionDescription"]:last').append("....")
             }
-            if(itemCount == 0){
+            if (itemCount == 0) {
                 itemCount = q.itemCount;
             }
+
         })
 
         $('tbody tr td:not(.questionSelect)').css('cursor', 'pointer');
         $('.questionSelectBox').css('cursor', 'pointer');
         pagination.pagination('redraw');
-        pagination.pagination("updateItems",itemCount);
-        console.log(itemCount)
+        pagination.pagination("updateItems", itemCount);
     }
 }
 
