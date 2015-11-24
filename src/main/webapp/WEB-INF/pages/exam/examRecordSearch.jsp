@@ -10,14 +10,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <c:set var="context" value="${pageContext.request.contextPath}"/>
-<script>
-    var context = '${context}';
-</script>
 
 <script>
+    var context = '${context}';
     $(document).ready(function () {
         $('[data-toggle="tooltip"]').tooltip();
     });
+
+    if ('${status}' == 'user' || '${status}' == '') {
+        window.location.href = context + "/TDCS/index.html";
+    }
 </script>
 <style>
    a { cursor: pointer; cursor: hand; }

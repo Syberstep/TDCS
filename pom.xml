@@ -332,6 +332,12 @@
             <version>${spring.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.4.3</version>
+        </dependency>
+
 
         <dependency>
             <groupId>javax.mail</groupId>
@@ -396,6 +402,13 @@
                     </webAppConfig>
                     <!--<jettyConfig>src/main/resources/jetty-env.xml</jettyConfig>-->
                 </configuration>
+
+            </plugin>
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>2.2</version>
+
             </plugin>
 
             <plugin>

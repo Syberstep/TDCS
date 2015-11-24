@@ -149,7 +149,7 @@ public class QueryQuestionDomain extends HibernateUtil {
                                               JSONArray createByJsonArray, String questionId,
                                               String questionDesc, String createDateFrom,
                                               String createDateTo, String scoreFrom,
-                                              String scoreTo, Integer statusId, Integer page, Integer maxRows) {
+                                              String scoreTo, Integer statusId, Integer page, Integer maxRows, String orderBy) {
 
         Criteria criteria = getSession().createCriteria(Question.class, "q");
         criteria.createAlias("q.subCategory", "subCategory");
@@ -247,6 +247,62 @@ public class QueryQuestionDomain extends HibernateUtil {
 //        }
 
         criteria.addOrder(Order.asc("q.createDate")).addOrder(Order.desc("q.id"));
+
+        if(orderBy != null ){
+            if(!orderBy.equals("id")){
+                if(orderBy.equals("category")){
+                    if(!isAsc){
+                        order = Order.desc("category.name");
+                    }else{
+                        order = Order.asc("category.name");
+                    }
+                }else if(orderBy.equals("subCategory")){
+                    if(!isAsc){
+                        order = Order.desc("subCategory.name");
+                    }else{
+                        order = Order.asc("subCategory.name");
+                    }
+                }else if(orderBy.equals("qType")){
+                    if(!isAsc){
+                        order = Order.desc("questionType");
+                    }else{
+                        order = Order.asc("questionType");
+                    }
+                }else if(orderBy.equals("date")){
+                    if(!isAsc){
+                        //sort in QuestionController
+                    }else{
+                        //sort in QuestionController
+                    }
+                }else if(orderBy.equals("createBy")){
+                    if(!isAsc){
+                        order = Order.desc("createBy.thFname");
+                    }else{
+                        order = Order.asc("createBy.thFname");
+                    }
+                }else if(orderBy.equals("score")){
+                    if(!isAsc){
+                        order = Order.desc("q.score");
+                    }else{
+                        order = Order.asc("q.score");
+                    }
+                }else if(orderBy.equals("qDesc")){
+                    if(!isAsc){
+                        order = Order.desc("q.description");
+                    }else{
+                        order = Order.asc("q.description");
+                    }
+                }
+            }
+        }
+        if(order != null){
+            criteria.addOrder(order);
+        }
+        if(orderBy.equals("id") && orderType.equals("asc")){
+            criteria.addOrder(Order.asc("q.id"));
+        }else{
+            criteria.addOrder(Order.desc("q.id"));
+        }
 
         List<Question> resultList = criteria.list();
         for (Question q : resultList) {

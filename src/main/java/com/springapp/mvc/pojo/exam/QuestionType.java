@@ -34,5 +34,4 @@ public class QuestionType implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
-
 }

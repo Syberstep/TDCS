@@ -16,16 +16,34 @@ $(function () {
 });
 
 $(document).ready(function () {
+<<<<<<< HEAD
     $("#searchCatNotFound").hide();
+=======
+>>>>>>> 35caa5f5705a9b527f8f49263a2f05232f204cdf
     clearAllSearchQuestionField()
     $('#selectAllItem').prop('checked', false)
     //listSearchQuestion();
+    $("#searchCatNotFound").show();
     pagination.pagination("destroy")
 
 //    ---------------------------------------------------------------------
 
 })
 
+<<<<<<< HEAD
+=======
+$("#selectOrderType").on('change', function () {
+    orderType = $(this).val()
+    listSearchQuestion("pageChange", pagination.pagination("getCurrentPage"))
+})
+
+$("#selectOrderBy").on('change', function () {
+    orderBy = $(this).val()
+    listSearchQuestion("pageChange", pagination.pagination("getCurrentPage"))
+})
+
+
+>>>>>>> 35caa5f5705a9b527f8f49263a2f05232f204cdf
 $('tbody').on('change', '.questionSelectBox', function () {
 
     if ($('.questionSelectBox').size() == $('.questionSelectBox:checked').size()) {
@@ -218,7 +236,13 @@ var deleteQuestions = function (questionIds) {
         },
         success: function () {
             alert("ลบข้อมูลสำเร็จ");
-            listSearchQuestion($('#advSearchBtn'));
+            if($("#tableBody tr").size() <= 1 ){
+                $("#searchCatNotFound").show();
+                pagination.pagination("destroy")
+                $(".table-container").addClass("hidden")
+            }else{
+                listSearchQuestion("pageChange",pagination.pagination('getCurrentPage'));
+            }
         }, error: function () {
             alert("ลบข้อมูลไม่สำเร็จ");
         }

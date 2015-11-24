@@ -48,6 +48,14 @@ public class ExamResult implements Serializable {
     @JoinColumn(name = "RESULT_STATUS")
     private Status status;
 
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
+
     public Date getMarkedDate() {
         return markedDate;
     }
@@ -112,11 +120,4 @@ public class ExamResult implements Serializable {
         this.subjectiveScore = subjectiveScore;
     }
 
-    public Integer getVersion() {
-        return version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
-    }
 }

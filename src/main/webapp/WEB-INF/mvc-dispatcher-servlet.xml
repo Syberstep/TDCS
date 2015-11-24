@@ -76,33 +76,33 @@
     <!--<property name="mailSender" ref="mailSender" />-->
     <!--</bean>-->
 
-    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-        <!--<property name="host" value="smtp.gmail.com" />-->
-        <!--<property name="port" value="587" />-->
-        <property name="host" value="smtp.softsquaregroup.com" />
-        <property name="port" value="25" />
-        <!--<property name="port" value="465" />-->
-        <property name="username" value="its-ronnakit_s" />
-        <property name="password" value="Loveorm33" />
+    <!--<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">-->
+        <!--&lt;!&ndash;<property name="host" value="smtp.gmail.com" />&ndash;&gt;-->
+        <!--&lt;!&ndash;<property name="port" value="587" />&ndash;&gt;-->
+        <!--<property name="host" value="smtp.softsquaregroup.com" />-->
+        <!--<property name="port" value="25" />-->
+        <!--&lt;!&ndash;<property name="port" value="465" />&ndash;&gt;-->
+        <!--<property name="username" value="its-ronnakit_s" />-->
+        <!--<property name="password" value="Loveorm33" />-->
+        <!--&lt;!&ndash;<property name="javaMailProperties">&ndash;&gt;-->
+        <!--&lt;!&ndash;<props>&ndash;&gt;-->
+        <!--&lt;!&ndash;<prop key="mail.transport.protocol">smtp</prop>&ndash;&gt;-->
+        <!--&lt;!&ndash;<prop key="mail.smtp.auth">true</prop>&ndash;&gt;-->
+        <!--&lt;!&ndash;<prop key="mail.smtp.starttls.enable">true</prop>&ndash;&gt;-->
+        <!--&lt;!&ndash;</props>&ndash;&gt;-->
+        <!--&lt;!&ndash;</property>&ndash;&gt;-->
         <!--<property name="javaMailProperties">-->
-        <!--<props>-->
-        <!--<prop key="mail.transport.protocol">smtp</prop>-->
-        <!--<prop key="mail.smtp.auth">true</prop>-->
-        <!--<prop key="mail.smtp.starttls.enable">true</prop>-->
-        <!--</props>-->
+            <!--<props>-->
+                <!--<prop key="mail.smtp.ssl.trust">smtp.softsquaregroup.com</prop>-->
+                <!--<prop key="mail.smtp.starttls.enable">true</prop>-->
+                <!--<prop key="mail.smtp.auth">true</prop>-->
+                <!--<prop key="mail.socket.debug">true</prop>-->
+                <!--&lt;!&ndash;<prop key="mail.smtp.socks.port">hqproxysvr</prop>&ndash;&gt;-->
+                <!--&lt;!&ndash;<prop key="mail.smtp.socks.port">8080</prop>&ndash;&gt;-->
+                <!--&lt;!&ndash;<prop key="mail.imaps.socks.username">its-ronnakit_s</prop>&ndash;&gt;-->
+                <!--&lt;!&ndash;<prop key="mail.imaps.socks.password">Loveorm33</prop>&ndash;&gt;-->
+            <!--</props>-->
         <!--</property>-->
-        <property name="javaMailProperties">
-            <props>
-                <prop key="mail.smtp.ssl.trust">smtp.softsquaregroup.com</prop>
-                <prop key="mail.smtp.starttls.enable">true</prop>
-                <prop key="mail.smtp.auth">true</prop>
-                <prop key="mail.socket.debug">true</prop>
-                <!--<prop key="mail.smtp.socks.port">hqproxysvr</prop>-->
-                <!--<prop key="mail.smtp.socks.port">8080</prop>-->
-                <!--<prop key="mail.imaps.socks.username">its-ronnakit_s</prop>-->
-                <!--<prop key="mail.imaps.socks.password">Loveorm33</prop>-->
-            </props>
-        </property>
-    </bean>
+    <!--</bean>-->
 
 </beans>

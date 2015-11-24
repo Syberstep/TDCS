@@ -75,10 +75,24 @@
                     </tbody>
                 </table>
             </div>
+<<<<<<< HEAD
             <div class="row">
                 <div class="col-md-12 clearfix">
                     <div id="pagination" class="pagination light-theme simple-pagination" style="float:right" ></div>
                 </div>
+=======
+            <div class="col-md-2">
+                <select id="selectOrderBy" class="form-control input-sm">
+                    <option value="id" selected>ลำดับการสร้าง</option>
+                    <option value="category">หมวดหมู่</option>
+                    <option value="subCategory">หัวข้อเรื่อง</option>
+                    <option value="createBy">ชื่อผู้สร้าง</option>
+                    <option value="date">วันที่</option>
+                    <option value="qType">ประเภทข้อสอบ</option>
+                    <option value="qDesc">คำถาม</option>
+                    <option value="score">คะแแนน</option>
+                </select>
+>>>>>>> 35caa5f5705a9b527f8f49263a2f05232f204cdf
             </div>
 
             <div class="bg-info" id="searchCatNotFound" hidden>

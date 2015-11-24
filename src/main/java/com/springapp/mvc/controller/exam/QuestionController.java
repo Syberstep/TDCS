@@ -131,13 +131,15 @@ public class QuestionController {
                 question.getQuestionType() == questionType && question.getDifficultyLevel() == difficulty &&
                 question.getSubCategory() == subCategory)) { //if question is edited
 
-            if (question.getPapers().isEmpty()) { //if is not used
+            if (question.getPapers().isEmpty()) { //if not used
 
                 question.setSubCategory(subCategory);
                 question.setDescription(qDesc);
                 question.setQuestionType(questionType);
                 question.setDifficultyLevel(difficulty);
                 question.setScore(score);
+                question.setUpdateDate(DateUtil.getCurrentDateWithRemovedTime());
+                question.setUpdateBy(queryUserDomain.getCurrentUser(request));
 
                 HibernateUtil.beginTransaction();
 
@@ -159,6 +161,7 @@ public class QuestionController {
                 newQuestion.setQuestionType(questionType);
                 newQuestion.setDifficultyLevel(difficulty);
                 newQuestion.setSubCategory(subCategory);
+                newQuestion.setStatus(queryStatusDomain.getReadyStatus());
                 newQuestion.setUpdateBy(queryUserDomain.getCurrentUser(request));
                 newQuestion.setUpdateDate(DateUtil.getCurrentDateWithRemovedTime());
 
@@ -231,13 +234,13 @@ public class QuestionController {
 
         Question questionNew = new Question();
         questionNew.setDifficultyLevel(question.getDifficultyLevel());
-        questionNew.setStatus(queryStatusDomain.getReadyStatus());
-        questionNew.setCreateDate(new Date());
+        questionNew.setStatus(question.getStatus());
+        questionNew.setCreateDate(question.getCreateDate());
         questionNew.setDescription(question.getDescription());
         questionNew.setScore(question.getScore());
         questionNew.setSubCategory(question.getSubCategory());
         questionNew.setQuestionType(question.getQuestionType());
-        questionNew.setCreateBy(queryUserDomain.getCurrentUser(request));
+        questionNew.setCreateBy(question.getCreateBy());
 
         return questionNew;
     }
@@ -600,6 +603,44 @@ public class QuestionController {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json;charset=UTF-8");
         return new ResponseEntity<String>(json, headers, HttpStatus.OK);
+    }
+
+    public List<Question> sortByDate(List<Question> qList, String orderType) {
+
+        int offset, startValue, endValue, j = 0;
+        boolean swapped = true;
+        Question tmp;
+        Date bestDate;
+
+        if (orderType != null && orderType.equals("asc")) {
+            offset = 1;
+            startValue = 0;
+            endValue = qList.size();
+        } else {
+            offset = -1;
+            startValue = qList.size();
+            endValue = 0;
+        }
+
+        while (swapped) {
+
+            swapped = false;
+            j += offset;
+
+            for (int i = startValue; i < endValue - j; i += offset) {
+
+                if (qList.get(i).getBestDate().after(qList.get(i + 1).getBestDate())) {
+
+                    tmp = qList.get(i);
+                    qList.set(i, qList.get(i + offset));
+                    qList.set(i + offset, tmp);
+
+                    swapped = true;
+                }
+            }
+        }
+
+        return qList;
     }
 }
 

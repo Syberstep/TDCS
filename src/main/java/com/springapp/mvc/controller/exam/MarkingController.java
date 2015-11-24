@@ -147,8 +147,25 @@ public class MarkingController {
         }
 
         return new ResponseEntity<String>(json, headers, HttpStatus.OK);
+    }
 
+    @RequestMapping(method = RequestMethod.POST, value = "/exam/marking/checkCurrentVersion")
+    @ResponseBody
+    public ResponseEntity<String> checkVersion(@RequestParam(value = "resultId", required = true) Integer resultId,
+                                               @RequestParam(value = "resultVersion", required = true) Integer version){
 
+        ExamResult er = queryExamResultDomain.getExamResultById(resultId);
+
+        boolean isCurrent = true;
+        if (er.getVersion() != version){
+            isCurrent = false;
+        }
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json;charset=UTF-8");
+        String json = new JSONSerializer().exclude("*.class").serialize(isCurrent);
+
+        return new ResponseEntity<String>(json, headers, HttpStatus.OK);
     }
 
 }

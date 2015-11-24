@@ -4,7 +4,8 @@ import com.springapp.mvc.domain.FindAllDataTableDomain;
 import com.springapp.mvc.domain.QueryUserDomain;
 import com.springapp.mvc.pojo.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.MailSender;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -25,8 +26,7 @@ public class AddStudentController {
     FindAllDataTableDomain findAllDataTableDomain;
     @Autowired
     QueryUserDomain queryUserDomain;
-    @Autowired
-    MailSender mailSender ;
+    private JavaMailSender mailSender;
 
     @RequestMapping(method = RequestMethod.POST,value = "/addingStu")
     @ResponseBody

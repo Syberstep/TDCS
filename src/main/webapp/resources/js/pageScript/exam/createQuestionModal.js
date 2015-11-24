@@ -147,6 +147,14 @@ function saveQuestion() {
                 '<td class="questionCreateDate">' + formattedDate + '</td>' +
                 '<td class="questionEditColumn"><button class="detailEditBtn btn btn-gray btn-block" value="' + q.id + '"><span class="glyphicon glyphicon-pencil"></span></button></td>' +
                 "</tr>")
+<<<<<<< HEAD
+=======
+                $("#searchCatNotFound").hide();
+                $('tbody tr td:not(.questionSelect)').css('cursor', 'pointer');
+                $('.questionSelectBox').css('cursor', 'pointer');
+                pagination.pagination('redraw');
+                pagination.pagination("updateItems",itemCount);
+>>>>>>> 35caa5f5705a9b527f8f49263a2f05232f204cdf
             }
         },
         error: function () {

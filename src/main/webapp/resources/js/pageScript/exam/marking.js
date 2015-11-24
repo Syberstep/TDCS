@@ -96,6 +96,28 @@ function markingRecord(answerRecordId, score) {
     this.score = score;
 }
 
+<<<<<<< HEAD
+=======
+var checkCurrentVersion = function(){
+    console.log(markingBody.attr('resultId'))
+    console.log(markingBody.attr('resultVersion'))
+    $.ajax({
+        type:"POST",
+        url: context+"/TDCS/exam/marking/checkCurrentVersion",
+        async:false,
+        data:{
+            resultVersion:markingBody.attr('resultVersion'),
+            resultId:markingBody.attr('resultId')
+        },
+        success:function(data){
+            isCurrent = data;
+        },error:function(){
+            alert('error in checking version')
+        }
+    })
+}
+
+>>>>>>> 35caa5f5705a9b527f8f49263a2f05232f204cdf
 var submitMarking = function (confirmation) {
     var questions = $('#marking-body .containerSubjective');
     var markingArray = [];

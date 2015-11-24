@@ -23,7 +23,7 @@
             </div>
         </div>
         <div class="container">
-            <div class="row text-left">
+            <div class="row">
                 <div class="col-md-6">
                     <h4 style="display: inline;">ชุดข้อสอบ&nbsp;:&nbsp;</h4>${paper.name}
                 </div>
@@ -31,6 +31,22 @@
                     เวลาในการทำข้อสอบ ${paper.timeLimit} นาที
                 </div>
             </div>
+<<<<<<< HEAD
+=======
+            <br>
+            <div class="row">
+                <div class="col-md-7">
+                    <h4 style="display:inline;">ออกโดย&nbsp;:&nbsp;</h4>${paper.createBy.thFname}&nbsp;&nbsp;${paper.createBy.thLname}
+                </div>
+                <div class="col-md-5 text-right">
+                    คะแนนเต็ม&nbsp;:&nbsp;${paper.maxScore}&nbsp;คะแนน
+                </div>
+                <div class="col-md-4 text-right">
+
+                </div>
+            </div>
+
+>>>>>>> 35caa5f5705a9b527f8f49263a2f05232f204cdf
                 <%--<br/>--%>
             <br/><br/>
         </div>
