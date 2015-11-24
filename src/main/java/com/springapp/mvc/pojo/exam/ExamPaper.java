@@ -94,23 +94,6 @@ public class ExamPaper implements Serializable {
 
     }
 
-    @Override
-    public int hashCode() {
-        int result = getId() != null ? getId().hashCode() : 0;
-        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
-        result = 31 * result + (getCreateDate() != null ? getCreateDate().hashCode() : 0);
-        result = 31 * result + (getMaxScore() != null ? getMaxScore().hashCode() : 0);
-        result = 31 * result + (getCreateBy() != null ? getCreateBy().hashCode() : 0);
-        result = 31 * result + (getCode() != null ? getCode().hashCode() : 0);
-        result = 31 * result + (getUpdateDate() != null ? getUpdateDate().hashCode() : 0);
-        result = 31 * result + (getTimeLimit() != null ? getTimeLimit().hashCode() : 0);
-        result = 31 * result + (getPosition() != null ? getPosition().hashCode() : 0);
-        result = 31 * result + (getPaperStatus() != null ? getPaperStatus().hashCode() : 0);
-        result = 31 * result + (getUpdateBy() != null ? getUpdateBy().hashCode() : 0);
-        result = 31 * result + (getQuestions() != null ? getQuestions().hashCode() : 0);
-        return result;
-    }
-
     public Integer getTimeLimit() {
         return timeLimit;
     }
