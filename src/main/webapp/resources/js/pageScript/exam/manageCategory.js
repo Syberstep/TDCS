@@ -163,6 +163,9 @@ function deleteCategory() {
     });
 }
 function editCategory(categoryId) {
+
+    $("#tbodyCategory").find('catid').val(categoryId).hide();
+
     $("#editBtn" + categoryId).hide();
     $("#data" + categoryId).hide();
     $("#thEdit").text("บันทึก");

@@ -59,14 +59,12 @@ public class ExamRecordSearchController {
         String codeId = (String) jsonItems.get("code");
         String posiId = (String) jsonItems.get("position");
         String empID = (String) jsonItems.get("empId");
-        String orderPaperBy = (String) jsonItems.get("orderPaperBy");
-        String orderPaperType = (String) jsonItems.get("orderPaperType");
         Position position = null;
         Integer posiIdInt = Integer.parseInt(posiId);
         if(posiIdInt != 0){
             position =  queryPositionDomain.getPositionById(posiIdInt);
         }
-        List<ExamResult> results = queryExamResualt.getAllExamResult(userId,codeId,position,empID,orderPaperBy,orderPaperType);
+        List<ExamResult> results = queryExamResualt.getAllExamResult(userId,codeId,position,empID);
 //        System.out.println(results);
 
         String json = new JSONSerializer()

@@ -22,7 +22,6 @@
     }
 </script>
 <style>
-   a { cursor: pointer; cursor: hand; }
     #paperNotFound {
         background-color: #b2e0ff;
         height: 100px;
@@ -45,6 +44,7 @@
 
 <h3>ตรวจข้อสอบ</h3>
 <hr>
+
 
 <div>
     <div class="panel panel-primary">
@@ -124,33 +124,12 @@
     </div>
 </div>
 <div>
-    <div id ="sortBy" class="row" style="margin-bottom: 15px">
-        <div class="col-sm-6 col-sm-offset-6 text-right">
-            <div class="form-inline">
-                <div class="form-group">
-                    <label for="orderPaperBy" class="control-label">จัดเรียงตาม :</label>
-                    <select id="orderPaperBy" class="form-control input-sm" width="100%">
-                        <option value="paperCode">รหัสชุดข้อสอบ</option>
-                        <option value="paperName">ชื่อชุดข้อสอบ</option>
-                        <option value="traineeName">ชื่อผู้สอบ</option>
-                        <option value="paperForPosition">ประเภทผู้สอบ</option>
-                        <option value="paperStatus">สถานะ</option>
-                    </select>
-                    <label for="orderPaperType" lass="control-label">รูปแบบ :</label>
-                    <select id="orderPaperType" class="form-control input-sm" width="100%">
-                        <option value="desc">จากมากไปน้อย</option>
-                        <option value="asc">จากน้อยไปมาก</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="row">
         <div class="col-md-12">
             <table id="tbExamRecordSearch" class="table table-bordered table-responsive table-hover">
                 <thead class="bg-primary small">
                 <tr>
-                    <th class="text-center" >รหัสชุดข้อสอบ</th>
+                    <th class="text-center">รหัสชุดข้อสอบ</th>
                     <th class="text-center">ชื่อชุดข้อสอบ</th>
                     <th class="text-center">ชื่อผู้สอบ</th>
                     <th class="text-center">ตำแหน่ง</th>
