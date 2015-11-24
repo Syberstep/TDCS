@@ -45,6 +45,26 @@ public class ExamRecord implements Serializable {
     @Cascade(CascadeType.ALL)
     private ExamResult examResult;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ExamRecord)) return false;
+
+        ExamRecord that = (ExamRecord) o;
+
+        if (getId() != null ? !getId().equals(that.getId()) : that.getId() != null) return false;
+        if (getUser() != null ? !getUser().equals(that.getUser()) : that.getUser() != null) return false;
+        if (getPaper() != null ? !getPaper().equals(that.getPaper()) : that.getPaper() != null) return false;
+        if (getExamDate() != null ? !getExamDate().equals(that.getExamDate()) : that.getExamDate() != null)
+            return false;
+        if (getTimeTaken() != null ? !getTimeTaken().equals(that.getTimeTaken()) : that.getTimeTaken() != null)
+            return false;
+        if (getExamAnswerRecords() != null ? !getExamAnswerRecords().equals(that.getExamAnswerRecords()) : that.getExamAnswerRecords() != null)
+            return false;
+        return !(getExamResult() != null ? !getExamResult().equals(that.getExamResult()) : that.getExamResult() != null);
+
+    }
+
     public ExamResult getExamResult() {
         return examResult;
     }
