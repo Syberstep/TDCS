@@ -106,26 +106,27 @@ $(document).ready(function(){
         });
     });
 
-    $("#tbodyManagePaper").on('change', '.checkPaper', function(){
+    $("#tbodyManagePaper").on('click', '.checkPaper', function(){
+
         var paperId = $(this).parent().parent().find("button").attr('id');
         pId = $(this).parent().siblings().map(function(){
             return $(this).text();
         }).get(0);
 
-        var check = $.ajax({
-            //url: context+"/TDCS/exam/checkExamPaperInUse",
-            url: context+"/TDCS/exam/checkExamPaperIfMarkConfirmed",
-            type: "POST",
-            data: {
-                paperId: paperId
-            },
-            async: false,
-            success: function(check){
+        //var check = $.ajax({
+        //    //url: context+"/TDCS/exam/checkExamPaperInUse",
+        //    url: context+"/TDCS/exam/checkExamPaperIfMarkConfirmed",
+        //    type: "POST",
+        //    data: {
+        //        paperId: paperId
+        //    },
+        //    async: false,
+        //    success: function(check){
+        //
+        //    }
+        //}).responseText;
 
-            }
-        }).responseText;
-
-        if(check == 'true'){
+        //if(check == 'true'){
             //if(!confirm('ชุดข้อสอบนี้ได้ถูกใช้งานแล้ว คุณต้องการลบชุดข้อสอบนี้ใช่หรือไม่')){
             //    this.checked = false;
             //
@@ -134,16 +135,17 @@ $(document).ready(function(){
             //else{
             //    this.checked = true;
             //}
-            $(this).attr('disabled', 'disabled');
-        }
+        //    $(this).attr('disabled', 'disabled');
+        //}
 
         if($("#dropdownId"+pId).val() == 1){
             alert('ไม่สามารถลบชุดข้อสอบนี้ได้');
             this.checked = false;
         }
 
-        $("#checkPaperAll").checked = false;
+        //$("#checkPaperAll").checked = false;
         counter();
+        checkAll = $(".checkPaper:not(input[type=checkbox]:disabled)").length;
         if(checkCurrent != checkAll){
             $("#checkPaperAll").prop('checked', false);
         }
@@ -247,9 +249,9 @@ function getAllPapers(){
                     str2 = "disabled";
                 }
 
-                if((value.check == 'false') && (value.examPaper.paperStatus.id != 1)){
-                    checkAll = checkAll + 1;
-                }
+                //if((value.check == 'false') && (value.examPaper.paperStatus.id != 1)){
+                //    checkAll = checkAll + 1;
+                //}
 
                 if(value.examPaper.paperStatus.id == 1){
                     str1 = "disabled";
@@ -483,9 +485,9 @@ function generalSearchPaper(btnSearchStatus) {
                             str2 = "disabled";
                         }
 
-                        if((value.check == 'false') && (value.examPaper.paperStatus.id != 1)){
-                            checkAll = checkAll + 1;
-                        }
+                        //if((value.check == 'false') && (value.examPaper.paperStatus.id != 1)){
+                        //    checkAll = checkAll + 1;
+                        //}
 
                         if(value.examPaper.paperStatus.id == 1){
                             str1 = "disabled";
