@@ -163,7 +163,7 @@ function listSearchPaper() {
         success: function (data) {
 
             data.forEach(function (value) {
-                availableall.push(value.code + ' : ' + value.name);
+                availableall.push(value.examPaper.code + ' : ' + value.examPaper.name);
             });
         },
         error: function (data) {
