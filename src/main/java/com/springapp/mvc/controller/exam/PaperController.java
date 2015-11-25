@@ -196,10 +196,36 @@ public class PaperController {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json;charset=UTF-8");
 
-        List<ExamPaper> examPapers = queryPaperDomain.getAllPapers();
-        String json = new Gson().toJson(examPapers);
+        List<ExamPaper> papers = queryPaperDomain.getAllPapers();
 
-        return new ResponseEntity<String>(json, headers, HttpStatus.OK);
+        List checkPaperInUses = null;
+
+        if(papers.size() > 0){
+            checkPaperInUses = new ArrayList();
+
+            for(int i = 0; i < papers.size(); i ++){
+                Boolean bool = false;
+                List<ExamRecord> examRecord = queryExamRecordDomain.getExamRecordByExamPaper(papers.get(i));
+                CheckPaperInUse checkPaperInUse = new CheckPaperInUse();
+
+                if(examRecord != null){
+                    bool = queryExamResultDomain.checkResultIsDone(examRecord);
+                    checkPaperInUse.setExamPaper(papers.get(i));
+                    checkPaperInUse.setCheck(bool);
+                }
+                else{
+                    checkPaperInUse.setExamPaper(papers.get(i));
+                    checkPaperInUse.setCheck(bool);
+                }
+
+                checkPaperInUses.add(checkPaperInUse);
+            }
+
+        }
+
+        String toJson = new JSONSerializer().include("choices").exclude("*.class").serialize(checkPaperInUses);
+        return new ResponseEntity<String>(toJson, headers, HttpStatus.OK);
+
     }
 
     @RequestMapping(value = "/exam/updatePaperStatus", method = RequestMethod.POST)
