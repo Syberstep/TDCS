@@ -97,8 +97,8 @@ function getPaperToCopy(){
         url: context+"/TDCS/exam/getAllPapers",
         success: function (data) {
             data.forEach(function (index) {
-                $('#copyPaperLov').append('<option class="paper" paperCode="' + index.code + '"' +
-                ' categoryName="' + index.name + '" value="' + index.id + '">' + index.code + ' : ' + index.name + '')
+                $('#copyPaperLov').append('<option class="paper" paperCode="' + index.examPaper.code + '"' +
+                ' categoryName="' + index.examPaper.name + '" value="' + index.examPaper.id + '">' + index.examPaper.code + ' : ' + index.examPaper.name + '')
             })
         },
         error: function () {
