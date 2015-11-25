@@ -114,7 +114,7 @@ function ajax(){
                         '<td><label >' + paperName + '</label></td>' +
                         '<td><label >' + data[i].examRecord.user.thFname + "    " + data[i].examRecord.user.thLname + '</label></td>' +
                         '<td class="text-center"><label >' + data[i].examRecord.user.position.posiName + '</label></td>' +
-                        '<td class="text-center" resultId="' + data[i].id + '"><label ></label></td>' +
+                        '<td class="text-center" resultId="' + data[i].id + '"><label >'+(data[i].objectiveScore + data[i].subjectiveScore)+'</label></td>' +
                         '<td class="text-center">' + data[i].examRecord.paper.maxScore + '</td>' +
                         '<td><label >' + data[i].examRecord.paper.createBy.thFname + '</label></td>' +
                         '<td class="text-center"><label >' + data[i].status.description + '</label></td>' +
