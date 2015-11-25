@@ -21,7 +21,7 @@ $(document).ready(function () {
     clearAllSearchQuestionField()
     $('#selectAllItem').prop('checked', false)
     //listSearchQuestion();
-    $("#searchCatNotFound").show();
+    $("#searchCatNotFound").hide();
     pagination.pagination("destroy")
 
 //    ---------------------------------------------------------------------
