@@ -367,8 +367,8 @@ $(document).ready(function(){
 
 $("#addQuestionBtn").unbind('click').click(function(){
 
-    if($("#tbodySelectQuestion tr:checkbox:checked").length > 0){
-        $("#tbSelectQuestion tbody input:checkbox:checked").each(function(){
+    if($("#tbodySelectQuestion tr input[type=checkbox]:checked").length > 0){
+        $("#tbodySelectQuestion tr input[type=checkbox]:checked").each(function(){
             var qId = $(this).parent().siblings().map(function(){
                 return $(this).text();
             }).get(0);
@@ -380,7 +380,7 @@ $("#addQuestionBtn").unbind('click').click(function(){
         if(checkAll2 > 0){
             $("#removeRowQuestionSelect").show();
         }
-        return true;
+        $("#selectQuest").modal('hide');
     }
     else{
         if(!confirm('คุณยังไม่ได้เลือกข้อสอบ คุณต้องการออกจากหน้าต่างนี้หรือไม่?')){
