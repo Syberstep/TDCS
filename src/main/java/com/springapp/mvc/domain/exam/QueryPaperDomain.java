@@ -304,7 +304,7 @@ public class QueryPaperDomain extends HibernateUtil {
         if (EPidList.isEmpty()) {
             return null;
         }
-            criteria.add(Restrictions.in("id", EPidList));
+        criteria.add(Restrictions.in("id", EPidList));
 
         return criteria.list();
     }

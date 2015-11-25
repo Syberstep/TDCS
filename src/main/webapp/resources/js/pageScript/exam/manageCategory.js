@@ -327,7 +327,7 @@ function search(){
         },
         async: false,
         success: function (data) {
-            if(data.length > 0){
+            if(data != null){
                 searchResultFound();
                 $("#tbodyCategory").empty();
 
