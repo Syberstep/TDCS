@@ -116,21 +116,7 @@ public class QueryPaperDomain extends HibernateUtil {
 
     public List<ExamPaper> getAllPapers() {
         Criteria criteria = getSession().createCriteria(ExamPaper.class);
-        criteria.setProjection(Projections.projectionList()
-                .add(Projections.property("id"), "id")
-                .add(Projections.property("name"), "name")
-                .add(Projections.property("createDate"), "createDate")
-                .add(Projections.property("createBy"), "createBy")
-                .add(Projections.property("maxScore"), "maxScore")
-                .add(Projections.property("code"), "code")
-                .add(Projections.property("updateDate"), "updateDate")
-                .add(Projections.property("updateBy"), "updateBy")
-                .add(Projections.property("timeLimit"), "timeLimit")
-                .add(Projections.property("position"), "position")
-                .add(Projections.property("paperStatus"), "paperStatus"));
-        criteria.addOrder(Order.asc("id"));
         criteria.add(Restrictions.ne("paperStatus.id", 4));
-        criteria.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
         List<ExamPaper> papers = criteria.list();
 
         return papers;
