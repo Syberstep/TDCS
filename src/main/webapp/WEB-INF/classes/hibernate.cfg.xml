@@ -10,11 +10,10 @@
 			<property name="connection.url">jdbc:hsqldb:hsql://localhost/xdb</property> 
 			<property name="connection.username">SA</property> <property name="connection.password"></property> -->
 
-
-		<property name="connection.driver_class">oracle.jdbc.OracleDriver</property>
-		<property name="connection.url">jdbc:oracle:thin:@172.16.0.32:1521:twcmt1</property>
-		<property name="connection.username">scott</property>
-		<property name="connection.password">tiger</property>
+		<!--<property name="connection.driver_class">oracle.jdbc.OracleDriver</property>-->
+		<!--<property name="connection.url">jdbc:oracle:thin:@172.16.0.32:1521:twcmt1</property>-->
+		<!--<property name="connection.username">scott</property>-->
+		<!--<property name="connection.password">tiger</property>-->
 
 		<!--<property name="connection.driver_class">oracle.jdbc.OracleDriver</property>-->
 		<!--<property name="connection.url">jdbc:oracle:thin:@localhost:1521:xe</property>-->
@@ -43,6 +42,13 @@
 		<!--<property name="connection.url">jdbc:oracle:thin:@localhost:1521/xe</property>-->
 		<!--<property name="connection.username">user1</property>-->
 		<!--<property name="connection.password">1234</property>-->
+
+		<property name="connection.driver_class">oracle.jdbc.OracleDriver</property>
+		<property name="connection.url">jdbc:oracle:thin:@localhost:1521/xe</property>
+		<property name="connection.username">TDCS</property>
+		<property name="connection.password">TDCS</property>
+
+
 
 
 		<!-- SQL dialect -->
