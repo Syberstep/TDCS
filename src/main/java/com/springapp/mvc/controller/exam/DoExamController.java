@@ -223,7 +223,7 @@ public class DoExamController {
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json;charset=UTF-8");
-        String json = new JSONSerializer().exclude("*.class").include("choices").serialize(questionList);
+        String json = new JSONSerializer().exclude("*.class").exclude("*.correction").include("choices").serialize(questionList);
 
         return new ResponseEntity<String>(json, headers, HttpStatus.OK);
     }
