@@ -9,6 +9,7 @@ import com.springapp.mvc.domain.exam.QueryExamResultDomain;
 import com.springapp.mvc.pojo.Position;
 import com.springapp.mvc.pojo.User;
 import com.springapp.mvc.pojo.exam.ExamResult;
+import com.springapp.mvc.util.HibernateUtil;
 import flexjson.JSONSerializer;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -68,6 +69,10 @@ public class ExamRecordSearchController {
         }
         List<ExamResult> results = queryExamResualt.getAllExamResult(userId,codeId,position,empID,orderPaperBy,orderPaperType);
 //        System.out.println(results);
+
+        for(ExamResult er : results){
+            HibernateUtil.getSession().refresh(er);
+        }
 
         String json = new JSONSerializer()
                 .include("examRecord")

@@ -70,6 +70,7 @@ public class MarkingController {
         for (ExamAnswerRecord ear : examResult.getExamRecord().getExamAnswerRecords()) {
             Hibernate.initialize(ear.getQuestion().getChoices());
             Hibernate.initialize(ear.getQuestion().getPapers());
+            HibernateUtil.getSession().refresh(ear);
         }
         modelMap.addAttribute("examResult", examResult);
         modelMap.addAttribute("user", queryUserDomain.getCurrentUser(request));

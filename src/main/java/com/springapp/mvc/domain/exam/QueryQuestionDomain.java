@@ -350,7 +350,6 @@ public class QueryQuestionDomain extends HibernateUtil {
 
         Criteria criteria = getSession().createCriteria(PaperQuestion.class);
         criteria.add(Restrictions.eq("pk.examPaper", ep));
-        criteria.add(Restrictions.ne("status.id", 4));
 
         List<PaperQuestion> paperQuestions = criteria.list();
         List<Question> questions = new ArrayList<Question>();
